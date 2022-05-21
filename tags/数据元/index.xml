@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>数据元 - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%85%83/</link>
+    <description>数据元 - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 24 Apr 2022 21:33:54 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%85%83/" rel="self" type="application/rss+xml" /><item>
+  <title>【数据治理】数据元、元数据、主数据、参考数据概述</title>
+  <link>https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E6%95%B0%E6%8D%AE%E5%85%83%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%BB%E6%95%B0%E6%8D%AE%E5%8F%82%E8%80%83%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/</link>
+  <pubDate>Sun, 24 Apr 2022 21:33:54 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E6%95%B0%E6%8D%AE%E5%85%83%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%BB%E6%95%B0%E6%8D%AE%E5%8F%82%E8%80%83%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="http://5b0988e595225.cdn.sohucs.com/images/20190620/c44008b1baad4be8be993a4ce565e2d8.jpeg" referrerpolicy="no-referrer">
+      </div>什么是数据元、元数据、主数据、参考数据？这之间有哪些相同之处和不同之处？这篇博客将以轻松简单的描述介绍这些基本概念]]></description>
+</item></channel>
+</rss>

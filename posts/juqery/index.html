@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>Juqery笔记 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="介绍juqery的基本语法，作为简单的文档" />
+<meta name="keywords" content="Juqery" /><meta itemprop="name" content="Juqery笔记">
+<meta itemprop="description" content="介绍juqery的基本语法，作为简单的文档"><meta itemprop="datePublished" content="2021-01-24T16:20:42+08:00" />
+<meta itemprop="dateModified" content="2021-01-24T16:20:42+08:00" />
+<meta itemprop="wordCount" content="3709"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="前端,juqery," /><meta property="og:title" content="Juqery笔记" />
+<meta property="og:description" content="介绍juqery的基本语法，作为简单的文档" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/juqery/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-24T16:20:42+08:00" />
+<meta property="article:modified_time" content="2021-01-24T16:20:42+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="Juqery笔记"/>
+<meta name="twitter:description" content="介绍juqery的基本语法，作为简单的文档"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/juqery/" /><link rel="prev" href="https://dingliusheng.github.io/posts/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81/" /><link rel="next" href="https://dingliusheng.github.io/posts/linux%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Juqery笔记",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/juqery\/"
+    },"genre": "posts","keywords": "前端, juqery","wordcount":  3709 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/juqery\/","datePublished": "2021-01-24T16:20:42+08:00","dateModified": "2021-01-24T16:20:42+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "介绍juqery的基本语法，作为简单的文档"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">Juqery笔记</h1><h2 class="single-subtitle">面对复杂的繁琐的JS语法，有什么能帮助我们偷懒的呢？这是一份我作为初学者快速学习Juqery基本内容，欢迎大家指正</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw"></i>&nbsp;前端</a></span></div>
+      <div class="post-meta-line"><span title=2021-01-24&#32;16:20:42>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021/01/24" >2021/01/24</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3709 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50"
+    title="介绍juqery的基本语法，作为简单的文档" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一jquery对象">一、Jquery对象</a>
+          <ul>
+            <li><a href="#11-对象类型">1.1 对象类型</a>
+              <ul>
+                <li><a href="#dom对象">DOM对象</a></li>
+                <li><a href="#jquery包装集对象">Jquery包装集对象</a></li>
+              </ul>
+            </li>
+            <li><a href="#12对象转换">1.2对象转换</a></li>
+          </ul>
+        </li>
+        <li><a href="#二jquery-选择器">二、Jquery 选择器</a>
+          <ul>
+            <li><a href="#21jquery-基础选择器">2.1、Jquery 基础选择器</a></li>
+            <li><a href="#22-jquery-层次选择器">2.2 Jquery 层次选择器</a></li>
+            <li><a href="#23-jquery-表单选择器">2.3 Jquery 表单选择器</a></li>
+          </ul>
+        </li>
+        <li><a href="#三jquery-操作元素">三、Jquery 操作元素</a>
+          <ul>
+            <li><a href="#31-操作元素的属性">3.1 、操作元素的属性</a></li>
+            <li><a href="#32--操作元素的样式">3.2 、 操作元素的样式</a></li>
+            <li><a href="#33-操作元素的内容">3.3 、操作元素的内容</a></li>
+          </ul>
+        </li>
+        <li><a href="#四jquery-创建添加删除遍历元素">四、Jquery 创建、添加、删除、遍历元素</a>
+          <ul>
+            <li><a href="#41--创建元素">4.1 、 创建元素</a></li>
+            <li><a href="#42-添加元素">4.2 、添加元素</a></li>
+            <li><a href="#43-删除元素">4.3 、删除元素</a></li>
+            <li><a href="#44-遍历元素">4.4 、遍历元素</a></li>
+          </ul>
+        </li>
+        <li><a href="#五-jquery-事件">五 、Jquery 事件</a>
+          <ul>
+            <li><a href="#51-预加载事件-ready">5.1 、预加载事件 ready</a></li>
+            <li><a href="#52-绑定事件">5.2 、绑定事件</a>
+              <ul>
+                <li><a href="#bind绑定事件"><strong>bind绑定事件</strong></a></li>
+                <li><a href="#直接绑定建议使用"><strong>直接绑定(建议使用)</strong></a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#六-ajax">六 、Ajax</a>
+          <ul>
+            <li><a href="#61简介">6.1、简介：</a></li>
+            <li><a href="#62jquery-调用ajax方法">6.2、Jquery 调用ajax方法：</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h3 id="一jquery对象">一、Jquery对象</h3>
+<h4 id="11-对象类型">1.1 对象类型</h4>
+<h5 id="dom对象">DOM对象</h5>
+<blockquote>
+<p>HTMLCollection []</p>
+</blockquote>
+<h5 id="jquery包装集对象">Jquery包装集对象</h5>
+<blockquote>
+<p>jQuery.fn.init(0)</p>
+</blockquote>
+<h4 id="12对象转换">1.2对象转换</h4>
+<blockquote>
+<p>//通过$(DOM对象）转为Jquery对象</p>
+<p>console.log($(document.getElementsByClassName(&ldquo;mainTable&rdquo;)));</p>
+<p>//通过  Jquery对象.属性 转为DOM对象</p>
+<p>console.log($(&quot;.mainTable&quot;).context);</p>
+</blockquote>
+<h3 id="二jquery-选择器">二、Jquery 选择器</h3>
+<h4 id="21jquery-基础选择器">2.1、Jquery 基础选择器</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选择器</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id选择器</td>
+<td style="text-align:center">#id</td>
+<td style="text-align:center">$(&quot;#idtest&quot;)  获取id 为 idtest 的元素</td>
+</tr>
+<tr>
+<td style="text-align:center">元素名称选择器</td>
+<td style="text-align:center">element</td>
+<td style="text-align:center">$(&ldquo;div&rdquo;)  获取所有div元素</td>
+</tr>
+<tr>
+<td style="text-align:center">类选择器</td>
+<td style="text-align:center">.class</td>
+<td style="text-align:center">$(&quot;.className&quot;)获取class=&ldquo;className&rdquo; 的元素</td>
+</tr>
+<tr>
+<td style="text-align:center">选择所有元素</td>
+<td style="text-align:center">*</td>
+<td style="text-align:center">$(&quot;*&quot;) 选择页面所有元素</td>
+</tr>
+<tr>
+<td style="text-align:center">组合选择器</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">$(&quot;#idtest,div,.className&quot;) 同时选取多个元素</td>
+</tr>
+</tbody>
+</table>
+<h4 id="22-jquery-层次选择器">2.2 Jquery 层次选择器</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选择器</th>
+<th>名称</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">后代选择器</td>
+<td>ancestor  descendant</td>
+<td>$(&quot;#parent div&quot;) 选择id为parent的元素的所有div元素</td>
+</tr>
+<tr>
+<td style="text-align:center">子代选择器</td>
+<td>parent &gt; child</td>
+<td>$(&quot;#parent &gt; div&quot;)选择id为parent的元素的直接div子元素</td>
+</tr>
+<tr>
+<td style="text-align:center">相邻选择器</td>
+<td>prev + next</td>
+<td>$(&quot;#parent + div&quot;)选择id为parent的元素的下一个div元素</td>
+</tr>
+<tr>
+<td style="text-align:center">同辈选择器</td>
+<td>prev ~ sibling</td>
+<td>$(&quot;#parent ~ div&quot;)选择id为parent的元素之后的div元素</td>
+</tr>
+</tbody>
+</table>
+<h4 id="23-jquery-表单选择器">2.3 Jquery 表单选择器</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选择器</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">表单选择器</td>
+<td style="text-align:center">:input</td>
+<td style="text-align:center">$(&quot;:input&quot;)查找所有input元素   <br/> 注意：会匹配所有的input、textarea、select和button元素</td>
+</tr>
+<tr>
+<td style="text-align:center">文本框选择器</td>
+<td style="text-align:center">:text</td>
+<td style="text-align:center">$(&quot;:text&quot;) 查找所有文本框</td>
+</tr>
+<tr>
+<td style="text-align:center">密码框选择器</td>
+<td style="text-align:center">:password</td>
+<td style="text-align:center">$(&quot;:password&quot;) 查找所有密码框</td>
+</tr>
+<tr>
+<td style="text-align:center">单选按钮选择器</td>
+<td style="text-align:center">:radio</td>
+<td style="text-align:center">$(&quot;:radio&quot;)查找所有单选按钮</td>
+</tr>
+<tr>
+<td style="text-align:center">复选框选择器</td>
+<td style="text-align:center">:checkbox</td>
+<td style="text-align:center">$(&quot;:checkbox&quot;) 查找所有复选框</td>
+</tr>
+<tr>
+<td style="text-align:center">提交按钮选择器</td>
+<td style="text-align:center">:submit</td>
+<td style="text-align:center">$(&quot;:submit&quot;)查找所有提交按钮</td>
+</tr>
+<tr>
+<td style="text-align:center">图像域选择器</td>
+<td style="text-align:center">:image</td>
+<td style="text-align:center">$(&quot;:image&quot;)查找所有图像域</td>
+</tr>
+<tr>
+<td style="text-align:center">重置按钮选择器</td>
+<td style="text-align:center">:reset</td>
+<td style="text-align:center">$(&quot;:reset&quot;)查找所有重置按钮</td>
+</tr>
+<tr>
+<td style="text-align:center">按钮选择器</td>
+<td style="text-align:center">:button</td>
+<td style="text-align:center">$(&quot;:button&quot;) 查找所有按钮</td>
+</tr>
+<tr>
+<td style="text-align:center">文件域选择器</td>
+<td style="text-align:center">:file</td>
+<td style="text-align:center">$(&quot;:file&quot;)查找所有文件域</td>
+</tr>
+</tbody>
+</table>
+<h3 id="三jquery-操作元素">三、Jquery 操作元素</h3>
+<h4 id="31-操作元素的属性">3.1 、操作元素的属性</h4>
+<p><strong>属性的分类</strong>：</p>
+<ol>
+<li>固有属性：元素本身有的属性（id、class、style)</li>
+<li>返回boolean的属性：如checked,selected,disabled</li>
+<li>自定义属性：用户自定义属性</li>
+</ol>
+<p><strong>获取属性的方法</strong>：</p>
+<p>​	attr(&ldquo;属性&rdquo;)</p>
+<p>​	prop(&ldquo;属性&rdquo;)</p>
+<blockquote>
+<p>​	$(spreadsheetReport.elem_content).attr(&ldquo;style&rdquo;);</p>
+</blockquote>
+<p>两者之间的区别：</p>
+<ol>
+<li>
+<p>如果是固有属性，attr 和 prop 方法都可以操作</p>
+</li>
+<li>
+<p>如果是自定义属性，attr 可以操作 ，prop不可以操作</p>
+</li>
+<li>
+<p>如果是boolean值属性，</p>
+<p>​		如果设置了属性值，attr 获取返回属性值，prop 获取返回 true</p>
+<p>​		如果没有设置属性值，attr 获取返回undefined, prop 获取返回false</p>
+</li>
+</ol>
+<p><strong>设置属性的方法：</strong></p>
+<p>​	attr(&ldquo;属性&rdquo;,&ldquo;属性值&rdquo;)</p>
+<p>​	prop(&ldquo;属性&rdquo;,&ldquo;属性值&rdquo;)</p>
+<p><strong>移除属性的方法：</strong></p>
+<p>​	removeAttr(&ldquo;属性名&rdquo;)</p>
+<p><strong>总结：</strong></p>
+<p>==如果属性的类型为boolean，则用prop()方法，否则使用attr()方法==</p>
+<h4 id="32--操作元素的样式">3.2 、 操作元素的样式</h4>
+<p><strong>结合css ,操作元素的样式</strong></p>
+<p>attr(&ldquo;class&rdquo;)                      获取元素的样式名</p>
+<p>attr(&ldquo;class&rdquo;,&ldquo;样式名&rdquo;)       设置元素的样式（会覆盖原本的样式）</p>
+<p>addClass(&ldquo;样式名&rdquo;)         添加样式（在原本的样式基础上添加样式，如果样式名中属性如background发生冲突，												则按css中定义的顺序，后定义的样式覆盖前定义的样式）</p>
+<p>removeClass(&ldquo;样式名&rdquo;)    移除样式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/*css 定义文件*/</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">green</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span><span class="kc">green</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">pink</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span><span class="kc">pink</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//获取元素的样式名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;class&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//设置元素的样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;class&#34;</span><span class="p">,</span><span class="s2">&#34;.pink&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//添加样式
+</span></span></span><span class="line"><span class="cl"><span class="c1">//在css文件中pink样式名定义在green样式名后，所有pink会覆盖掉green的背景色
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;green&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//移除样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s2">&#34;pink&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>操作元素的css样式中的具体内容</strong></p>
+<p>css()        添加具体的样式（添加行内样式）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//获取color属性值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;div&#34;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&#34;color&#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">//设置单个样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;div&#34;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&#34;color&#34;</span><span class="p">,</span><span class="s2">&#34;red&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//设置多个样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;div&#34;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="nx">fontSize</span><span class="o">:</span><span class="s2">&#34;30px&#34;</span><span class="p">,</span><span class="nx">color</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="33-操作元素的内容">3.3 、操作元素的内容</h4>
+<p><strong>操作表单元素内容</strong></p>
+<p>表单元素：文本框text 、密码框input、单选框radio、复选框checkbox、文本域textarea、下拉框select</p>
+<p>​	val()       获取表单元素的值</p>
+<p>​	val(&ldquo;值&rdquo;)  设置表单元素的值</p>
+<p><strong>操作非表单元素的内容</strong></p>
+<p>​	html()      		获取元素的内容</p>
+<p>​	html(&ldquo;内容&rdquo;)  	设置元素的内容（会覆盖原本的内容）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="nx">spreadsheetReport</span><span class="p">.</span><span class="nx">elem_content</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="nx">spreadsheetReport</span><span class="p">.</span><span class="nx">elem_content</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">&#34;1234&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="四jquery-创建添加删除遍历元素">四、Jquery 创建、添加、删除、遍历元素</h3>
+<h4 id="41--创建元素">4.1 、 创建元素</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//$(&#34;元素&#34;) ,通过$将元素转为Jquery对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">p</span><span class="o">=</span><span class="s2">&#34;&lt;p&gt;这是一个p标签&lt;/p&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="42-添加元素">4.2 、添加元素</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prepend(content)</td>
+<td>在元素内部开头插入元素或者内容<br/>==content参数可以是字符串、html元素、JQuery对象==</td>
+</tr>
+<tr>
+<td>$(content).prependTo(selector)</td>
+<td>把content元素或内容加入selector 元素内部开头</td>
+</tr>
+<tr>
+<td>append(content)</td>
+<td>在元素内部尾部插入元素或内容</td>
+</tr>
+<tr>
+<td>$(content).appendTo(selector)</td>
+<td>把content元素或内容加入selector 元素内部结尾</td>
+</tr>
+<tr>
+<td>before(content)</td>
+<td>在元素前插入元素或内容</td>
+</tr>
+<tr>
+<td>after(content)</td>
+<td>在元素后插入元素或内容</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//  添加元素：内容可以是字符串、html元素、JQuery对象 ，指定元素必须是Jquery对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cm">/* 1、前追加子元素
+</span></span></span><span class="line"><span class="cl"><span class="cm">	  指定元素.prepend(内容)            在指定元素内部的最前面追加内容
+</span></span></span><span class="line"><span class="cl"><span class="cm">	  $(内容).prependTo(指定元素) 
+</span></span></span><span class="line"><span class="cl"><span class="cm">	2、后追加子元素
+</span></span></span><span class="line"><span class="cl"><span class="cm">	  指定元素.append(内容)             在指定元素内部的最后面追加内容
+</span></span></span><span class="line"><span class="cl"><span class="cm">	  $(内容).appendTo(指定元素) 
+</span></span></span><span class="line"><span class="cl"><span class="cm">	3、前追加同级元素
+</span></span></span><span class="line"><span class="cl"><span class="cm">	  指定元素.before(内容)			  在指定元素相邻的前面位置追加内容
+</span></span></span><span class="line"><span class="cl"><span class="cm">	4、后追加同级元素
+</span></span></span><span class="line"><span class="cl"><span class="cm">	   指定元素.after(内容)			  在指定元素相邻的后面位置追加内容
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="s2">&#34;&lt;h1&gt;这是一个p标签&lt;/h1&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">p1</span> <span class="o">=</span> <span class="s2">&#34;&lt;h1&gt;这是一个p1标签&lt;/h1&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">spreadsheetReport</span><span class="p">.</span><span class="nx">elem_content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">c</span><span class="p">.</span><span class="nx">before</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">p</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">c</span><span class="p">.</span><span class="nx">before</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">p1</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="43-删除元素">4.3 、删除元素</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>remove()</td>
+<td>删除所选元素或指定的子元素，包括整个标签和内容都删除</td>
+</tr>
+<tr>
+<td>empty()</td>
+<td>清空所有内容，保留标签</td>
+</tr>
+</tbody>
+</table>
+<h4 id="44-遍历元素">4.4 、遍历元素</h4>
+<p><strong>each()</strong></p>
+<p>使用方法：</p>
+<p>​	$(selector).each(function(index,element)) ;  遍历元素</p>
+<p>​		参数 function 为遍历时的回调函数</p>
+<p>​		index 为遍历的序列号，从0开始</p>
+<p>​		element是当前的元素</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//可以不需要index、element参数，直接用this获取当前的子元素 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">spreadsheetReport</span><span class="p">.</span><span class="nx">elem_content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">c</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span><span class="nx">element</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="五-jquery-事件">五 、Jquery 事件</h3>
+<h4 id="51-预加载事件-ready">5.1 、预加载事件 ready</h4>
+<p>当前的DOM结构加载完毕后执行，类似于js的load事件，ready事件可以写多个</p>
+<p><strong>使用语法：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//要执行的代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">简写</span><span class="err">：</span>
+</span></span><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="52-绑定事件">5.2 、绑定事件</h4>
+<p>为被选元素添加一个或多个事件处理程序，并规定事件发生时运行的函数</p>
+<h5 id="bind绑定事件"><strong>bind绑定事件</strong></h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">$(selector).bind(eventType[,evevtData],handler(eventObject));
+</span></span></span><span class="line"><span class="cl"><span class="cm">	selector: 被选元素
+</span></span></span><span class="line"><span class="cl"><span class="cm">	eventType:所需要绑定的事件
+</span></span></span><span class="line"><span class="cl"><span class="cm">    [,evevtData]:传递的参数，格式{名：值；名1：值1;...}
+</span></span></span><span class="line"><span class="cl"><span class="cm">    handler(eventObject) 该事件触发执行的函数
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">绑定单个事件</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;元素&#34;</span><span class="p">).</span><span class="nx">blind</span><span class="p">(</span><span class="s2">&#34;事件类型&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">绑定多个事件</span>
+</span></span><span class="line"><span class="cl">    	<span class="mi">1</span><span class="err">、</span><span class="nx">同时为多个事件绑定同一个函数</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;元素&#34;</span><span class="p">).</span><span class="nx">blind</span><span class="p">(</span><span class="s2">&#34;事件类型1，事件类型2，事件类型3...&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">});</span>
+</span></span><span class="line"><span class="cl">		<span class="mi">2</span><span class="err">、</span><span class="nx">为元素绑定多个事件</span><span class="err">，</span><span class="nx">并设置对应的函数</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;元素&#34;</span><span class="p">).</span><span class="nx">blind</span><span class="p">(</span><span class="s2">&#34;事件类型1&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}).</span><span class="nx">blind</span><span class="p">(</span><span class="s2">&#34;事件类型2&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}).</span><span class="nx">blind</span><span class="p">(</span><span class="s2">&#34;事件类型3&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">});</span>
+</span></span><span class="line"><span class="cl">		<span class="mi">3</span><span class="err">、</span><span class="nx">为元素绑定多个事件</span><span class="err">，</span><span class="nx">并设置对应的函数</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;元素&#34;</span><span class="p">).</span><span class="nx">blind</span><span class="p">({}</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;事件类型1&#34;</span><span class="err">：</span><span class="kd">function</span><span class="p">({}),</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;事件类型2&#34;</span><span class="err">：</span><span class="kd">function</span><span class="p">({}),</span>
+</span></span><span class="line"><span class="cl">         <span class="s2">&#34;事件类型3&#34;</span><span class="err">：</span><span class="kd">function</span><span class="p">({})</span>
+</span></span><span class="line"><span class="cl">         <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="直接绑定建议使用"><strong>直接绑定(建议使用)</strong></h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">绑定单个事件
+</span></span><span class="line"><span class="cl">		$(&#34;元素&#34;).事件名(function(){
+</span></span><span class="line"><span class="cl">			//
+</span></span><span class="line"><span class="cl">		});
+</span></span><span class="line"><span class="cl">绑定多个事件
+</span></span><span class="line"><span class="cl">		$(&#34;元素&#34;).事件名1(function(){
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">		}).事件名2(function(){
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">		}).事件名3(function(){
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">		});
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">   <span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">spreadsheetReport</span><span class="p">.</span><span class="nx">elem_content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">c</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="s2">&#34;&lt;h1&gt;click here&lt;/h1&gt;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设置&lt;h1&gt;鼠标样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;h1&#34;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&#34;cursor&#34;</span><span class="p">,</span><span class="s2">&#34;pointer&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;h1&#34;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;你好&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}).</span><span class="nx">mouseover</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;aaaa&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="六-ajax">六 、Ajax</h3>
+<h4 id="61简介">6.1、简介：</h4>
+<p>Ajax 异步局部刷新技术</p>
+<p>​	异步：发送请求后不需要等待服务器返回结果后再去执行其他操作</p>
+<p>局部刷新：发送请求后不会刷新整个页面，只会刷新部分页面</p>
+<h4 id="62jquery-调用ajax方法">6.2、Jquery 调用ajax方法：</h4>
+<p>​	格式：$.ajax({})</p>
+<p>​	参数说明：</p>
+<p>​		type:请求方式 get/post</p>
+<p>​		url：请求地址url</p>
+<p>​		async:是否异步，默认是true表示异步</p>
+<p>​		data:发送到服务器的数据</p>
+<p>​		dataType:预期服务器返回的数据类型</p>
+<p>​		contentType:设置请求头部</p>
+<p>​       success:请求成功时调用此函数</p>
+<p>​       error:请求失败时，调用此函数</p>
+<p>​</p>
+<p>​</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2021-01-24&#32;16:20:42>更新于 2021/01/24</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/juqery/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/juqery/" data-title="Juqery笔记" data-description="介绍juqery的基本语法，作为简单的文档"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>,&nbsp;<a href="/tags/juqery/">juqery</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81/" class="prev" rel="prev" title="javaweb实例-订单管理系统（7）验证密码模块"><i class="fas fa-angle-left fa-fw"></i>javaweb实例-订单管理系统（7）验证密码模块</a>
+      <a href="/posts/linux%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="linux命令使用文档">linux命令使用文档<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

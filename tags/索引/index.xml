@@ -1,0 +1,25 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>索引 - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/%E7%B4%A2%E5%BC%95/</link>
+    <description>索引 - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 12 Apr 2022 22:38:43 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/%E7%B4%A2%E5%BC%95/" rel="self" type="application/rss+xml" /><item>
+  <title>sql优化(0)-表和索引结构</title>
+  <link>https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%960-%E8%A1%A8%E5%92%8C%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/</link>
+  <pubDate>Tue, 12 Apr 2022 22:38:43 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%960-%E8%A1%A8%E5%92%8C%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7" referrerpolicy="no-referrer">
+      </div>表中的数据到底存到了哪里？以什么格式存放的？MySQL以什么方式来访问这些数据？]]></description>
+</item><item>
+  <title>mysql索引介绍</title>
+  <link>https://dingliusheng.github.io/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/</link>
+  <pubDate>Tue, 12 Apr 2022 22:01:54 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://img-blog.csdnimg.cn/img_convert/760088524a3979c0aab9f7033efe6f9e.png" referrerpolicy="no-referrer">
+      </div>索引是什么？为什么能加快sql查询？]]></description>
+</item></channel>
+</rss>

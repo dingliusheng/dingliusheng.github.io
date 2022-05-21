@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>linux - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/linux/</link>
+    <description>linux - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 01 Apr 2021 10:11:51 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+  <title>linux命令使用文档</title>
+  <link>https://dingliusheng.github.io/posts/linux%E5%AD%A6%E4%B9%A0/</link>
+  <pubDate>Thu, 01 Apr 2021 10:11:51 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/linux%E5%AD%A6%E4%B9%A0/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://img1.baidu.com/it/u=1044457215,2379841855&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=651&amp;h=393" referrerpolicy="no-referrer">
+      </div>linux命令使用文档]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>sql优化(2)-单表访问方法 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="访问单表有哪些方法？" />
+<meta name="keywords" content="mysql" /><meta itemprop="name" content="sql优化(2)-单表访问方法">
+<meta itemprop="description" content="访问单表有哪些方法？"><meta itemprop="datePublished" content="2022-05-08T09:34:32+08:00" />
+<meta itemprop="dateModified" content="2022-05-08T09:34:32+08:00" />
+<meta itemprop="wordCount" content="5762"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="mysql优化," /><meta property="og:title" content="sql优化(2)-单表访问方法" />
+<meta property="og:description" content="访问单表有哪些方法？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-08T09:34:32+08:00" />
+<meta property="article:modified_time" content="2022-05-08T09:34:32+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="sql优化(2)-单表访问方法"/>
+<meta name="twitter:description" content="访问单表有哪些方法？"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/" /><link rel="prev" href="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" /><link rel="next" href="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%963-%E8%A1%A8%E8%BF%9E%E6%8E%A5%E5%8E%9F%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "sql优化(2)-单表访问方法",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95\/"
+    },"genre": "posts","keywords": "mysql优化","wordcount":  5762 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95\/","datePublished": "2022-05-08T09:34:32+08:00","dateModified": "2022-05-08T09:34:32+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "访问单表有哪些方法？"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">sql优化(2)-单表访问方法</h1><h2 class="single-subtitle">访问单表有哪些方法？</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>&nbsp;数据库</a></span></div>
+      <div class="post-meta-line"><span title=2022-05-08&#32;09:34:32>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022/05/08" >2022/05/08</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5762 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7"
+    title="访问单表有哪些方法？" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#单表访问方法">单表访问方法</a>
+          <ul>
+            <li><a href="#什么是访问方法">什么是访问方法</a></li>
+            <li><a href="#使用单索引的访问方法">使用单索引的访问方法</a>
+              <ul>
+                <li><a href="#const">const</a></li>
+                <li><a href="#ref">ref</a></li>
+                <li><a href="#ref_or_null">ref_or_null</a></li>
+                <li><a href="#range">range</a></li>
+                <li><a href="#index">index</a></li>
+                <li><a href="#all">all</a></li>
+              </ul>
+            </li>
+            <li><a href="#使用多索引的访问方法">使用多索引的访问方法</a>
+              <ul>
+                <li><a href="#intersection-索引合并">Intersection 索引合并</a></li>
+                <li><a href="#union-索引合并">Union 索引合并</a></li>
+                <li><a href="#sort_uinon-索引合并">Sort_Uinon 索引合并</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h3 id="单表访问方法">单表访问方法</h3>
+<p>MySQL 是怎么执行单表查询的(就是 FROM 子句后面只有一个表)。一般对sql的性能查询可以用explian+要查询的sql语句。<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/a74b25d9811e4c4db56ac6df250358fa.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/a74b25d9811e4c4db56ac6df250358fa.png#pic_center, https://img-blog.csdnimg.cn/a74b25d9811e4c4db56ac6df250358fa.png#pic_center 1.5x, https://img-blog.csdnimg.cn/a74b25d9811e4c4db56ac6df250358fa.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/a74b25d9811e4c4db56ac6df250358fa.png#pic_center"
+    title="在这里插入图片描述" />
+对于type属性就是表的访问方法。</p>
+<h4 id="什么是访问方法">什么是访问方法</h4>
+<p>类比使用各种地图 App 来查找到某个地方的路线， 如果搜索从北京西站到北京站的路线，地图 App 会给出多种路线供选择，其中的花费的钱和时间都不相同，无论采用哪一种路线，最终的目标都是从北京西站到北京站。我们平时所写的那些查询语句本质上只是一种声明式的语法，只是告诉 MySQL 要获取的数据符合哪些规则 ，至于 MySQL 是如何把查询结果搞出来的则是 MySQL 内部解决的事情。</p>
+<p>**把 MySQL 执行查询语句的方式称为访问方法（access method ）或者访问类型 。**同一个查询语句可以使用多种不同的访问方法来执行，虽然最后的查询结果都是一样的，但是不同的执行方式花费的时间成本可能差距甚大。就像是从北京西站到北京站，可以坐公交车去，还可以骑共享单车去，当然也可以走着去。</p>
+<h4 id="使用单索引的访问方法">使用单索引的访问方法</h4>
+<p>先展开说访问方法之前，先用创建一张举例用的demo表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="nf">table_demo</span><span class="w"> </span><span class="p">(</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">id</span><span class="w"> </span><span class="kt">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="w"> </span><span class="kp">AUTO_INCREMENT</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">keyl</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="n">lOO</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key2</span><span class="w"> </span><span class="kt">INT</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key3</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key_partl</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key_part2</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">10</span><span class="n">Q</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key_part3</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">common_field</span><span class="w"> </span><span class="nf">VλRCHAR</span><span class="p">(</span><span class="n">lOO</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">PRIMARY</span><span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">KEY</span><span class="w"> </span><span class="nf">idx_keyl</span><span class="w"> </span><span class="p">(</span><span class="n">keyl</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="nf">uk_key2</span><span class="w"> </span><span class="p">(</span><span class="n">key2</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">key</span><span class="w"> </span><span class="nf">idx_key3</span><span class="w"> </span><span class="p">(</span><span class="n">key3</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">KEY</span><span class="w"> </span><span class="nf">idx_part</span><span class="p">(</span><span class="n">key_partl</span><span class="p">,</span><span class="w"> </span><span class="n">key_part2</span><span class="p">,</span><span class="w"> </span><span class="n">keY_part3</span><span class="p">)</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>为这个 table_demo 表建立1个聚簇索引4个二级索引，分别是：</p>
+<ul>
+<li>为 id 列建立的聚簇索引;</li>
+<li>为 key1 列建立的 idx_key1 二级索引</li>
+<li>为 key2 列建立的 uk_key2 唯一索引</li>
+<li>为 key3 列建立的 idx_key3 二级索引</li>
+<li>为key_part1、key_part2、 key_part3列建立联合索引</li>
+</ul>
+<p>假设往这个表插入10万条随机数据。然后进行下面这些查询操作：</p>
+<h5 id="const">const</h5>
+<p>查询1：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key2</span><span class="o">=</span><span class="mi">1438</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个查询的执行可以分为下面两步：</p>
+<ol>
+<li>使用唯一索引 uk_key2, 在索引对应的 B+ 树索引中，根据 key2列与常数的等值比较条件定位到一条二级索引记录(二级索引会记录包含 key2值和 对应的主键id值 )</li>
+<li>然后再根据该记录的 id 值到聚簇索引（即主键索引）中获取到完整的用户记录</li>
+</ol>
+<p>这种通过主键或者唯一索引列与常数的等值比较来定位条记录是特别快的，所以<strong>把这种通过主键或者非空唯一索号列来定位一条记录的访问方法定义为 const (意思是常数级别的，代价是可以忽略不计的)</strong> 。不过这种 const 访问方法只能在主键列或者唯一二级索引列与一个常数进行等值比较时才有效，如果主键或者唯一二索引的索引列由多个列构成，则只有在索引列中的每个列都与常数进行等值比较时，这个const 访问方法才有效〈这是因为只有在该索引的每个列都采用等值比较时，才可以保证最多只有一条记录符合搜索条件)。</p>
+<p>对于唯一二级索引列来说 在查询列为 NULL 值时，情况比较特殊。比如下面这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key2</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="no">null</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为唯一二级索引列并不限制 NUL 值的数量 所以上述语句可能访问到<strong>多条记录</strong>，也就是说上面这个语句不可以使用 const 访问方法来执行。</p>
+<h5 id="ref">ref</h5>
+<p>查询2：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;abc&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于这个查询，当然可以选择全表扫描的方式来执行，不过也可以使用 idx_keyl 来执行，此时对应的扫描区间就是[ &lsquo;abc&rsquo;, &lsquo;abc&rsquo;] ，这是个单点扫描区间 我们可以定位到 keyl = &lsquo;abc&rsquo; 条件的第一条记录，然后沿辑记录所在的单向链表向后扫描，直到某条记录不符合 key1 = &lsquo;abc&rsquo; 条件为止。由于查询列表是 *，因此针对获取到的每 二级索引记录，都需要根据该记录的 id 值执行回表操作， 到聚簇索引中获取到完整的用户记录后再发送给客户端。</p>
+<p>由于普通二级索引并不限制列值的唯一性，所以位于扫描区间 &lsquo;abc&rsquo; 中的 级索引记录可能有多条， 此时使用二级索引执行查询的代价就取决于该扫描区间中的记录条数。如果该扫描区间中的记录较少 ，则回表操作的代价还是比较低的。<strong>把这种&quot;搜索条件为二级索引列与常数进行得值比较，形成的扫描区为单点扫描区间，采用二级索引来</strong></p>
+<p><strong>执行查询&quot;的访问方法称为 ref 。</strong></p>
+<blockquote>
+<p>对于普通的二级索引来说 ，通过索引列进行等值比较后可能会匹配到多条连续的二级索引记录，而不是像主键或者唯一二级索引那样最多只能匹配一条记录.所以这种 ref 访问方法比 const 差了那么一点。</p>
+<p>另外二级索引列允许存储 NULL 值时，无论是普通的二级索引 ，还是唯一二级索引 ，它们的索引列并不 限制NULL值的数量，所以在执行包 &ldquo;key IS NULL&rdquo; 形式的搜索条件的查询时，最多只能使用 ref 访问方法 而不能使用 const 访问方法。</p>
+</blockquote>
+<p>对于联合索引，按照最左匹配原则，只要最左边连续的列与常数进行等值比较，就可以采用ref 访问方法。如key_part1、key_part2、 key_part3列建成联合索引：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key_part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key_part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key_part2</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key_part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key_part2</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key_part3</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果索引列中最左边连续的列不全部是等值比较的话，它的访问方法就不能称为 ref 了。</p>
+<h5 id="ref_or_null">ref_or_null</h5>
+<p>查询3：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;abc&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key1</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="no">null</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当查询3 使用二级索引而不是全表扫描的方式执行该查询时，对应的扫描区间就是 [NULL, NULL] 以及 [&lsquo;abc&rsquo; &lsquo;abc&rsquo;]  。<strong>像这样不仅需要找出某个二级索引列的值等于某个常数的记录，而且还需要把该列中值为 NULL 的记录也找出来的查询所使用的方法就叫 ref_or_null</strong> 。</p>
+<p>可以看到 ref_or_null 访问方法只是比 ref 访问方法多扫描了一些值为 NULL 二级索引记录。</p>
+<h5 id="range">range</h5>
+<p>查询4：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key2</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">1438</span><span class="p">,</span><span class="mi">1567</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">1</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key2</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在对索引列与某一个常数进府等值比较时，才会使用到前文介绍的几种访问方法 。面对更为复杂的搜索条件如查询2，如果使用uk_key2索引形成的所对应的扫描区间为(1,100)、[1438,1438]、[1567,567]。<strong>把&quot;使用索引执行查询时， 对应 扫描区间为若干个单点扫描区区 或者范围扫描区间&quot;的访问方法称为 range (仅包含一个单点扫描区间的 方法不能</strong> <strong>称为 range 访问方法，扫描区间为(-∞，+∞)的访问方法也不能称为 range 访问方法)。</strong></p>
+<h5 id="index">index</h5>
+<p>查询5：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">key_part2</span><span class="p">,</span><span class="w"> </span><span class="n">keY_part3</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">  </span><span class="n">key_part2</span><span class="o">=</span><span class="s1">&#39;abc&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于查询5，如果使用联合索引idx_key_part ，因为key_part2不是联合索引idx_key_part 的索引列中最左边的列，所以无法通过联合索引形成合适的扫描区间来减少扫描记录数据，从而无法使用ref或者range访问方法来执行这个语句。但是这个查询恰好符合下面这两个条件：</p>
+<ol>
+<li>它的查询列只有  key_part2, keY_part3 这2个列，而联合索引 idx_key_part  的索引值又包含这两个列</li>
+<li>搜索条件中只有key_part2列，这个列也包含在索引idx_key_part中</li>
+</ol>
+<p>也就是说，我们可以直接遍历 idx_key_part 索引的所有二级索引记录， 针对获取到每一条二级索引记录，都判断 key_part2 = &lsquo;abc&rsquo; 条件是否成立。如果成立，就从中读取出 key_part2、key_part3 这2个列的值并将它们发送给客户端。很显然 在这种使用 idx_key_part 索引执行上述查询的情况下，对应 扫锚区间就是(-∞ +∞) 。</p>
+<p>由于二级索引记录比聚簇索记录小得多(聚簇索引记录要存储用户定义的所有列以及隐藏列，而二级索引记录只需要存放索引列和主键) ，而且这个过程不用执行回表操作，所以直接扫描全部的二级索引记录比直接扫描全部的聚簇索引记录的成本要小很多。<strong>把这种扫描全部二级索引记录的访问方法称为 index 方法。</strong></p>
+<p>另外，当通过全表扫描对使用 lnnoDB 存储引擎的表执行查询时, 如果添加了 &ldquo;ORDER BY 主键&rdquo; 的语句，那么该语句在执行时也会被人为地认定未使用的是 index 访问方法 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="all">all</h5>
+<p>最直接的查询行方式就是全表扫描 ，对于 InnoDB 表来说就是直接扫描全部的聚簇索引记录，把这种<strong>使用全表扫描执行查询的访问方法称为 all 访问方法</strong>。</p>
+<h4 id="使用多索引的访问方法">使用多索引的访问方法</h4>
+<p>MySQL 在&quot; 一般情况下&quot;只会为<strong>单个索引生成扫描区间</strong>，但还存在特殊情况 。这些特殊情况下，MySQL 也可能为多个索引生成扫描区间 。把<strong>这种使用多个索引来完查询的执行方法称为index_merge (索引合并)</strong>。 具体的索引合并方法有下面3种</p>
+<h5 id="intersection-索引合并">Intersection 索引合并</h5>
+<p>查询6：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key3</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于查询6 ，除了使用全表扫描的方法，还可以使用 idx_key1索引和idx_key3索引，这分别对应着两个方案：</p>
+<blockquote>
+<p>方案1：使用 idx_key1 索引执行该查询，此时对应的扫描区间就是 [&lsquo;a&rsquo;，&lsquo;a&rsquo;]，可 对于获取到的每条二级索引记录，根据它的 id 值执行回表操作后获取到完整的用户记录，再判断 key3 = &lsquo;b&rsquo; 条件是否成立。对于满足 key1=&lsquo;a&rsquo;的二级索引，其对应的主键值是按大小排序的。</p>
+</blockquote>
+<blockquote>
+<p>方案2：使用 idx_key3 索引执行该查询，此时对应的扫描区间就是 [&lsquo;b&rsquo;，&lsquo;b&rsquo;]，可 对于获取到的每条二级索引记录，根据它的 id 值执行回表操作后获取到完整的用户记录，再判断 key1 = &lsquo;a&rsquo; 条件是否成立。对于满足 key3=&lsquo;b&rsquo;的二级索引，其对应的主键值是按大小排序的。</p>
+</blockquote>
+<p>除了使用单个索引的方案1和方案2，还有以有方案3：</p>
+<blockquote>
+<p>方案3：同时使用 idx_key1 和 idx_key3 执行查询。也就是在idx_key1中扫描key1值 在[&lsquo;a&rsquo;，a&rsquo;] 区间中的二级索引记录，同时在 idx key3 中扫描 key3 值在[&lsquo;b&rsquo;，&lsquo;b&rsquo;] 区间中的二级索引记录，然后从两者的操作结果中找出 主键列值相同的记录（即找它们共有的 id值），然后再据这些共有的主键值执行回表操作 （那些仅在单个扫描区间中包含的 id 值就不需要执行回表操作了 ，这样可能省下很多回表操作带来的开销）</p>
+</blockquote>
+<p>这里的方案3就是所谓的 <code>Intersection  索引合并</code>。Intersection 的中文含义就是&quot;交集&quot;， <strong>Intersection 索引合并指的就是对从不同索引中扫描到的记录的主键值取交集，只为这些主键值执行回表操作 。</strong></p>
+<p>如果使用Intersection 索引合并的方式执行查询，并且每个使用到的索引都是二级索引的话， <strong>则要求从每个索引中获取到的二级索引记录都是按照主键值排序的</strong>（补充一下：如果是主键索引，那么必然是按照主键排序的）。比如在上面的查询中，在 idx_key1 的 [&lsquo;a&rsquo; ，&lsquo;a&rsquo;] 可扫描区间中的二级索引记录都是按照主键值排序的，在 idx_key3 的[&lsquo;b&rsquo;， &lsquo;b&rsquo;]  扫描区间中的二级索引记录也都是按照主键值排序的。</p>
+<blockquote>
+<p>为什么会要求从不同二级索引中获取到的二级索引记录都按照主键值排好序呢？这主要出于两方面的考虑</p>
+<p>1、从两个有序集合中取交集比从两个无序集合中取交集要容易得多:</p>
+<p>2、如果获取到的 id 值是有序排列的，则在根据这些 id 值执行回表操作时就不再是进行单纯的随机I/O（这些 id 值是有序的），从而会提高效率</p>
+</blockquote>
+<p>如果使用索引获取的二级索引记录不是按照主键值排序的话，是不能使用 Intersection  索引合并 的方式执行的。</p>
+<p>例如下面这些查询：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">&gt;</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key3</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key_part1</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="union-索引合并">Union 索引合并</h5>
+<p>查询7：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">&gt;</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key3</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>是否可以仅使用 idx_key1或者 idx_key3索引来执行上述查询吗？以使用 idx_key1索引为例，使用 idx_key1索引执行查询7，对应的扫描区间就是  (-∞,+∞ )  ,相当于要获取所有的 idx_key1索引的每一条记录值，然后执行回表操作。</p>
+<p>在这种情况下，除了全表扫描方法，还可以同时使用 idx_key1和idx key3 索引执行查询。也就是在 idx_key1 扫描 keyl 值位于 [&lsquo;a&rsquo;, &lsquo;a&rsquo;] 区间中的二级索引记录， 同时在idx_key3 中扫描 key3 值位于[&lsquo;b&rsquo;, &lsquo;b&rsquo;] 区问中的二级索引记录，然后根据二级索引记录的 主键值在两者的结果中进行去重，再根据去重后的 id 值执行回表操作，这样重复的 主键值只需回表一次。这方案就是所谓的 Union 索引合并。Union 的中文含义就是&quot;并集&quot;，<strong>Union 索引合并指的就是对从不同索引中扫描到的记录的主键值取并集，为这些主键值执行回表操作</strong> 。</p>
+<p>如果使用 Union 合并的方式执行查询，并且每个使用到的索引都是二级索引的话，<strong>则要求从每个索引中获取到的二级索引记录都是按照主键值排序的</strong>。比如在上面的查询中，在 idx_key1 的 [&lsquo;a&rsquo; ，&lsquo;a&rsquo;] 可扫描区间中的二级索引记录都是按照主键值排序的，在 idx_key3 的[&lsquo;b&rsquo;， &lsquo;b&rsquo;]  扫描区间中的二级索引记录也都是按照主键值排序的。</p>
+<blockquote>
+<p>为什么会要求从不同二级索引中获取到的二级索引记录都按照主键值排好序呢？这主要出于两方面的考虑</p>
+<p>1、从两个有序集合去重比从两个无序集合中执行去重要容易得多:</p>
+<p>2、如果获取到的 id 值是有序排列的，则在根据这些 id 值执行回表操作时就不再是进行单纯的随机I/O（这些 id 值是有序的），从而会提高效率</p>
+</blockquote>
+<p>如果使用索引获取的二级索引记录不是按照主键值排序的话，是不能使用 Intersection  索引合并 的方式执行的。</p>
+<p>例如下面这些查询：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">&gt;</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key3</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key_part1</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="sort_uinon-索引合并">Sort_Uinon 索引合并</h5>
+<p>Union 索引合并的使用条件太苛刻，它必须保证从各个索引中扫描到的记录的主键值是有序的。比如下面这个查询就无法使用 Union 索引合并:</p>
+<p>查询8</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">key1</span><span class="o">&lt;</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key3</span><span class="o">&gt;</span><span class="s1">&#39;z&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>针对查询8，可以使用sort_union 索引合并访问方式，具体步骤如下：</p>
+<ul>
+<li>先根据 key1 &lt;&lsquo;a&rsquo; 条件从 idx_key1 二级索引中获二级索引记录，并将获取到的二级索引记录的主键值进行排序</li>
+<li>再根据 key3 &gt;&lsquo;z&rsquo; 条件从 idx_key3二级索引中获取二级索引记录，并将获取到的二级索引记录的主键值进行排序</li>
+<li>因为这两个二级索引现在的主键值都是排好序的， 剩下的操作就与 Union 索引合并方式一样</li>
+</ul>
+<p>把上面这种&quot;先将从各个索引中扫描到的记录的主键值进行排序，再按照执行 Union 索引合并的方式执行查询&quot;的方式称为Sort-Union 索引合并。很显然， Sort-Union 索引合并比 Union 合并多了一步对二级索引记录的主键值进行排序的过程。</p>
+<blockquote>
+<p>为什么没有 Sort_Intersection 索引合并？</p>
+<p>因为排序是一个很费时的操作，如果and条件使用范围查询，完全可以取其中一个索引，然后进行回表操作即可，进行排序后又取交集再回表，可能性能上不相上下甚至有所降低，但是or操作不一样，无法通过取其中一个索引再回表的操作，另一个条件可能全表都有，此时就要全表扫描，这样性能较差，不如两个索引都查然后排序一下再取并集，这样性能比全表扫描效果要好</p>
+</blockquote>
+<p>索引合并比 Union 合并多了一步对二级索引记录的主键值进行排序的过程。</p>
+<blockquote>
+<p>为什么没有 Sort_Intersection 索引合并？</p>
+<p>因为排序是一个很费时的操作，如果and条件使用范围查询，完全可以取其中一个索引，然后进行回表操作即可，进行排序后又取交集再回表，可能性能上不相上下甚至有所降低，但是or操作不一样，无法通过取其中一个索引再回表的操作，另一个条件可能全表都有，此时就要全表扫描，这样性能较差，不如两个索引都查然后排序一下再取并集，这样性能比全表扫描效果要好</p>
+</blockquote></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-05-08&#32;09:34:32>更新于 2022/05/08</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/" data-title="sql优化(2)-单表访问方法" data-description="访问单表有哪些方法？"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql%E4%BC%98%E5%8C%96/">mysql优化</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" class="prev" rel="prev" title="sql优化(1)-扫描区间和边界条件"><i class="fas fa-angle-left fa-fw"></i>sql优化(1)-扫描区间和边界条件</a>
+      <a href="/posts/sql%E4%BC%98%E5%8C%963-%E8%A1%A8%E8%BF%9E%E6%8E%A5%E5%8E%9F%E7%90%86/" class="next" rel="next" title="sql优化(3)-表连接原理">sql优化(3)-表连接原理<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

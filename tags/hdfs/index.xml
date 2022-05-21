@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>hdfs - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/hdfs/</link>
+    <description>hdfs - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 15 Apr 2021 10:19:14 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/hdfs/" rel="self" type="application/rss+xml" /><item>
+  <title>hdfs学习文档</title>
+  <link>https://dingliusheng.github.io/posts/hdfs/</link>
+  <pubDate>Thu, 15 Apr 2021 10:19:14 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/hdfs/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp5.itc.cn%2Fimages01%2F20210413%2F922ffb02e6e64fe5b55338d595688d4c.png&amp;refer=http%3A%2F%2Fp5.itc.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655563949&amp;t=9a80396a1db7660ccfddf052a987b085" referrerpolicy="no-referrer">
+      </div>全面介绍了hdfs是什么？怎么用？什么原理？]]></description>
+</item></channel>
+</rss>

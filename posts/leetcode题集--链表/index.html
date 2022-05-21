@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>leetcode题集--链表 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="leetcode题集--链表" />
+<meta name="keywords" content="链表" /><meta itemprop="name" content="leetcode题集--链表">
+<meta itemprop="description" content="leetcode题集--链表"><meta itemprop="datePublished" content="2020-12-09T18:49:07+08:00" />
+<meta itemprop="dateModified" content="2020-12-09T18:49:07+08:00" />
+<meta itemprop="wordCount" content="829"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="leetcode,链表,数据结构," /><meta property="og:title" content="leetcode题集--链表" />
+<meta property="og:description" content="leetcode题集--链表" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-12-09T18:49:07+08:00" />
+<meta property="article:modified_time" content="2020-12-09T18:49:07+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="leetcode题集--链表"/>
+<meta name="twitter:description" content="leetcode题集--链表"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8/" /><link rel="prev" href="https://dingliusheng.github.io/posts/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF/" /><link rel="next" href="https://dingliusheng.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B--%E5%9F%BA%E7%A1%80/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "leetcode题集--链表",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8\/"
+    },"genre": "posts","keywords": "leetcode, 链表, 数据结构","wordcount":  829 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8\/","datePublished": "2020-12-09T18:49:07+08:00","dateModified": "2020-12-09T18:49:07+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "leetcode题集--链表"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">leetcode题集--链表</h1><h2 class="single-subtitle">leetcode题集--链表</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/leetcode/"><i class="far fa-folder fa-fw"></i>&nbsp;leetcode</a></span></div>
+      <div class="post-meta-line"><span title=2020-12-09&#32;18:49:07>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020/12/09" >2020/12/09</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 829 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.wangt.cc%2Fdownload%2Fpic_router.php%3Fpath%3Dhttps%3A%2F%2Fwww.wangt.cc%2Fwp-content%2Fuploads%2F2020%2F08%2F20200805_5f2a040689176.png&amp;refer=http%3A%2F%2Fpic.wangt.cc&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655477588&amp;t=1af3593429da5703916119c2faa0760b"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.wangt.cc%2Fdownload%2Fpic_router.php%3Fpath%3Dhttps%3A%2F%2Fwww.wangt.cc%2Fwp-content%2Fuploads%2F2020%2F08%2F20200805_5f2a040689176.png&amp;refer=http%3A%2F%2Fpic.wangt.cc&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655477588&amp;t=1af3593429da5703916119c2faa0760b, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.wangt.cc%2Fdownload%2Fpic_router.php%3Fpath%3Dhttps%3A%2F%2Fwww.wangt.cc%2Fwp-content%2Fuploads%2F2020%2F08%2F20200805_5f2a040689176.png&amp;refer=http%3A%2F%2Fpic.wangt.cc&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655477588&amp;t=1af3593429da5703916119c2faa0760b 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.wangt.cc%2Fdownload%2Fpic_router.php%3Fpath%3Dhttps%3A%2F%2Fwww.wangt.cc%2Fwp-content%2Fuploads%2F2020%2F08%2F20200805_5f2a040689176.png&amp;refer=http%3A%2F%2Fpic.wangt.cc&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655477588&amp;t=1af3593429da5703916119c2faa0760b 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.wangt.cc%2Fdownload%2Fpic_router.php%3Fpath%3Dhttps%3A%2F%2Fwww.wangt.cc%2Fwp-content%2Fuploads%2F2020%2F08%2F20200805_5f2a040689176.png&amp;refer=http%3A%2F%2Fpic.wangt.cc&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655477588&amp;t=1af3593429da5703916119c2faa0760b"
+    title="leetcode题集--链表" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目">题目</a></li>
+    <li><a href="#思路">思路</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#1用list集合">1、用List集合</a></li>
+            <li><a href="#2-用链表长度">2 用链表长度</a></li>
+            <li><a href="#3双指针">3、双指针</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="题目">题目</h2>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20201208184555981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20201208184555981.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20201208184555981.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20201208184555981.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20201208184555981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h2 id="思路">思路</h2>
+<h4 id="1用list集合">1、用List集合</h4>
+<p>先将一个链表headA的节点都存入集合list中，然后遍历另一个链表headB时，比较headB的每个节点是否存在集合list中，如果存在，就返回这个节点；如果不存在，返回空节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ListNode</span> <span class="nf">getIntersectionNode</span><span class="o">(</span><span class="n">ListNode</span> <span class="n">headA</span><span class="o">,</span> <span class="n">ListNode</span> <span class="n">headB</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    	<span class="c1">//链表为空的情况
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="k">if</span><span class="o">(</span><span class="n">headA</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="n">headB</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">           <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">//定义集合list
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="n">ArrayList</span> <span class="n">list</span><span class="o">=</span><span class="k">new</span> <span class="n">ArrayList</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">       <span class="n">ListNode</span> <span class="n">p</span><span class="o">=</span><span class="n">headA</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">//遍历链表headA,将链表节点存入集合list
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="k">while</span><span class="o">(</span><span class="n">p</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">           <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">           <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">//遍历链表headB
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="n">ListNode</span> <span class="n">q</span><span class="o">=</span><span class="n">headB</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="k">while</span><span class="o">(</span><span class="n">q</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">       	   <span class="c1">//比较每个节点是否存在集合list中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>           <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">q</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">               <span class="k">return</span> <span class="n">q</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">           <span class="o">}</span>
+</span></span><span class="line"><span class="cl">           <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/2020120909264085.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/2020120909264085.png#pic_center, https://img-blog.csdnimg.cn/2020120909264085.png#pic_center 1.5x, https://img-blog.csdnimg.cn/2020120909264085.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/2020120909264085.png#pic_center"
+    title="效率比较低" />
+集合的比较消耗比较多，整体效率比较低</p>
+<h4 id="2-用链表长度">2 用链表长度</h4>
+<p>先计算两个链表的长度，让长的链表走多出来的距离，使得链表headA和headB等长。然后headA和headB同步走，如果这时两个节点headA等于headB，返回这个节点；如果遍历完节点也不满足这时的两个节点headA等于headB，则返回空节点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">length</span><span class="o">(</span><span class="n">ListNode</span> <span class="n">p</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">count</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="n">p</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span><span class="o">+=</span><span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ListNode</span> <span class="nf">getIntersectionNode</span><span class="o">(</span><span class="n">ListNode</span> <span class="n">headA</span><span class="o">,</span> <span class="n">ListNode</span> <span class="n">headB</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">       <span class="k">if</span><span class="o">(</span><span class="n">headA</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="n">headB</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">           <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">//统计链表A和链表B的长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">lenA</span> <span class="o">=</span> <span class="n">length</span><span class="o">(</span><span class="n">headA</span><span class="o">),</span> <span class="n">lenB</span> <span class="o">=</span> <span class="n">length</span><span class="o">(</span><span class="n">headB</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="o">(</span><span class="n">lenA</span><span class="o">!=</span><span class="n">lenB</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span><span class="n">lenA</span><span class="o">&gt;</span><span class="n">lenB</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">headA</span><span class="o">=</span><span class="n">headA</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lenA</span><span class="o">--;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span><span class="n">lenA</span><span class="o">&lt;</span><span class="n">lenB</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">headB</span><span class="o">=</span><span class="n">headB</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lenB</span><span class="o">--;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="o">(</span><span class="n">headA</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span> <span class="n">headB</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span><span class="n">headA</span><span class="o">==</span><span class="n">headB</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">headA</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">headA</span><span class="o">=</span><span class="n">headA</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">headB</span><span class="o">=</span><span class="n">headB</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>   
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/202012091826043.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/202012091826043.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/202012091826043.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/202012091826043.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/202012091826043.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="3双指针">3、双指针</h4>
+<p>假设公共链表长度为x,链表headA为lenA,链表headB为lenB，
+两个指针跑完链表A和链表B，
+p 节点：lenA+lenB-X
+q 节点：lenA+lenB-X
+则 p、q指针相遇的那个节点就是公共链表的头节点
+分为三个阶段：（假设链表A更长，指针p、q分别从链表A、B出发）
+阶段一：指针q 走完了链表B，指针p还在走链表B
+阶段二：指针q 从链表A开始走，指针p 走完了链表A
+阶段三：指针q正在走链表A，指针p开始走链表B
+阶段四：指针p、q相遇在公共节点，返回公共节点
+或者 都走完了各自的链表，返回空节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ListNode</span> <span class="nf">getIntersectionNode</span><span class="o">(</span><span class="n">ListNode</span> <span class="n">headA</span><span class="o">,</span> <span class="n">ListNode</span> <span class="n">headB</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ListNode</span> <span class="n">p</span><span class="o">=</span><span class="n">headA</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ListNode</span> <span class="n">q</span><span class="o">=</span><span class="n">headB</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="n">p</span><span class="o">!=</span><span class="n">q</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">           <span class="k">if</span><span class="o">(</span><span class="n">p</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">               <span class="n">p</span><span class="o">=</span><span class="n">headB</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">           <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">               <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">           <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="o">(</span><span class="n">q</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">               <span class="n">q</span><span class="o">=</span><span class="n">headA</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">           <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">               <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">           <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">p</span><span class="o">;</span>      
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20201209184800693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20201209184800693.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20201209184800693.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20201209184800693.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20201209184800693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<p><strong>（参考leetcode题解，本篇文章内容只是个人解题思路总结）</strong></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2020-12-09&#32;18:49:07>更新于 2020/12/09</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8/" data-title="leetcode题集--链表" data-description="leetcode题集--链表"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/leetcode/">leetcode</a>,&nbsp;<a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a>,&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF/" class="prev" rel="prev" title="Echarts定制-中国飞行航线"><i class="fas fa-angle-left fa-fw"></i>Echarts定制-中国飞行航线</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B--%E5%9F%BA%E7%A1%80/" class="next" rel="next" title="计算机网络编程--基础概念">计算机网络编程--基础概念<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

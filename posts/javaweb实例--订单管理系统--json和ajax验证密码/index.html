@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>javaweb实例-订单管理系统（7）验证密码模块 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="javaweb实例-订单管理系统（7）验证密码模块" />
+<meta name="keywords" content="javaweb" /><meta itemprop="name" content="javaweb实例-订单管理系统（7）验证密码模块">
+<meta itemprop="description" content="javaweb实例-订单管理系统（7）验证密码模块"><meta itemprop="datePublished" content="2021-01-12T22:34:43+08:00" />
+<meta itemprop="dateModified" content="2021-01-12T22:34:43+08:00" />
+<meta itemprop="wordCount" content="2182"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="javaweb实例,AJAX,JavaWeb," /><meta property="og:title" content="javaweb实例-订单管理系统（7）验证密码模块" />
+<meta property="og:description" content="javaweb实例-订单管理系统（7）验证密码模块" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-12T22:34:43+08:00" />
+<meta property="article:modified_time" content="2021-01-12T22:34:43+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="javaweb实例-订单管理系统（7）验证密码模块"/>
+<meta name="twitter:description" content="javaweb实例-订单管理系统（7）验证密码模块"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81/" /><link rel="prev" href="https://dingliusheng.github.io/posts/javaweb%E5%AE%9E%E8%B7%B5--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/" /><link rel="next" href="https://dingliusheng.github.io/posts/juqery/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "javaweb实例-订单管理系统（7）验证密码模块",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81\/"
+    },"genre": "posts","keywords": "javaweb实例, AJAX, JavaWeb","wordcount":  2182 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81\/","datePublished": "2021-01-12T22:34:43+08:00","dateModified": "2021-01-12T22:34:43+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "javaweb实例-订单管理系统（7）验证密码模块"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">javaweb实例-订单管理系统（7）验证密码模块</h1><h2 class="single-subtitle">javaweb实例-订单管理系统（7）验证密码模块</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>&nbsp;JavaWeb</a></span></div>
+      <div class="post-meta-line"><span title=2021-01-12&#32;22:34:43>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021/01/12" >2021/01/12</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2182 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190722%2F7b7a1e306dbb4aaead6a1d8c8f603dd2.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655539010&amp;t=71c95783ad2063053b499861cbfb7d42"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190722%2F7b7a1e306dbb4aaead6a1d8c8f603dd2.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655539010&amp;t=71c95783ad2063053b499861cbfb7d42, https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190722%2F7b7a1e306dbb4aaead6a1d8c8f603dd2.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655539010&amp;t=71c95783ad2063053b499861cbfb7d42 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190722%2F7b7a1e306dbb4aaead6a1d8c8f603dd2.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655539010&amp;t=71c95783ad2063053b499861cbfb7d42 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190722%2F7b7a1e306dbb4aaead6a1d8c8f603dd2.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655539010&amp;t=71c95783ad2063053b499861cbfb7d42"
+    title="javaweb实例-订单管理系统（7）验证密码模块" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#web10时代">web1.0时代</a></li>
+        <li><a href="#什么是json">什么是json</a></li>
+        <li><a href="#json格式">json格式</a></li>
+        <li><a href="#什么是ajax">什么是AJAX</a></li>
+        <li><a href="#ajax的使用">AJAX的使用</a></li>
+        <li><a href="#json和ajax实现验证密码">json和AJAX实现验证密码</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h3 id="web10时代">web1.0时代</h3>
+<ul>
+<li>早期网站，登入，如果失败，需要刷新页面，才能重新登入；不点击提交按钮不知道自己密码输错了。</li>
+<li>现在大多数的网站，都是局部刷新，不刷新整个页面的情况下，实现页面更新。</li>
+<li>像百度搜索框，当年输入字进去就会在下方出现提示选项</li>
+</ul>
+<h3 id="什么是json">什么是json</h3>
+<p>JSON(JavaScript Object Notation, JS 对象简谱) 是一种轻量级的数据交换格式。</p>
+<h3 id="json格式">json格式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">,</span><span class="s2">&#34;zhangsan&#34;</span><span class="p">}</span> <span class="c1">//用{} 表示一个对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">[{</span><span class="s2">&#34;name&#34;</span><span class="p">,</span><span class="s2">&#34;张三&#34;</span><span class="p">},{</span><span class="s2">&#34;name&#34;</span><span class="p">,</span><span class="s2">&#34;李四&#34;</span><span class="p">}]</span> <span class="c1">//用[]表示一个数组
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>json字符串：指的是符合json格式要求的js字符串。
+例如：var jsonStr = &ldquo;{StudentID:&lsquo;100&rsquo;,Name:&rsquo;tmac&rsquo;,Hometown:&lsquo;usa&rsquo;}&rdquo;;
+json对象：指符合json格式要求的js对象。
+例如：var jsonObj = { StudentID: &ldquo;100&rdquo;, Name: &ldquo;tmac&rdquo;, Hometown: &ldquo;usa&rdquo; };</p>
+</blockquote>
+<h3 id="什么是ajax">什么是AJAX</h3>
+<p>ajax一个前后台配合的技术，它可以让javascript发送http请求，与后台通信，获取数据和信息。ajax技术的原理是实例化xmlhttp对象，使用此对象与后台通信。jquery将它封装成了一个函数$.ajax()，我们可以直接用这个函数来执行ajax请求。</p>
+<h3 id="ajax的使用">AJAX的使用</h3>
+<p>常用参数：
+1、url 请求地址
+2、type 请求方式，默认是’GET’，常用的还有’POST’
+3、dataType 设置返回的数据格式，常用的是’json’格式，也可以设置为’html’
+4、data 设置发送给服务器的数据
+5、success 设置请求成功后的回调函数
+6、error 设置请求失败后的回调函数
+7、async 设置是否异步，默认值是’true’，表示异步</p>
+<h3 id="json和ajax实现验证密码">json和AJAX实现验证密码</h3>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210112215813565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210112215813565.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210112215813565.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210112215813565.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210112215813565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>首先是jsp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#34;right&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#34;location&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;strong&gt;</span>你现在所在的位置是:<span class="nt">&lt;/strong&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;span&gt;</span>密码修改页面<span class="nt">&lt;/span&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#34;providerAdd&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&#34;userForm&#34;</span> <span class="na">name=</span><span class="s">&#34;userForm&#34;</span> <span class="na">method=</span><span class="s">&#34;post&#34;</span> <span class="na">action=</span><span class="s">&#34;${pageContext.request.contextPath }/jsp/user.do&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name=</span><span class="s">&#34;method&#34;</span> <span class="na">value=</span><span class="s">&#34;savepwd&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="c">&lt;!--div的class 为error是验证错误，ok是验证成功--&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#34;info&#34;</span><span class="nt">&gt;</span>${message}<span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#34;&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&#34;oldPassword&#34;</span><span class="nt">&gt;</span>旧密码：<span class="nt">&lt;/label&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;password&#34;</span> <span class="na">name=</span><span class="s">&#34;oldpassword&#34;</span> <span class="na">id=</span><span class="s">&#34;oldpassword&#34;</span> <span class="na">value=</span><span class="s">&#34;&#34;</span><span class="nt">&gt;</span> 
+</span></span><span class="line"><span class="cl">						<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">&#34;red&#34;</span><span class="nt">&gt;&lt;/font&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;div&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&#34;newPassword&#34;</span><span class="nt">&gt;</span>新密码：<span class="nt">&lt;/label&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;password&#34;</span> <span class="na">name=</span><span class="s">&#34;newpassword&#34;</span> <span class="na">id=</span><span class="s">&#34;newpassword&#34;</span> <span class="na">value=</span><span class="s">&#34;&#34;</span><span class="nt">&gt;</span> 
+</span></span><span class="line"><span class="cl">						<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">&#34;red&#34;</span><span class="nt">&gt;&lt;/font&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;div&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&#34;newPassword&#34;</span><span class="nt">&gt;</span>确认新密码：<span class="nt">&lt;/label&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;password&#34;</span> <span class="na">name=</span><span class="s">&#34;rnewpassword&#34;</span> <span class="na">id=</span><span class="s">&#34;rnewpassword&#34;</span> <span class="na">value=</span><span class="s">&#34;&#34;</span><span class="nt">&gt;</span> 
+</span></span><span class="line"><span class="cl">						<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">&#34;red&#34;</span><span class="nt">&gt;&lt;/font&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#34;providerAddBtn&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="c">&lt;!--&lt;a href=&#34;#&#34;&gt;保存&lt;/a&gt;--&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;button&#34;</span> <span class="na">name=</span><span class="s">&#34;save&#34;</span> <span class="na">id=</span><span class="s">&#34;save&#34;</span> <span class="na">value=</span><span class="s">&#34;保存&#34;</span> <span class="na">class=</span><span class="s">&#34;input-button&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/form&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/div&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/div&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用AJAX 传递数据到后台
+<strong>前提，引入jquery</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&#34;text/javascript&#34;</span> <span class="na">src=</span><span class="s">&#34;${pageContext.request.contextPath }/js/jquery-1.8.3.min.js&#34;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>jsp</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">oldpassword</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">newpassword</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">rnewpassword</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">saveBtn</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">oldpassword</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#oldpassword&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">newpassword</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#newpassword&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rnewpassword</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#rnewpassword&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">saveBtn</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#save&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span><span class="s2">&#34;*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">newpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span><span class="s2">&#34;*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span><span class="s2">&#34;*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//blur 当鼠标移出输入框时触发事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//当输入旧密码后，失去聚焦事件触发，发出url:path+&#34;/jsp/user.do&#34;请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//在servlet 获取method 和 oldpassword 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//接收返回的json
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">oldpassword</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;blur&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">type</span><span class="o">:</span><span class="s2">&#34;GET&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">url</span><span class="o">:</span><span class="nx">path</span><span class="o">+</span><span class="s2">&#34;/jsp/user.do&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">data</span><span class="o">:</span><span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s2">&#34;pwdmodify&#34;</span><span class="p">,</span><span class="nx">oldpassword</span><span class="o">:</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">()},</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">dataType</span><span class="o">:</span><span class="s2">&#34;json&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">success</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span> <span class="o">==</span> <span class="s2">&#34;true&#34;</span><span class="p">){</span><span class="c1">//旧密码正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">validateTip</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;green&#34;</span><span class="p">},</span><span class="nx">imgYes</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span> <span class="o">==</span> <span class="s2">&#34;false&#34;</span><span class="p">){</span><span class="c1">//旧密码输入不正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">validateTip</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">},</span><span class="nx">imgNo</span> <span class="o">+</span> <span class="s2">&#34; 原密码输入不正确&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span> <span class="o">==</span> <span class="s2">&#34;sessionerror&#34;</span><span class="p">){</span><span class="c1">//当前用户session过期，请重新登录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">validateTip</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">},</span><span class="nx">imgNo</span> <span class="o">+</span> <span class="s2">&#34; 当前用户session过期，请重新登录&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span> <span class="o">==</span> <span class="s2">&#34;error&#34;</span><span class="p">){</span><span class="c1">//旧密码输入为空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">validateTip</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">},</span><span class="nx">imgNo</span> <span class="o">+</span> <span class="s2">&#34; 请输入旧密码&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">error</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">				<span class="c1">//请求出错
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="nx">validateTip</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">},</span><span class="nx">imgNo</span> <span class="o">+</span> <span class="s2">&#34; 请求错误&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">});</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//当鼠标移入输入框，聚焦事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;focus&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">validateTip</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;#666666&#34;</span><span class="p">},</span><span class="s2">&#34;* 请输入原密码&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">});</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="nx">newpassword</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;focus&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">validateTip</span><span class="p">(</span><span class="nx">newpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;#666666&#34;</span><span class="p">},</span><span class="s2">&#34;* 密码长度必须是大于6小于20&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;blur&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nx">newpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">newpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">				<span class="o">&amp;&amp;</span> <span class="nx">newpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">().</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">validateTip</span><span class="p">(</span><span class="nx">newpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;green&#34;</span><span class="p">},</span><span class="nx">imgYes</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">validateTip</span><span class="p">(</span><span class="nx">newpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">},</span><span class="nx">imgNo</span> <span class="o">+</span> <span class="s2">&#34; 密码输入不符合规范，请重新输入&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">});</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;focus&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">validateTip</span><span class="p">(</span><span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;#666666&#34;</span><span class="p">},</span><span class="s2">&#34;* 请输入与上面一致的密码&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;blur&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">				<span class="o">&amp;&amp;</span> <span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">().</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="o">&amp;&amp;</span> <span class="nx">newpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span> <span class="o">==</span> <span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">val</span><span class="p">()){</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">validateTip</span><span class="p">(</span><span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;green&#34;</span><span class="p">},</span><span class="nx">imgYes</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">validateTip</span><span class="p">(</span><span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">next</span><span class="p">(),{</span><span class="s2">&#34;color&#34;</span><span class="o">:</span><span class="s2">&#34;red&#34;</span><span class="p">},</span><span class="nx">imgNo</span> <span class="o">+</span> <span class="s2">&#34; 两次密码输入不一致，请重新输入&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">});</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">//点击保存事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">saveBtn</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;click&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">oldpassword</span><span class="p">.</span><span class="nx">blur</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">newpassword</span><span class="p">.</span><span class="nx">blur</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">blur</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nx">oldpassword</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;validateStatus&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&#34;true&#34;</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">			 <span class="nx">newpassword</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;validateStatus&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&amp;&amp;</span> <span class="nx">rnewpassword</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;validateStatus&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&#34;true&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span><span class="p">(</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">&#34;确定要修改密码？&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#userForm&#34;</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">	<span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>servlet</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">//根据method 传的值不同来判断
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="n">String</span> <span class="n">method</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&#34;method&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">if</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&#34;savepwd&#34;</span><span class="o">)&amp;&amp;</span><span class="n">method</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">//点击保存按钮，响应更新密码操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>               <span class="k">this</span><span class="o">.</span><span class="na">updatePwd</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&#34;pwdmodify&#34;</span><span class="o">)&amp;&amp;</span><span class="n">method</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">//鼠标移出原密码的输入框，响应返回原密码和输入的原密码是否相同的结果true or false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>               <span class="k">this</span><span class="o">.</span><span class="na">pwdModify</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>//原密码的比较</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//验证旧密码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">pwdModify</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//获取存在session的用户对象的密码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">UserInfo</span> <span class="n">user</span> <span class="o">=(</span><span class="n">UserInfo</span><span class="o">)</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="n">Constants</span><span class="o">.</span><span class="na">USER_SESSION</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取输入的原密码（AJAX data:{method:&#34;pwdmodify&#34;,oldpassword:oldpassword.val()}返回给服务器的参数）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">String</span> <span class="n">oldpassword</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&#34;oldpassword&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//结果集
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">resultMap</span><span class="o">=</span><span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//session 失效了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">resultMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;result&#34;</span><span class="o">,</span><span class="s">&#34;sessionerror&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">oldpassword</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//输入密码为空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">resultMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;result&#34;</span><span class="o">,</span><span class="s">&#34;error&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">userpassword</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="na">getUserPassword</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="o">(</span><span class="n">oldpassword</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">userpassword</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//旧密码验证正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">resultMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;result&#34;</span><span class="o">,</span><span class="s">&#34;true&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//旧密码验证不正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">resultMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;result&#34;</span><span class="o">,</span><span class="s">&#34;false&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//响应返回json 格式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;Application/json&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">PrintWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//JSONArray 阿里巴巴的json工具类，将结果集输出到页面去
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">writer</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">JSONArray</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">resultMap</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writer</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writer</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2021-01-12&#32;22:34:43>更新于 2021/01/12</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/javaweb%E5%AE%9E%E4%BE%8B--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--json%E5%92%8Cajax%E9%AA%8C%E8%AF%81%E5%AF%86%E7%A0%81/" data-title="javaweb实例-订单管理系统（7）验证密码模块" data-description="javaweb实例-订单管理系统（7）验证密码模块"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/javaweb%E5%AE%9E%E4%BE%8B/">javaweb实例</a>,&nbsp;<a href="/tags/ajax/">AJAX</a>,&nbsp;<a href="/tags/javaweb/">JavaWeb</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/javaweb%E5%AE%9E%E8%B7%B5--%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F--%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/" class="prev" rel="prev" title="javaweb实例-订单管理系统（6）修改密码模块"><i class="fas fa-angle-left fa-fw"></i>javaweb实例-订单管理系统（6）修改密码模块</a>
+      <a href="/posts/juqery/" class="next" rel="next" title="Juqery笔记">Juqery笔记<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

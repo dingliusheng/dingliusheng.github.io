@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>ssesion - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/ssesion/</link>
+    <description>ssesion - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 28 Dec 2020 22:58:31 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/ssesion/" rel="self" type="application/rss+xml" /><item>
+  <title>通过Java源码理解cookie 和 ssesion</title>
+  <link>https://dingliusheng.github.io/posts/%E9%80%9A%E8%BF%87java%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3cookie%E5%92%8Cssesion/</link>
+  <pubDate>Mon, 28 Dec 2020 22:58:31 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/%E9%80%9A%E8%BF%87java%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3cookie%E5%92%8Cssesion/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2F88f8b6d3080d6f067f8cf95094cad4bf.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655525607&amp;t=0b263ddcc25288d9edf354083112e403" referrerpolicy="no-referrer">
+      </div>通过Java源码理解cookie 和 ssesion]]></description>
+</item></channel>
+</rss>

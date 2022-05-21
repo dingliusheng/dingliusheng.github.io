@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>Echarts定制-中国飞行航线 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="Echarts定制-中国飞行航线" />
+<meta name="keywords" content="Echarts" /><meta itemprop="name" content="Echarts定制-中国飞行航线">
+<meta itemprop="description" content="Echarts定制-中国飞行航线"><meta itemprop="datePublished" content="2020-12-07T19:22:13+08:00" />
+<meta itemprop="dateModified" content="2020-12-07T19:22:13+08:00" />
+<meta itemprop="wordCount" content="3168"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="Echarts," /><meta property="og:title" content="Echarts定制-中国飞行航线" />
+<meta property="og:description" content="Echarts定制-中国飞行航线" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-12-07T19:22:13+08:00" />
+<meta property="article:modified_time" content="2020-12-07T19:22:13+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="Echarts定制-中国飞行航线"/>
+<meta name="twitter:description" content="Echarts定制-中国飞行航线"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF/" /><link rel="prev" href="https://dingliusheng.github.io/posts/echarts%E5%AE%9A%E5%88%B65-%E5%A1%94%E5%9E%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE/" /><link rel="next" href="https://dingliusheng.github.io/posts/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Echarts定制-中国飞行航线",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF\/"
+    },"genre": "posts","keywords": "Echarts","wordcount":  3168 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF\/","datePublished": "2020-12-07T19:22:13+08:00","dateModified": "2020-12-07T19:22:13+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "Echarts定制-中国飞行航线"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">Echarts定制-中国飞行航线</h1><h2 class="single-subtitle">Echarts定制-中国飞行航线</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/echarts/"><i class="far fa-folder fa-fw"></i>&nbsp;Echarts</a></span></div>
+      <div class="post-meta-line"><span title=2020-12-07&#32;19:22:13>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020/12/07" >2020/12/07</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3168 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20201207192124448.png"
+    data-srcset="https://img-blog.csdnimg.cn/20201207192124448.png, https://img-blog.csdnimg.cn/20201207192124448.png 1.5x, https://img-blog.csdnimg.cn/20201207192124448.png 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20201207192124448.png"
+    title="Echarts定制-中国飞行航线" /></div><div class="content" id="content"><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">//地标经纬度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">geoCoordMap</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;上海&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">121.4648</span><span class="p">,</span> <span class="mf">31.2891</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;东莞&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.8953</span><span class="p">,</span> <span class="mf">22.901</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;东营&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.7073</span><span class="p">,</span> <span class="mf">37.5513</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;中山&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.4229</span><span class="p">,</span> <span class="mf">22.478</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;临汾&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">111.4783</span><span class="p">,</span> <span class="mf">36.1615</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;临沂&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.3118</span><span class="p">,</span> <span class="mf">35.2936</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;丹东&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">124.541</span><span class="p">,</span> <span class="mf">40.4242</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;丽水&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.5642</span><span class="p">,</span> <span class="mf">28.1854</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;乌鲁木齐&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">87.9236</span><span class="p">,</span> <span class="mf">43.5883</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;佛山&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.8955</span><span class="p">,</span> <span class="mf">23.1097</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;保定&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">115.0488</span><span class="p">,</span> <span class="mf">39.0948</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;兰州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">103.5901</span><span class="p">,</span> <span class="mf">36.3043</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;包头&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">110.3467</span><span class="p">,</span> <span class="mf">41.4899</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;北京&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">116.4551</span><span class="p">,</span> <span class="mf">40.2539</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;北海&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">109.314</span><span class="p">,</span> <span class="mf">21.6211</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;南京&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.8062</span><span class="p">,</span> <span class="mf">31.9208</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;南宁&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">108.479</span><span class="p">,</span> <span class="mf">23.1152</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;南昌&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">116.0046</span><span class="p">,</span> <span class="mf">28.6633</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;南通&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">121.1023</span><span class="p">,</span> <span class="mf">32.1625</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;厦门&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.1689</span><span class="p">,</span> <span class="mf">24.6478</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;台州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">121.1353</span><span class="p">,</span> <span class="mf">28.6688</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;合肥&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.29</span><span class="p">,</span> <span class="mf">32.0581</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;呼和浩特&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">111.4124</span><span class="p">,</span> <span class="mf">40.4901</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;咸阳&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">108.4131</span><span class="p">,</span> <span class="mf">34.8706</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;哈尔滨&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">127.9688</span><span class="p">,</span> <span class="mf">45.368</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;唐山&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.4766</span><span class="p">,</span> <span class="mf">39.6826</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;嘉兴&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.9155</span><span class="p">,</span> <span class="mf">30.6354</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;大同&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.7854</span><span class="p">,</span> <span class="mf">39.8035</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;大连&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">122.2229</span><span class="p">,</span> <span class="mf">39.4409</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;天津&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.4219</span><span class="p">,</span> <span class="mf">39.4189</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;太原&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.3352</span><span class="p">,</span> <span class="mf">37.9413</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;威海&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">121.9482</span><span class="p">,</span> <span class="mf">37.1393</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;宁波&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">121.5967</span><span class="p">,</span> <span class="mf">29.6466</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;宝鸡&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">107.1826</span><span class="p">,</span> <span class="mf">34.3433</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;宿迁&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.5535</span><span class="p">,</span> <span class="mf">33.7775</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;常州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.4543</span><span class="p">,</span> <span class="mf">31.5582</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;广州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.5107</span><span class="p">,</span> <span class="mf">23.2196</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;廊坊&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">116.521</span><span class="p">,</span> <span class="mf">39.0509</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;延安&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">109.1052</span><span class="p">,</span> <span class="mf">36.4252</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;张家口&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">115.1477</span><span class="p">,</span> <span class="mf">40.8527</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;徐州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.5208</span><span class="p">,</span> <span class="mf">34.3268</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;德州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">116.6858</span><span class="p">,</span> <span class="mf">37.2107</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;惠州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.6204</span><span class="p">,</span> <span class="mf">23.1647</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;成都&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">103.9526</span><span class="p">,</span> <span class="mf">30.7617</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;扬州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.4653</span><span class="p">,</span> <span class="mf">32.8162</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;承德&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.5757</span><span class="p">,</span> <span class="mf">41.4075</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;拉萨&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">91.1865</span><span class="p">,</span> <span class="mf">30.1465</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;无锡&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.3442</span><span class="p">,</span> <span class="mf">31.5527</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;日照&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.2786</span><span class="p">,</span> <span class="mf">35.5023</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;昆明&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">102.9199</span><span class="p">,</span> <span class="mf">25.4663</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;杭州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.5313</span><span class="p">,</span> <span class="mf">29.8773</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;枣庄&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.323</span><span class="p">,</span> <span class="mf">34.8926</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;柳州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">109.3799</span><span class="p">,</span> <span class="mf">24.9774</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;株洲&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.5327</span><span class="p">,</span> <span class="mf">27.0319</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;武汉&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.3896</span><span class="p">,</span> <span class="mf">30.6628</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;汕头&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.1692</span><span class="p">,</span> <span class="mf">23.3405</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;江门&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.6318</span><span class="p">,</span> <span class="mf">22.1484</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;沈阳&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">123.1238</span><span class="p">,</span> <span class="mf">42.1216</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;沧州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">116.8286</span><span class="p">,</span> <span class="mf">38.2104</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;河源&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.917</span><span class="p">,</span> <span class="mf">23.9722</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;泉州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.3228</span><span class="p">,</span> <span class="mf">25.1147</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;泰安&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.0264</span><span class="p">,</span> <span class="mf">36.0516</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;泰州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.0586</span><span class="p">,</span> <span class="mf">32.5525</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;济南&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.1582</span><span class="p">,</span> <span class="mf">36.8701</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;济宁&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">116.8286</span><span class="p">,</span> <span class="mf">35.3375</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;海口&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">110.3893</span><span class="p">,</span> <span class="mf">19.8516</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;淄博&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.0371</span><span class="p">,</span> <span class="mf">36.6064</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;淮安&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.927</span><span class="p">,</span> <span class="mf">33.4039</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;深圳&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.5435</span><span class="p">,</span> <span class="mf">22.5439</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;清远&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.9175</span><span class="p">,</span> <span class="mf">24.3292</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;温州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.498</span><span class="p">,</span> <span class="mf">27.8119</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;渭南&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">109.7864</span><span class="p">,</span> <span class="mf">35.0299</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;湖州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.8608</span><span class="p">,</span> <span class="mf">30.7782</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;湘潭&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.5439</span><span class="p">,</span> <span class="mf">27.7075</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;滨州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.8174</span><span class="p">,</span> <span class="mf">37.4963</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;潍坊&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.0918</span><span class="p">,</span> <span class="mf">36.524</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;烟台&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.7397</span><span class="p">,</span> <span class="mf">37.5128</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;玉溪&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">101.9312</span><span class="p">,</span> <span class="mf">23.8898</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;珠海&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.7305</span><span class="p">,</span> <span class="mf">22.1155</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;盐城&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.2234</span><span class="p">,</span> <span class="mf">33.5577</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;盘锦&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">121.9482</span><span class="p">,</span> <span class="mf">41.0449</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;石家庄&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.4995</span><span class="p">,</span> <span class="mf">38.1006</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;福州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.4543</span><span class="p">,</span> <span class="mf">25.9222</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;秦皇岛&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.2126</span><span class="p">,</span> <span class="mf">40.0232</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;绍兴&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.564</span><span class="p">,</span> <span class="mf">29.7565</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;聊城&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">115.9167</span><span class="p">,</span> <span class="mf">36.4032</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;肇庆&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.1265</span><span class="p">,</span> <span class="mf">23.5822</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;舟山&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">122.2559</span><span class="p">,</span> <span class="mf">30.2234</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;苏州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.6519</span><span class="p">,</span> <span class="mf">31.3989</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;莱芜&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">117.6526</span><span class="p">,</span> <span class="mf">36.2714</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;菏泽&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">115.6201</span><span class="p">,</span> <span class="mf">35.2057</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;营口&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">122.4316</span><span class="p">,</span> <span class="mf">40.4297</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;葫芦岛&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.1575</span><span class="p">,</span> <span class="mf">40.578</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;衡水&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">115.8838</span><span class="p">,</span> <span class="mf">37.7161</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;衢州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">118.6853</span><span class="p">,</span> <span class="mf">28.8666</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;西宁&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">101.4038</span><span class="p">,</span> <span class="mf">36.8207</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;西安&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">109.1162</span><span class="p">,</span> <span class="mf">34.2004</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;贵阳&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">106.6992</span><span class="p">,</span> <span class="mf">26.7682</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;连云港&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.1248</span><span class="p">,</span> <span class="mf">34.552</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;邢台&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.8071</span><span class="p">,</span> <span class="mf">37.2821</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;邯郸&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">114.4775</span><span class="p">,</span> <span class="mf">36.535</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;郑州&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.4668</span><span class="p">,</span> <span class="mf">34.6234</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;鄂尔多斯&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">108.9734</span><span class="p">,</span> <span class="mf">39.2487</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;重庆&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">107.7539</span><span class="p">,</span> <span class="mf">30.1904</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;金华&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.0037</span><span class="p">,</span> <span class="mf">29.1028</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;铜川&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">109.0393</span><span class="p">,</span> <span class="mf">35.1947</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;银川&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">106.3586</span><span class="p">,</span> <span class="mf">38.1775</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;镇江&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">119.4763</span><span class="p">,</span> <span class="mf">31.9702</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;长春&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">125.8154</span><span class="p">,</span> <span class="mf">44.2584</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;长沙&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.0823</span><span class="p">,</span> <span class="mf">28.2568</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;长治&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">112.8625</span><span class="p">,</span> <span class="mf">36.4746</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;阳泉&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.4778</span><span class="p">,</span> <span class="mf">38.0951</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;青岛&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">120.4651</span><span class="p">,</span> <span class="mf">36.3373</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;韶关&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mf">113.7964</span><span class="p">,</span> <span class="mf">24.7028</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//飞机路线：起点-终点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">XAData</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;北京&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;上海&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;广州&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;南昌&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}]</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">XNData</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;北京&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;上海&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;广州&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}]</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">YCData</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;北京&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;广州&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;上海&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西安&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;银川&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;西宁&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">value</span><span class="o">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}],</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//飞机图片样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">planePath</span> <span class="o">=</span> <span class="s1">&#39;path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//var planePath = &#39;arrow&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">convertData</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">dataItem</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">fromCoord</span> <span class="o">=</span> <span class="nx">geoCoordMap</span><span class="p">[</span><span class="nx">dataItem</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">toCoord</span> <span class="o">=</span> <span class="nx">geoCoordMap</span><span class="p">[</span><span class="nx">dataItem</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">name</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">fromCoord</span> <span class="o">&amp;&amp;</span> <span class="nx">toCoord</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">fromName</span><span class="o">:</span> <span class="nx">dataItem</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">toName</span><span class="o">:</span> <span class="nx">dataItem</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">coords</span><span class="o">:</span> <span class="p">[</span><span class="nx">fromCoord</span><span class="p">,</span> <span class="nx">toCoord</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">value</span><span class="o">:</span> <span class="nx">dataItem</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">value</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#a6c84c&#39;</span><span class="p">,</span> <span class="s1">&#39;#ffa022&#39;</span><span class="p">,</span> <span class="s1">&#39;#46bee9&#39;</span><span class="p">];</span> <span class="c1">//航线的颜色
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">series</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;西安&#39;</span><span class="p">,</span> <span class="nx">XAData</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;西宁&#39;</span><span class="p">,</span> <span class="nx">XNData</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;银川&#39;</span><span class="p">,</span> <span class="nx">YCData</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">series</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//第一个series 设置飞机路线的特效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//第二个series 设置地图点的特效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//飞机特效设置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">name</span><span class="o">:</span> <span class="nx">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;lines&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">zlevel</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//线两端的标记类型，none,arrow等
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">symbol</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">symbolSize</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">effect</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">show</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">period</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">trailLength</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//选择样式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">symbol</span><span class="o">:</span> <span class="nx">planePath</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//飞机大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">symbolSize</span><span class="o">:</span> <span class="mi">12</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">lineStyle</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">normal</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">color</span><span class="o">:</span> <span class="nx">color</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//飞行路线宽度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">width</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">opacity</span><span class="o">:</span> <span class="mf">0.6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">curveness</span><span class="o">:</span> <span class="mf">0.2</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">data</span><span class="o">:</span> <span class="nx">convertData</span><span class="p">(</span><span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="nx">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; Top3&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//带有涟漪特效动画的散点（气泡）图
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;effectScatter&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//使用地理坐标系
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">coordinateSystem</span><span class="o">:</span> <span class="s1">&#39;geo&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">zlevel</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//涟漪特效相关配置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">rippleEffect</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//设置为波纹效果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">brushType</span><span class="o">:</span> <span class="s1">&#39;stroke&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">label</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">normal</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">show</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">formatter</span><span class="o">:</span> <span class="s1">&#39;{b}&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">symbolSize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">val</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">itemStyle</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">normal</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">color</span><span class="o">:</span> <span class="nx">color</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">emphasis</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">areaColor</span><span class="o">:</span> <span class="s1">&#39;#2B91B7&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">data</span><span class="o">:</span> <span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">dataItem</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">name</span><span class="o">:</span> <span class="nx">dataItem</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">value</span><span class="o">:</span> <span class="nx">geoCoordMap</span><span class="p">[</span><span class="nx">dataItem</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">name</span><span class="p">].</span><span class="nx">concat</span><span class="p">([</span><span class="nx">dataItem</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">value</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">option</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">backgroundColor</span><span class="o">:</span> <span class="s1">&#39;#012248&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">title</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;模拟航线&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">left</span><span class="o">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">textStyle</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#fff&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">tooltip</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">trigger</span><span class="o">:</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">formatter</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">ticket</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">seriesType</span> <span class="o">==</span> <span class="s2">&#34;effectScatter&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="s2">&#34;线路：&#34;</span> <span class="o">+</span> <span class="nx">params</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&#34;&#34;</span> <span class="o">+</span> <span class="nx">params</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">value</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">seriesType</span> <span class="o">==</span> <span class="s2">&#34;lines&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nx">params</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">fromName</span> <span class="o">+</span> <span class="s2">&#34;&gt;&#34;</span> <span class="o">+</span> <span class="nx">params</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">toName</span> <span class="o">+</span> <span class="s2">&#34;&lt;br /&gt;&#34;</span> <span class="o">+</span> <span class="nx">params</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nx">params</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">geo</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">map</span><span class="o">:</span> <span class="s1">&#39;china&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">label</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">emphasis</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">show</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#fff&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">roam</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">itemStyle</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">normal</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//修改地图颜色
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">areaColor</span><span class="o">:</span> <span class="s1">&#39;rgba(20,41,87,0.7)&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">borderColor</span><span class="o">:</span> <span class="s1">&#39;#195BB9&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">borderWidth</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">emphasis</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">areaColor</span><span class="o">:</span> <span class="s1">&#39;#2B91B7&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">series</span><span class="o">:</span> <span class="nx">series</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2020-12-07&#32;19:22:13>更新于 2020/12/07</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/echarts%E5%AE%9A%E5%88%B66-%E4%B8%AD%E5%9B%BD%E9%A3%9E%E8%A1%8C%E8%88%AA%E7%BA%BF/" data-title="Echarts定制-中国飞行航线" data-description="Echarts定制-中国飞行航线"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/echarts/">Echarts</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/echarts%E5%AE%9A%E5%88%B65-%E5%A1%94%E5%9E%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE/" class="prev" rel="prev" title="Echarts定制-塔形雷达图"><i class="fas fa-angle-left fa-fw"></i>Echarts定制-塔形雷达图</a>
+      <a href="/posts/leetcode%E9%A2%98%E9%9B%86--%E9%93%BE%E8%A1%A8/" class="next" rel="next" title="leetcode题集--链表">leetcode题集--链表<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

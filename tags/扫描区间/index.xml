@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>扫描区间 - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4/</link>
+    <description>扫描区间 - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 29 Apr 2022 21:29:08 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4/" rel="self" type="application/rss+xml" /><item>
+  <title>sql优化(1)-扫描区间和边界条件</title>
+  <link>https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/</link>
+  <pubDate>Fri, 29 Apr 2022 21:29:08 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7" referrerpolicy="no-referrer">
+      </div>如何判断一条sql的大致数据量？]]></description>
+</item></channel>
+</rss>

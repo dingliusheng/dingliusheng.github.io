@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>mysql索引介绍 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="索引是什么？为什么能加快sql查询？" />
+<meta name="keywords" content="sql索引" /><meta itemprop="name" content="mysql索引介绍">
+<meta itemprop="description" content="索引是什么？为什么能加快sql查询？"><meta itemprop="datePublished" content="2022-04-12T22:01:54+08:00" />
+<meta itemprop="dateModified" content="2022-04-12T22:01:54+08:00" />
+<meta itemprop="wordCount" content="9700"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="sql,索引,数据库,mysql," /><meta property="og:title" content="mysql索引介绍" />
+<meta property="og:description" content="索引是什么？为什么能加快sql查询？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-12T22:01:54+08:00" />
+<meta property="article:modified_time" content="2022-04-12T22:01:54+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="mysql索引介绍"/>
+<meta name="twitter:description" content="索引是什么？为什么能加快sql查询？"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/" /><link rel="prev" href="https://dingliusheng.github.io/posts/sql%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/" /><link rel="next" href="https://dingliusheng.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "mysql索引介绍",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D\/"
+    },"genre": "posts","keywords": "sql, 索引, 数据库, mysql","wordcount":  9700 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D\/","datePublished": "2022-04-12T22:01:54+08:00","dateModified": "2022-04-12T22:01:54+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "索引是什么？为什么能加快sql查询？"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">mysql索引介绍</h1><h2 class="single-subtitle">索引是什么？为什么能加快sql查询？</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>&nbsp;数据库</a></span></div>
+      <div class="post-meta-line"><span title=2022-04-12&#32;22:01:54>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022/04/12" >2022/04/12</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9700 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 20 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/img_convert/760088524a3979c0aab9f7033efe6f9e.png"
+    data-srcset="https://img-blog.csdnimg.cn/img_convert/760088524a3979c0aab9f7033efe6f9e.png, https://img-blog.csdnimg.cn/img_convert/760088524a3979c0aab9f7033efe6f9e.png 1.5x, https://img-blog.csdnimg.cn/img_convert/760088524a3979c0aab9f7033efe6f9e.png 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/img_convert/760088524a3979c0aab9f7033efe6f9e.png"
+    title="索引是什么？为什么能加快sql查询？" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#索引概述">索引概述</a>
+      <ul>
+        <li><a href="#一计算机存储原理">一、计算机存储原理</a></li>
+        <li><a href="#二局部性原理与磁盘预读">二、局部性原理与磁盘预读</a></li>
+        <li><a href="#三什么是索引">三、什么是索引</a></li>
+        <li><a href="#四索引的数据结构">四、索引的数据结构</a>
+          <ul>
+            <li><a href="#21二叉树">2.1、二叉树</a></li>
+            <li><a href="#22红黑树">2.2、红黑树</a></li>
+            <li><a href="#23b-树">2.3、B-树</a></li>
+            <li><a href="#24b树">2.4、B+树</a></li>
+            <li><a href="#25hash表">2.5、hash表</a></li>
+          </ul>
+        </li>
+        <li><a href="#五mysql索引拓展">五、mysql索引拓展</a>
+          <ul>
+            <li><a href="#41主键索引和非主键索引的区别">4.1、主键索引和非主键索引的区别</a></li>
+            <li><a href="#42联合索引的最左前缀原则">4.2、联合索引的最左前缀原则</a></li>
+            <li><a href="#43唯一索引和唯一约束的区别">4.3、唯一索引和唯一约束的区别</a></li>
+            <li><a href="#44索引失效场景">4.4、索引失效场景</a></li>
+          </ul>
+        </li>
+        <li><a href="#六参考资料">六、参考资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="索引概述">索引概述</h2>
+<h3 id="一计算机存储原理">一、计算机存储原理</h3>
+<p>在理解索引这个概念之前，我们需要先了解一下计算机存储方面的基本知识。</p>
+<p>我们知道数据持久化之后存在了数据库里,那么我现在的问题是数据库将数据存在了哪里？答案显然是存在了计算机的存储设备上。就个人电脑而言，数据被存在了我们的电脑存储设备上。</p>
+<p>计算机的存储设备有很多种，其中速度越快的越贵，因此容量也往往越小例如我们的RAM随机存储器，也就是大家平时说的内存条，速度慢的就相对便宜例如我们的硬盘。而我们的数据往往都是被存在最慢的存储设备硬盘上的，因为存在硬盘当中的数据在断电之后依然存在。</p>
+<p>计算机的存储介质有多种，例如硬盘，例如高速缓存，不同的存储介质的数据读取速度是不一样的。例如，像RAM这样的易失性存储设备的读写操作就非常快，访问其中的数据几乎没有延迟性。</p>
+<p>由于这个原因，计算机操作系统的设计是这样的：数据永远不会直接从硬盘等机械设备中取出，而是首先从硬盘转移到更快的存储设备，例如RAM，从RAM当中应用程序直接按需获取数据。</p>
+<p>计算机内部的机械硬盘是下面这样的：
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/2ec6d9adc667447ca15b823b79d28c59.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_16,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/2ec6d9adc667447ca15b823b79d28c59.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_16%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/2ec6d9adc667447ca15b823b79d28c59.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_16%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/2ec6d9adc667447ca15b823b79d28c59.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_16%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/2ec6d9adc667447ca15b823b79d28c59.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_16,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>在一个典型的硬盘驱动器中可以有很多个盘片，“盘片”在外观上非常类似于一个光盘（但具有很高的存储容量）。盘片又被磁道分条，同时一个盘片又可以分为扇区。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/182482196a124f378b0022ef5c3baa2a.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/182482196a124f378b0022ef5c3baa2a.png#pic_center, https://img-blog.csdnimg.cn/182482196a124f378b0022ef5c3baa2a.png#pic_center 1.5x, https://img-blog.csdnimg.cn/182482196a124f378b0022ef5c3baa2a.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/182482196a124f378b0022ef5c3baa2a.png#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>要获取数据，“盘片”需要由主轴进行旋转。大多数硬盘供应商都提到了主轴旋转的速度，例如，7200转/分和15000转/分。磁盘中的数据总是以扇区的固定大小倍数表示。因此，如果要从硬盘访问数据，需要执行以下步骤，这也是性能开销的主要来源。</p>
+<p>1、当需要从磁盘读取数据时，系统会将数据逻辑地址传给磁盘，磁盘的控制电路按照寻址逻辑将逻辑地址翻译成物理地址，即确定要读的数据在哪个磁道，哪个扇区。为了读取这个扇区的数据，需要将磁头放到这个扇区上方，为了实现这一点，磁头需要移动对准相应磁道，这个过程叫做寻道，所耗费时间叫做寻道时间。</p>
+<p>2、然后磁盘旋转将目标扇区旋转到磁头下，这个过程耗费的时间叫做旋转时间。</p>
+<p>3、从扇区开始到扇区结束获取整个数据。</p>
+<p>如果数据恰好分布在连续扇区上，那么它将提高获取数据的性能。因为主轴和磁头本身不需要移动/旋转，也就没有太多开销，但是大多数时候这种开销是存在的。</p>
+<p>由于存在这种开销，我们不能直接从硬盘获取数据。RAM的存储器高性能的背后的主要原因是它没有像硬盘那样的机械运动部件。但是尽管RAM的性能很高，但它当中的数据却不会用作永久存储，断电之后就会消失，重新启动之后就什么都没有了，这是我们需要硬盘来进行持久化的原因所在。数据库中的数据毫无疑问就是存放在硬盘当中的，因此访问数据库中的数据不可避免的会经历磁盘操作的开销。</p>
+<h3 id="二局部性原理与磁盘预读">二、局部性原理与磁盘预读</h3>
+<p>由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘I/O。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理：</p>
+<p>当一个数据被用到时，其附近的数据也通常会马上被使用。</p>
+<p>程序运行期间所需要的数据通常比较集中。</p>
+<p>由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高I/O效率。</p>
+<p>预读的长度一般为页（page）的整倍数。页是计算机管理存储器的逻辑块，硬件及操作系统往往将主存和磁盘存储区分割为连续的大小相等的块，每个存储块称为一页（在许多操作系统中，页得大小通常为4k），主存和磁盘以页为单位交换数据。当程序要读取的数据不在主存中时，会触发一个缺页异常，此时系统会向磁盘发出读盘信号，磁盘会找到数据的起始位置并向后连续读取一页或几页载入内存中，然后异常返回，程序继续运行。</p>
+<h3 id="三什么是索引">三、什么是索引</h3>
+<p>要想搞懂索引的本质是什么，就要先看下没有索引Msql会怎样工作？mysql数据是存储在磁盘文件中，但是<strong>磁盘的数据是随机分布的</strong>，而且数据本身写入就有先有后或删除修改，原地址在存入新的数据，所以数据在磁盘的保存不一定会落在同一个磁道上，即使在同一个磁道上也不一定就是有序的。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/bf6c51b424c741b5b16500ab809148f7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/bf6c51b424c741b5b16500ab809148f7.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_19%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/bf6c51b424c741b5b16500ab809148f7.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_19%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/bf6c51b424c741b5b16500ab809148f7.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_19%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/bf6c51b424c741b5b16500ab809148f7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>如上图所示，那么对于一条sql查询语句来说，就是要对磁盘文件进行扫描读取，<strong>一次读取就是一次IO操作</strong>，假设一张表有1000万的数据，一个select语句where col=998，那么就是要<strong>逐行逐行扫描磁盘文件</strong>直到读到该数据为止。很显然这种方式效率是极低的。那我们的目的就是要减少数据的查找次数，也就是减少IO，索引就帮我们解决这个问题。</p>
+<p>那么索引是什么？索引就是帮助MySQL高效获取数据的<strong>排好序</strong>的<strong>数据结构</strong>。</p>
+<h3 id="四索引的数据结构">四、索引的数据结构</h3>
+<h4 id="21二叉树">2.1、二叉树</h4>
+<p>搜索二叉树是按顺序排列的数据结构，如果用二叉树作为索引的数据结构，以下图为例：给列2添加索引就生成右边的二叉树。如果查询语句【select 列1，列2  from  T  where 列2=31】全表扫描查询，总共要访问7次，每一次访问都需要进行磁盘I / O操作，总共进行7次磁盘I / O；如果按照二叉树索引，总共访问3次节点，总共进行3次磁盘I / O。</p>
+<blockquote>
+<p>注意：磁盘IO是机械方法读取，读写速度较内存慢几个数量级，数据查询大部分时间消耗主要是在磁盘读写数据这个步骤，有效减少磁盘IO，是优化数据查询的最直接的方式。</p>
+</blockquote>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/026b944b311543c0b28d2dd5a70fb86f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/026b944b311543c0b28d2dd5a70fb86f.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/026b944b311543c0b28d2dd5a70fb86f.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/026b944b311543c0b28d2dd5a70fb86f.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/026b944b311543c0b28d2dd5a70fb86f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>给列1添加索引生成右边的二叉树。查询语句【select 列1，列2  from  T  where 列1=7】，如果全表扫描，则访问7次，每一次访问都需要进行磁盘I / O操作，总共进行7次磁盘I / O；如果按照二叉树索引，总共访问7次，进行7次磁盘I / O。这时的索引的效率和不加索引全表扫描的效率是一样的。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/513621dd19234fa6bb3ebe147da382ae.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/513621dd19234fa6bb3ebe147da382ae.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/513621dd19234fa6bb3ebe147da382ae.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/513621dd19234fa6bb3ebe147da382ae.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/513621dd19234fa6bb3ebe147da382ae.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>对比这两种情况，可以知道如果二叉树的高度越小，那么对比次数也会越少，执行IO也会越少。</p>
+<h4 id="22红黑树">2.2、红黑树</h4>
+<p>红黑树就是在二叉树的基础上进一步优化，减少树的高度（红黑树是平衡树，可以调整树的高度）。进一步减少IO次数。例如：给列1添加红黑树索引。查询语句【select 列1，列2  from  T  where 列1=7】，如果全表扫描，则访问7次，每一次比较都需要进行磁盘I / O操作，总共进行7次磁盘I / O；如果按照红黑树索引，总共访问3次，总共进行3次磁盘I / O。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/17d2d2ed6e0a4414b95454b35a4fd270.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/17d2d2ed6e0a4414b95454b35a4fd270.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/17d2d2ed6e0a4414b95454b35a4fd270.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/17d2d2ed6e0a4414b95454b35a4fd270.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/17d2d2ed6e0a4414b95454b35a4fd270.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>但有一个问题就是：当数据量变为一百万行，红黑树的高度是20，查询性能还是比较差</p>
+<h4 id="23b-树">2.3、B-树</h4>
+<p>B-树（称为B树）是多阶树，一个节点可以存储多个索引值。还是上面的例子：给列1添加B-树索引（4阶树）。查询语句【select 列1，列2  from  T  where 列1=7】，如果全表扫描，则访问7个节点，每一次访问都需要进行磁盘I / O操作，总共进行7次磁盘I / O；如果B-树索引，总共访问2个节点，总共进行2次磁盘I / O。</p>
+<p>B-树：增加了节点存储的关键字，原先二叉树结构是一个节点一个关键字，B-树是一个节点可以多个关键字。如果都是3层高度，二叉树能存7个关键字。mysql默认的一个节点16K的大小，可以通过show global status like &ldquo;Innodb_page_size&rdquo; 看到该值是16384，每次IO读取16K大小的数据，假设索引加指针加数据大小1k(B-树每个索引是带数据的),则 可存储16 X 16 X 16=4096 大约4000个关键字。</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/33a064b9e6ec4ea49662add4bac70c54.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/33a064b9e6ec4ea49662add4bac70c54.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/33a064b9e6ec4ea49662add4bac70c54.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/33a064b9e6ec4ea49662add4bac70c54.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/33a064b9e6ec4ea49662add4bac70c54.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="24b树">2.4、B+树</h4>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/9c6f5738729a47e68058e9ec0e3a6b6f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/9c6f5738729a47e68058e9ec0e3a6b6f.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/9c6f5738729a47e68058e9ec0e3a6b6f.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/9c6f5738729a47e68058e9ec0e3a6b6f.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/9c6f5738729a47e68058e9ec0e3a6b6f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>使用B树存放数据之后会在每个对应的索引列的值上存放上对应的数据。而B+树则不同，它只会在叶子节点上面挂载数据，非叶子节点不会存放数据，数据只会存在叶子节点上面，非叶子节点只存放索引列的数据。B+树是叶子节点之间也有双向指针连接，提高区间范围性能，范围查找。</p>
+<p>mysql默认的一个节点16K的大小，可以通过show global status like &ldquo;Innodb_page_size&rdquo; 看到该值是16384，每次IO读取16K大小的数据，以索引列是bigInt类型为例，大小8字节，每一条数据还有一个指向下一层的指针6字节，16384/（8+6）=1170，一个节点就大约可以存1170条数据。</p>
+<p>以一个层高为3的树为例，叶子节点存放数据之后大小1KB，那么这个树可以存放 1170 *1170 *16 =21,902,400,大约2200万条数据。所以在这种千万级的表中通过主键索引查找一条数据，最多3次IO就可以找到一条数据。而很多时候树的根节点基本都是在内存中，所以多数时候只需要2次IO。</p>
+<p>B+树设计的巧妙之处，非叶子节点只放索引不放数据，可以让16kb大小的节点存储更多的索引，使得树更低。而且B+树可以更好的支持范围查询，比如要查询大于20的数据，可以很快的通过B+索引树定位到20所在的节点，然后可以根据其排好序的特点一直往右边拿数据，拿到下一页也可以根据指针快速定位到下一页的数据，顺藤摸瓜下去快速拿到所有大于20的数据。提高区间的访问性正是这个意思，而B树是没有这个指针的，跨页的时候又得从根节点往下找。</p>
+<h4 id="25hash表">2.5、hash表</h4>
+<p>哈希索引基于哈希表实现，只有匹配所有列的查询才有效。对于每一行数据，存储引擎都会对所有索引列计算一个哈希码，哈希码是一个较小的值，不同键值的行计算出的哈希码也不一样。哈希索引将所有的哈希码存储在索引中，同时保存指向每个数据行的指针。</p>
+<p>还是以前面的例子说明。对列2创建hash索引，按照对5取余数的方法计算每行的hash值，如：25%5=0,hash值对应位0。</p>
+<p>则在 hash表（就是一个数组）根据前面计算的hash值作为下标找到arrays[0]，存储指向表第一行的指针。以此类推：表第二行列2值为12，12%5=2，则arrary[2]存储第二行指针。当发生hash值相同，但arrary数组对应位置存入其他行指针，这就需要把对应行的指针数据存入hash表链接的链表中。</p>
+<p>如果哈希冲突比较少的情况，只需要通过计算hash值，通过下标找到对应的表数据行指针（数据存储地址），只需要一次磁盘IO，例如：【select * from T where 列2=31】，直接可以从array[1]获取指向第7行的指针并进行1次磁盘IO，获取这一行的数据。哈希冲突比较多的情况，相同hash值的数据行指针依次存到链表中，例如：【select * from T where 列2=22】，hash值为2 ，有3个列2值的hash值为2，那么就需要依次从磁盘获取 第2行、第3行、第5行的数据进行比较，总共3次磁盘IO。所以hash冲突比较影响hash索引查询性能，尽量减少hash冲突。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/96cc2cfb3de540d3826b394880d3d3c6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/96cc2cfb3de540d3826b394880d3d3c6.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/96cc2cfb3de540d3826b394880d3d3c6.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/96cc2cfb3de540d3826b394880d3d3c6.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/96cc2cfb3de540d3826b394880d3d3c6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<h3 id="五mysql索引拓展">五、mysql索引拓展</h3>
+<h4 id="41主键索引和非主键索引的区别">4.1、主键索引和非主键索引的区别</h4>
+<p>基于MySQL的InnoDB引擎，要求表必须包含一个主键列的：如果在创建表的时候创建了主键，那么主键索引值就是这个主键列值；如果没有创建主键但创建了唯一键（唯一约束的列），那么主键索引值就是唯一键；如果都没有，就会系统默认生成6字节的rowid作为主键（用户不可见，rowid 随行记录的写入而递增）。主键索引生成的B+树的叶子节点存放整行的数据，非主键索引生成的B+树的叶子节点存放主键的值。</p>
+<p>例如：下面这个表,且ID是主键。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/78a54be96148477da352bbd796438b88.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/78a54be96148477da352bbd796438b88.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_19%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/78a54be96148477da352bbd796438b88.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_19%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/78a54be96148477da352bbd796438b88.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_19%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/78a54be96148477da352bbd796438b88.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>主键索引和非主键索引的示意图如下：
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/2f2560f60a1b40a999a042307090d219.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/2f2560f60a1b40a999a042307090d219.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/2f2560f60a1b40a999a042307090d219.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/2f2560f60a1b40a999a042307090d219.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/2f2560f60a1b40a999a042307090d219.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>主键索引和非主键索引的区别是：非主键索引的叶子节点存放的是<strong>主键的值</strong>，而主键索引的叶子节点存放的是<strong>整行数据</strong>，其中非主键索引也被称为<strong>二级索引</strong>（非聚簇索引：是指数据和索引是分开存放），而主键索引也被称为<strong>聚簇索引</strong>。(聚簇索引：是指数据和索引是一块存放)</p>
+<p>根据这两种结构进行下查询，看看他们在查询上有什么区别。</p>
+<p>1、如果查询语句是 select * from table where ID = 100,即主键查询的方式，则只需要搜索 ID 这棵 B+树。</p>
+<p>2、如果查询语句是 select * from table where k = 1，即非主键的查询方式，则先搜索k索引树，得到ID=100,再到ID索引树搜索一次，这个过程也被称为<strong>回表</strong>。(回表就是先通过数据库索引扫描出数据所在的行，再通过行主键id取出索引中未提供的数据，即基于非主键索引的查询需要多扫描一棵索引树)</p>
+<p>3、如果查询语句  select id,k from table where k = 1,根据k可直接查到id,k两个列的值，直接返回结果即可，不需要从主键索引查询任何数据，此时叫做<strong>索引覆盖</strong>。（索引是高效找到行的一个方法，当能通过检索索引就可以读取想要的数据，那就不需要再到数据表中读取行了。如果一个索引包含了（或覆盖了）满足查询语句中字段与条件的数据就叫 做索引覆盖）</p>
+<p><strong>问：为什么推荐使用整型的自增主键：</strong></p>
+<blockquote>
+<p>1、如果表使用自增主键
+那么每次插入新的记录，记录就会顺序添加到当前索引节点的后续位置，主键的顺序按照数据记录的插入顺序排列，自动有序。当一页写满，就会自动开辟一个新的页(与B+树结构相关，如果是主键是递增的话，每次插入新的记录时，按大小是最大的，就会匹配到B+树的最右边的节点插入，不会影响左边的节点，减少了叶子节点的移动)</p>
+<p>2、如果使用非自增主键（如果身份证号或学号等）
+由于每次插入主键的值近似于随机，因此每次新纪录都要被插到现有索引页得中间某个位置，此时MySQL不得不为了将新记录插到合适位置而移动数据，甚至目标页面可能已经被回写到磁盘上而从缓存中清掉，此时又要从磁盘上读回来，这增加了很多开销，同时频繁的移动、分页操作造成了大量的碎片，得到了不够紧凑的索引结构，后续不得不通过OPTIMIZE TABLE来重建表并优化填充页面。</p>
+</blockquote>
+<p><strong>问：为什么非主键索引结构叶子结点存储的是主键值：</strong></p>
+<blockquote>
+<p>减少了出现行移动或者数据页分裂时二级索引的维护工作（当数据需要更新的时候，二级索引不需要修改，只需要修改聚簇索引，一个表只能有一个聚簇索引，其他的都是二级索引，这样只需要修改聚簇索引就可以了，不需要重新构建二级索引）</p>
+<p>聚簇索引也称为主键索引，其索引树的叶子节点中存的是整行数据，表中行的物理顺序与键值的逻辑（索引）顺序相同。一个表只能包含一个聚集索引。因为索引（目录）只能按照一种方法进行排序。</p>
+<p>非聚簇索引（普通索引）的叶子节点内容是主键的值。在 InnoDB 里，非主键索引也被称为二级索引（secondary index）。</p>
+</blockquote>
+<h4 id="42联合索引的最左前缀原则">4.2、联合索引的最左前缀原则</h4>
+<p>通常我们在建立联合索引的时候，也就是对多个字段建立索引，相信建立过索引的同学们会发现，无论是oralce还是mysql都会让我们选择索引的顺序，比如我们想在a,b,c三个字段上建立一个联合索引，我们可以选择自己想要的优先级，a、b、c,或者是b、a、c 或者是c、a、b等顺序。为什么数据库会让我们选择字段的顺序呢？不都是三个字段的联合索引么？这里就引出了数据库索引的最左前缀原理。</p>
+<p>先举一个例子：如下图有这么一张表，列a是自增主键，除e为varchar其余为int类型，并创建了一个联合索引idx_t1_bcd(b,c,d)。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/b252e8fb0cdb430db1b32041bf2bfa4c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_13,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/b252e8fb0cdb430db1b32041bf2bfa4c.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_13%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/b252e8fb0cdb430db1b32041bf2bfa4c.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_13%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/b252e8fb0cdb430db1b32041bf2bfa4c.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_13%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/b252e8fb0cdb430db1b32041bf2bfa4c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_13,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>b、c、d三列作为联合索引，在B+树上的结构正如下图所示。对 b、c、d列 按照先后顺序进行排序：</p>
+<p>（1，1，4）、（1，5，4）、（5，3，6）、（12，14，3）、（13，12，4）、
+（13，16，1）、（13，16，5）
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/4e14695612a64e3a8a982d9609c4cfd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/4e14695612a64e3a8a982d9609c4cfd0.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/4e14695612a64e3a8a982d9609c4cfd0.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/4e14695612a64e3a8a982d9609c4cfd0.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/4e14695612a64e3a8a982d9609c4cfd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>之所以会有最左前缀匹配原则和联合索引的索引构建方式及存储结构是有关系的。</p>
+<p>首先我们创建的<code>index_bcd(b,c,d)</code>索引，相当于创建了(b)、（b、c）（b、c、d）三个索引，看完下面你就知道为什么相当于创建了三个索引。</p>
+<p>我们看，联合索引是首先使用多列索引的第一列构建的索引树，用上面idx_t1_bcd(b,c,d)的例子就是优先使用b列构建，当b列值相等时再以c列排序，若c列的值也相等则以d列排序。我们可以取出索引树的叶子节点看一下。
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/b9ba19fd551e4f03bbbad99dcfcd5a26.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/b9ba19fd551e4f03bbbad99dcfcd5a26.png#pic_center, https://img-blog.csdnimg.cn/b9ba19fd551e4f03bbbad99dcfcd5a26.png#pic_center 1.5x, https://img-blog.csdnimg.cn/b9ba19fd551e4f03bbbad99dcfcd5a26.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/b9ba19fd551e4f03bbbad99dcfcd5a26.png#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>索引的第一列也就是b列可以说是从左到右单调递增的，但我们看c列和d列并没有这个特性，它们只能在b列值相等的情况下这个小范围内递增，如第一叶子节点的第1、2个元素和第二个叶子节点的后三个元素。  由于联合索引是上述那样的索引构建方式及存储结构，所以联合索引只能从多列索引的第一列开始查找。</p>
+<p>1、查询语句是 select * from table where  b=12  ，联合索引（b,c,d）有没有生效？生效了，因为 对应联合索引生成的B+树来说，b列的值是排序过的(叶子节点b列的值从左往右是：1，1，5，12，13，13，13  是有序的)，同理(b),(b,c)、（b、c、d）的组合也是排序过的，可以根据B+树进行快速查询</p>
+<p>2、查询语句是 select * from table where  c=12  ，联合索引（b,c,d）有没有生效？没生效，可以观察上图叶子节点，对于c列来看是无序的(叶子节点c列的值从左往右是：1，5，3，14，12，16，16  是无序的)，所以没法走B+树结构进行查询，同理 (c),(d),(b,d),(c,d)都是无效的</p>
+<p>3、查询语句是 select * from table where  c=12 and b=14,联合索引(b,c,d)有没有生效?生效了，仅等值无范围查询WHERE后面的条件只要一模一样，写在哪儿都是无所谓的。mysql查询优化器会判断纠正这条sql语句该以什么样的顺序执行效率最高，最后才生成真正的执行计划。相同环境下，生成的执行计划也是一样的</p>
+<p>4、查询语句是 select * from table where b&gt;5 and c =14,联合索引(b,c,d)有没有生效?只有列b走索引查询，使用范围条件的时候，也会使用到该处的索引，但后面的索引都不会用到</p>
+<p>5、查询语句是 select * from table where b=12 or c =14,联合索引(b,c,d)有没有生效?没生效，对于or条件是满足左边b=12 或者 右边 c=14，如果是 对 b和c列都有单独的索引，才能使索引生效</p>
+<p>6、查询语句是select c from table where b=12 group by c ，联合索引(b,c,d)有没有生效？ 生效了，group by和order by 其实一样，也是遵从最左原则，可以看做继承where的条件顺序，但需要where作为基础铺垫，即没有where语句，单纯的group by | order by 也是不会使用任何索引的，并且需要和联合索引顺序一致才会使用索引。</p>
+<h4 id="43唯一索引和唯一约束的区别">4.3、唯一索引和唯一约束的区别</h4>
+<p>唯一约束和唯一索引在 MySQL 数据库里区别：</p>
+<ol>
+<li>
+<p>概念上不同，约束是为了保证数据的完整性，索引是为了辅助查询；</p>
+</li>
+<li>
+<p>创建唯一约束时，会自动的创建唯一索引；</p>
+</li>
+<li>
+<p>在理论上，不一样，在实际使用时，基本没有区别。</p>
+</li>
+</ol>
+<p>关于第二条，MySQL 中唯一约束是通过唯一索引实现的，为了保证没有重复值，在插入新记录时会再检索一遍，怎样检索快，当然是建索引了，所以，在创建唯一约束的时候就创建了唯一索引</p>
+<h4 id="44索引失效场景">4.4、索引失效场景</h4>
+<p><strong>1、对索引使用左或者左右模糊匹配</strong></p>
+<p>当我们使用左或者左右模糊匹配的时候，也就是 <code>like %xx</code> 或者 <code>like %xx%</code> 这两种方式都会造成索引失效。原因就是：<strong>因为索引 B+ 树是按照「索引值」有序排列存储的，只能根据前缀进行比较。</strong></p>
+<p>假设我们要查询 name 字段前缀为「林」的数据，也就是 <code>name like '林%'</code>，扫描索引的过程：</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/9b9e02e2fae24bdcac2ec8dded02e722.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/9b9e02e2fae24bdcac2ec8dded02e722.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/9b9e02e2fae24bdcac2ec8dded02e722.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/9b9e02e2fae24bdcac2ec8dded02e722.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/9b9e02e2fae24bdcac2ec8dded02e722.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<ul>
+<li>首节点查询比较：林这个字的拼音大小比首节点的第一个索引值中的陈字大，但是比首节点的第二个索引值中的周字小，所以选择去节点2继续查询；</li>
+<li>节点 2 查询比较：节点2的第一个索引值中的陈字的拼音大小比林字小，所以继续看下一个索引值，发现节点2有与林字前缀匹配的索引值，于是就往叶子节点查询，即叶子节点4；</li>
+<li>节点 4 查询比较：节点4的第一个索引值的前缀符合林字，于是就读取该行数据，接着继续往右匹配，直到匹配不到前缀为林的索引值。</li>
+</ul>
+<p>如果使用 <code>name like '%林'</code> 方式来查询，因为查询的结果可能是「陈林、张林、周林」等之类的，所以不知道从哪个索引值开始比较，于是就只能通过全表扫描的方式来查询。</p>
+<p><strong>2、对索引使用函数</strong></p>
+<p>有时候我们会用一些 MySQL 自带的函数来得到我们想要的结果，这时候要注意了，如果查询条件中对索引字段使用函数，就会导致索引失效。</p>
+<p>比如下面这条语句查询条件中对 name 字段使用了 LENGTH 函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">student_info</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">length</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">=</span><span class="mi">4</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为索引保存的是索引字段的原始值，而不是经过函数计算后的值，自然就没办法走索引了。不过，从 MySQL 8.0 开始，索引特性增加了函数索引，即可以针对函数计算后的值建立一个索引，也就是说该索引的值是函数计算后的值，所以就可以通过扫描索引来查询数据。</p>
+<p><strong>3、对索引进行表达式计算</strong></p>
+<p>在查询条件中对索引进行表达式计算，也是无法走索引的。比如下面这条语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">student_info</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">age</span><span class="o">+</span><span class="mi">1</span><span class="o">=</span><span class="mi">22</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因跟对索引使用函数差不多。因为索引保存的是索引字段的原始值，而不是 age + 1 表达式计算后的值，所以无法走索引，只能通过把索引字段的取值都取出来，然后依次进行表达式的计算来进行条件判断，因此采用的就是全表扫描的方式。</p>
+<p><strong>4、对索引隐式类型转换</strong></p>
+<p>如果索引字段是字符串类型，但是在条件查询中，输入的参数是整型的话，你会在执行计划的结果发现这条语句会走全表扫描。但是如果索引字段是整型类型，查询条件中的输入参数即使字符串，是不会导致索引失效，还是可以走索引扫描。</p>
+<p>MySQL 的数据类型转换规则是什么：</p>
+<ul>
+<li>
+<p>如果规则是 MySQL 会将自动「字符串」转换成「数字」，就相当于 select 10 &gt; 9，这个就是数字比较，所以结果应该是 1；</p>
+</li>
+<li>
+<p>如果规则是 MySQL 会将自动「数字」转换成「字符串」，就相当于 select &ldquo;10&rdquo; &gt; &ldquo;9&rdquo;，这个是字符串比较，字符串比较大小是逐位从高位到低位逐个比较（按ascii码） ，那么&quot;10&quot;字符串相当于 “1”和“0”字符的组合，所以先是拿 “1” 字符和 “9” 字符比较，因为 “1” 字符比 “9” 字符小，所以结果应该是 0。</p>
+</li>
+</ul>
+<p>在 MySQL 中，执行的结果如下图：</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/7c43bf599b2741209f4746ed7102cedf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_10,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/7c43bf599b2741209f4746ed7102cedf.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_10%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/7c43bf599b2741209f4746ed7102cedf.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_10%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/7c43bf599b2741209f4746ed7102cedf.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_10%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/7c43bf599b2741209f4746ed7102cedf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_10,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>上面的结果为 1，说明 <strong>MySQL 在遇到字符串和数字比较的时候，会自动把字符串转为数字，然后再进行比较</strong>。如果是索引列从字符串转为数字那么就相当于给索引列加上一个cast 转换函数，就是第2种索引失效的情况（对索引使用函数）。如果是条件值从字符转换为数字那就相当于  索引列=cast (  条件值  as  int )，对索引列无影响</p>
+<p><strong>5、联合索引非最左匹配</strong></p>
+<p>对主键字段建立的索引叫做聚簇索引，对普通字段建立的索引叫做二级索引。</p>
+<p>那么<strong>多个普通字段组合在一起创建的索引就叫做联合索引</strong>，也叫组合索引。</p>
+<p>创建联合索引时，我们需要注意创建时的顺序问题，因为联合索引 (a, b, c) 和 (c, b, a) 在使用的时候会存在差别。</p>
+<p>联合索引要能正确使用需要遵循<strong>最左匹配原则</strong>，也就是按照最左优先的方式进行索引的匹配。</p>
+<p>比如，如果创建了一个 <code>(a, b, c)</code> 联合索引，如果查询条件是以下这几种，就可以匹配上联合索引：</p>
+<ul>
+<li>where a=1；</li>
+<li>where a=1 and b=2 and c=3；</li>
+<li>where a=1 and b=2；</li>
+</ul>
+<p>需要注意的是，因为有查询优化器，所以 a 字段在 where 子句的顺序并不重要。</p>
+<p>但是，如果查询条件是以下这几种，因为不符合最左匹配原则，所以就无法匹配上联合索引，联合索引就会失效:</p>
+<ul>
+<li>where b=2；</li>
+<li>where c=3；</li>
+<li>where b=2 and c=3；</li>
+</ul>
+<p>有一个比较特殊的查询条件：where a = 1 and c = 3 ，符合最左匹配吗？</p>
+<p>这种其实严格意义上来说是属于索引截断，不同版本处理方式也不一样。</p>
+<p>MySQL 5.5 的话，前面 a 会走索引，在联合索引找到主键值后，开始回表，到主键索引读取数据行，然后再比对 c 字段的值。</p>
+<p>从 MySQL5.6 之后，有一个<strong>索引下推功能</strong>，可以在索引遍历过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数。</p>
+<p>大概原理是：截断的字段会被下推到存储引擎层进行条件判断（因为 c 字段的值是在 <code>(a, b, c)</code> 联合索引里的），然后过滤出符合条件的数据后再返回给 Server 层。由于在引擎层就过滤掉大量的数据，无需再回表读取数据来进行判断，减少回表次数，从而提升了性能。</p>
+<p><strong>6、WHERE子句中的 OR</strong></p>
+<p>在 WHERE 子句中，如果在 OR 前的条件列是索引列，而在 OR 后的条件列不是索引列，那么索引会失效。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">student_info</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">age</span><span class="o">=</span><span class="s1">&#39;20&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是因为 OR 的含义就是两个只要满足一个即可，因此只有一个条件列是索引列是没有意义的，只要有条件列不是索引列，就会进行全表扫描。要解决办法很简单，将 age 字段设置为索引即可。</p>
+<h3 id="六参考资料">六、参考资料</h3>
+<p>​            <a
+  href="https://www.cnblogs.com/nijunyang/p/11406688.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql索引数据结构</a></p>
+<p>​            <a
+  href="https://baijiahao.baidu.com/s?id=1647079867833965110&amp;wfr=spider&amp;for=pc"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>哈希索引</a></p>
+<p>​          <a
+  href="https://ithuangqing.blog.csdn.net/article/details/103344078?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&amp;utm_relevant_index=2"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>来吧！一文彻底搞定哈希表！</a></p>
+<p>​          <a
+  href="https://www.jianshu.com/p/e76afd7945d7"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>腾讯三面：你换一个角度跟我讲讲MySQL的B+树</a></p>
+<p>​          <a
+  href="https://www.jianshu.com/p/787b14655681"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>为什么索引可以让查询变快？终于有人说清楚了！</a></p>
+<p>​          <a
+  href="https://www.jianshu.com/p/5ae7d10250b1"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql索引底层数据结构</a></p>
+<p>​          <a
+  href="https://www.jianshu.com/p/bf2589672661"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySql常见的索引优化和索引设计原则</a></p>
+<p>​          <a
+  href="https://www.jianshu.com/p/2a8789f841e1"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>纳尼？MySQL 中 count(*) 比 count(1) 快？</a></p>
+<p>​         <a
+  href="https://www.jianshu.com/p/80be367ebb7b"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MVCC 水略深，但是弄懂了真的好爽！</a></p>
+<p>​        <a
+  href="https://blog.csdn.net/a519640026/article/details/106940115?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>一文彻底搞懂MySQL基础：B树和B+树的区别</a></p>
+<p>​         <a
+  href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL索引背后的数据结构及算法原理</a></p>
+<p>​        <a
+  href="https://blog.csdn.net/mrzhouxiaofei/article/details/79719529"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>谈谈唯一约束和唯一索引</a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/jiawen010/p/11805241.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>聚簇索引和非聚簇索引(通俗易懂 言简意赅) </a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/heishuichenzhou/p/10813463.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>主键索引和非主键索引的区别</a></p>
+<p>​         <a
+  href="https://www.cnblogs.com/barrywxx/p/8592975.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql最左匹配原则</a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/wyaokai/p/10836527.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>多个单列索引和联合索引的区别详解</a></p>
+<p>​        <a
+  href="https://juejin.cn/post/6844904073955639304"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>联合索引在B+树上的存储结构及数据查找方式</a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/xiaolincoding/p/15839040.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>面试官：聊聊索引失效？失效的原因是什么？</a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/wdss/p/11186411.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>Mysql索引查询失效的情况</a></p>
+<p>​       <a
+  href="https://www.cnblogs.com/ttaylor/p/14443815.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql联合索引对于group by order by的影响</a></p>
+<p>​       <a
+  href="https://www.jianshu.com/p/6e90e38d2b6773955639304"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql关于or的索引问题</a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/xiaolincoding/p/15839040.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>面试官：聊聊索引失效？失效的原因是什么？</a></p>
+<p>​        <a
+  href="https://www.cnblogs.com/wdss/p/11186411.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>Mysql索引查询失效的情况</a></p>
+<p>​       <a
+  href="https://www.cnblogs.com/ttaylor/p/14443815.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql联合索引对于group by order by的影响</a></p>
+<p>​       <a
+  href="https://www.jianshu.com/p/6e90e38d2b67"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>mysql关于or的索引问题</a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-04-12&#32;22:01:54>更新于 2022/04/12</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/" data-title="mysql索引介绍" data-description="索引是什么？为什么能加快sql查询？"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/sql/">sql</a>,&nbsp;<a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>,&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>,&nbsp;<a href="/tags/mysql/">mysql</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/sql%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/" class="prev" rel="prev" title="sql执行流程概述"><i class="fas fa-angle-left fa-fw"></i>sql执行流程概述</a>
+      <a href="/posts/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0/" class="next" rel="next" title="mysql数据类型概述">mysql数据类型概述<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

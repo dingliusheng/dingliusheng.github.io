@@ -1,0 +1,25 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>前端 - 分类 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/categories/%E5%89%8D%E7%AB%AF/</link>
+    <description>前端 - 分类 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 24 Jan 2021 16:20:42 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/categories/%E5%89%8D%E7%AB%AF/" rel="self" type="application/rss+xml" /><item>
+  <title>Juqery笔记</title>
+  <link>https://dingliusheng.github.io/posts/juqery/</link>
+  <pubDate>Sun, 24 Jan 2021 16:20:42 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/juqery/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50" referrerpolicy="no-referrer">
+      </div>介绍juqery的基本语法，作为简单的文档]]></description>
+</item><item>
+  <title>js笔记</title>
+  <link>https://dingliusheng.github.io/posts/js%E5%AD%A6%E4%B9%A0/</link>
+  <pubDate>Tue, 01 Dec 2020 15:06:10 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/js%E5%AD%A6%E4%B9%A0/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2F1978e2e5486ded16372de655a22ffc3c.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655477229&amp;t=1600c22b8d55c9cf358893dc628a5f76" referrerpolicy="no-referrer">
+      </div>js怎么使用？接下来会详细说明]]></description>
+</item></channel>
+</rss>

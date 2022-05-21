@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>数据质量 - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F/</link>
+    <description>数据质量 - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 24 Apr 2022 21:35:07 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F/" rel="self" type="application/rss+xml" /><item>
+  <title>数据质量概述</title>
+  <link>https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/</link>
+  <pubDate>Sun, 24 Apr 2022 21:35:07 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190924%2F2eecefebb85e4deaa4a5c49b7c08e153.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655566091&amp;t=adca7ab90b5cd72ad07ec181444c7982" referrerpolicy="no-referrer">
+      </div>什么是数据质量？如何提高数据质量]]></description>
+</item></channel>
+</rss>

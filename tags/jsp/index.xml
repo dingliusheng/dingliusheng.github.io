@@ -1,0 +1,25 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>jsp - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/jsp/</link>
+    <description>jsp - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 Jan 2021 19:24:19 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/jsp/" rel="self" type="application/rss+xml" /><item>
+  <title>jsp基础语法和指令</title>
+  <link>https://dingliusheng.github.io/posts/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4/</link>
+  <pubDate>Sat, 02 Jan 2021 19:24:19 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://www.yht7.com/upload/image/20201106/5fa4d456cbc34313.jpg" referrerpolicy="no-referrer">
+      </div>jsp基础语法和指令]]></description>
+</item><item>
+  <title>从源码角度了解jsp本质</title>
+  <link>https://dingliusheng.github.io/posts/%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E4%BA%86%E8%A7%A3jsp%E6%9C%AC%E8%B4%A8/</link>
+  <pubDate>Thu, 31 Dec 2020 21:44:13 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E4%BA%86%E8%A7%A3jsp%E6%9C%AC%E8%B4%A8/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fupload-images.jianshu.io%2Fupload_images%2F13126787-5bf974758a2a675b.png&amp;refer=http%3A%2F%2Fupload-images.jianshu.io&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655528171&amp;t=25307548b6639ecb61fc47d24850d5ba" referrerpolicy="no-referrer">
+      </div>从源码角度了解jsp本质]]></description>
+</item></channel>
+</rss>

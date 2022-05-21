@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>jsp基础语法和指令 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="jsp基础语法和指令" />
+<meta name="keywords" content="jsp" /><meta itemprop="name" content="jsp基础语法和指令">
+<meta itemprop="description" content="jsp基础语法和指令"><meta itemprop="datePublished" content="2021-01-02T19:24:19+08:00" />
+<meta itemprop="dateModified" content="2021-01-02T19:24:19+08:00" />
+<meta itemprop="wordCount" content="1464"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="jsp,JavaWeb," /><meta property="og:title" content="jsp基础语法和指令" />
+<meta property="og:description" content="jsp基础语法和指令" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-02T19:24:19+08:00" />
+<meta property="article:modified_time" content="2021-01-02T19:24:19+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="jsp基础语法和指令"/>
+<meta name="twitter:description" content="jsp基础语法和指令"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4/" /><link rel="prev" href="https://dingliusheng.github.io/posts/%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E4%BA%86%E8%A7%A3jsp%E6%9C%AC%E8%B4%A8/" /><link rel="next" href="https://dingliusheng.github.io/posts/javabean%E7%9A%84%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "jsp基础语法和指令",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4\/"
+    },"genre": "posts","keywords": "jsp, JavaWeb","wordcount":  1464 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4\/","datePublished": "2021-01-02T19:24:19+08:00","dateModified": "2021-01-02T19:24:19+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "jsp基础语法和指令"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">jsp基础语法和指令</h1><h2 class="single-subtitle">jsp基础语法和指令</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/javaweb/"><i class="far fa-folder fa-fw"></i>&nbsp;JavaWeb</a></span></div>
+      <div class="post-meta-line"><span title=2021-01-02&#32;19:24:19>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021/01/02" >2021/01/02</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1464 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://www.yht7.com/upload/image/20201106/5fa4d456cbc34313.jpg"
+    data-srcset="https://www.yht7.com/upload/image/20201106/5fa4d456cbc34313.jpg, https://www.yht7.com/upload/image/20201106/5fa4d456cbc34313.jpg 1.5x, https://www.yht7.com/upload/image/20201106/5fa4d456cbc34313.jpg 2x"
+    data-sizes="auto"
+    alt="https://www.yht7.com/upload/image/20201106/5fa4d456cbc34313.jpg"
+    title="jsp基础语法和指令" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#maven导入jsp依赖jar包">Maven导入jsp依赖jar包</a></li>
+        <li><a href="#jsp-基础语法">jsp 基础语法</a></li>
+        <li><a href="#jsp指令">jsp指令</a></li>
+        <li><a href="#jsp-内置对象和作用域">jsp 内置对象和作用域</a></li>
+        <li><a href="#el表达式">EL表达式</a></li>
+        <li><a href="#jsp标签">jsp标签</a></li>
+      </ul>
+    </li>
+    <li><a href="#jstl标签">jstl标签</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h3 id="maven导入jsp依赖jar包">Maven导入jsp依赖jar包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"> <span class="c">&lt;!--        Servlet依赖--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;artifactId&gt;</span>javax.servlet-api<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;version&gt;</span>3.1.0<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--        JSP依赖--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;groupId&gt;</span>javax.servlet.jsp<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;artifactId&gt;</span>javax.servlet.jsp-api<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--引入Javaee7开始--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;groupId&gt;</span>javax<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;artifactId&gt;</span>javaee-api<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;version&gt;</span>7.0<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--引入Javaee7结束--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--引入JSTL开始--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;groupId&gt;</span>jstl<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;artifactId&gt;</span>jstl<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;version&gt;</span>1.2<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="jsp-基础语法">jsp 基础语法</h3>
+<p>jsp 表达式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%--</span> <span class="n">jsp</span> <span class="n">表达式</span>
+</span></span><span class="line"><span class="cl">     <span class="n">作用</span><span class="err">：</span><span class="n">用来将程序的输出</span><span class="err">，</span><span class="n">输出到客户端</span>
+</span></span><span class="line"><span class="cl">     <span class="n">格式</span><span class="err">：</span><span class="o">&lt;%=</span><span class="n">变量或者表达式</span><span class="o">%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">--%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;%=</span><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">()%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>jsp 脚本片段,可以和html任意嵌套</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%--</span> <span class="n">jsp</span> <span class="n">脚本片段</span>
+</span></span><span class="line"><span class="cl">     <span class="n">作用</span><span class="err">：</span><span class="n">就是一段java程序</span>
+</span></span><span class="line"><span class="cl">     <span class="n">格式</span><span class="err">：</span><span class="o">&lt;%</span><span class="n">一段java程序</span><span class="o">%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">--%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;%</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sum</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">10</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&gt;%</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span><span class="n">循环</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;%</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sum</span><span class="o">+=</span><span class="n">i</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;&lt;h1&gt;Sum=&#34;</span><span class="o">+</span><span class="n">sum</span><span class="o">+</span><span class="s">&#34;&lt;/h1&gt;&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>jsp 声明</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;%!</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//jsp 声明，定义全局变量（类变量）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>本质上就是通过&lt;%!java声明代码%&gt;是放在XXX_jsp.java的类中，是全局的作用域
+&lt;%java代码%&gt;是放在XXX_jsp.java下的_jspService方法中，是局部的作用域</p>
+<h3 id="jsp指令">jsp指令</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="err">&lt;</span>%--指定页面格式--%&gt;
+</span></span><span class="line"><span class="cl"><span class="err">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+</span></span><span class="line"><span class="cl"><span class="err">&lt;</span>%--指定发生错误时跳转的页面--%&gt;
+</span></span><span class="line"><span class="cl"><span class="err">&lt;</span>%@ page errorPage=&#34;/WEB-INF/500.jsp&#34; %&gt;
+</span></span><span class="line"><span class="cl"><span class="err">&lt;</span>%--加载其他jsp的资源--%&gt;
+</span></span><span class="line"><span class="cl"><span class="err">&lt;</span>%@ include file=&#34;hello.jsp&#34;%&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="jsp-内置对象和作用域">jsp 内置对象和作用域</h3>
+<ul>
+<li>PageContext</li>
+<li>Request</li>
+<li>Response</li>
+<li>Session</li>
+<li>Application 【ServletContext】</li>
+<li>config 【Servletconfig】</li>
+<li>out</li>
+<li>page</li>
+<li>exception</li>
+</ul>
+<p>PageContext：一般不用这个保存数据
+Request:客户端向服务器发送请求，产生的数据，用户看完就没用了，比如：新闻
+Session:客户端向服务器发送请求，产生的数据，用户看完后还可能用到，比如：购物车
+Application:客户端向服务器发送请求，产生的数据，用户看完后其他用户还可能用到，比如：游戏中的聊天信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="o">&lt;%</span>  <span class="c1">//保存的数据只在一个页面中有效
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">pageContext</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;num1&#34;</span><span class="o">,</span><span class="s">&#34;1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保存的数据只在一次请求中有效，请求转发会携带这个信息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;num2&#34;</span><span class="o">,</span><span class="s">&#34;2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保存的数据只在服务器有效，从打开服务器到关闭服务器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">application</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;num3&#34;</span><span class="o">,</span><span class="s">&#34;3&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保存的数据只在一次会话有效，从打开浏览器到关闭浏览器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&#34;num4&#34;</span><span class="o">,</span><span class="s">&#34;4&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//从底层到高层的作用域：page--&gt;request--&gt;session--&gt;application
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">//从底层往高层找所需要的数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">String</span>  <span class="n">num3</span> <span class="o">=(</span><span class="n">String</span><span class="o">)</span> <span class="n">pageContext</span><span class="o">.</span><span class="na">findAttribute</span><span class="o">(</span><span class="s">&#34;num3&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="el表达式">EL表达式</h3>
+<p>格式：${ }
+<strong>获取数据</strong>
+<strong>执行运算</strong>
+<strong>获取web常用对象</strong></p>
+<h3 id="jsp标签">jsp标签</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="c">&lt;!--添加hello.jsp的内容--&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">&#34;hello.jsp&#34;</span><span class="nt">&gt;&lt;/jsp:include&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="c">&lt;!--转发到hello.jsp--&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;jsp:forward</span> <span class="na">page=</span><span class="s">&#34;/hello.jsp&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--设置跳转链接参数--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&#34;name&#34;</span> <span class="na">value=</span><span class="s">&#34;小明&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/jsp:forward&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="jstl标签">jstl标签</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="err">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!--
+</span></span></span><span class="line"><span class="cl"><span class="c">引用jstl核心标签库
+</span></span></span><span class="line"><span class="cl"><span class="c">--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="err">&lt;</span>%@ taglib prefix=&#34;c&#34; uri=&#34;http://java.sun.com/jsp/jstl/core&#34; %&gt;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;head&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/head&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;body&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;form&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;text&#34;</span> <span class="na">name=</span><span class="s">&#34;user&#34;</span> <span class="na">value=</span><span class="s">&#34;${param.user}&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;submit&#34;</span> <span class="na">value=</span><span class="s">&#34;登入&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/form&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="err">&lt;</span>！--
+</span></span><span class="line"><span class="cl">    测试登入的是否是admin
+</span></span><span class="line"><span class="cl">	c:if 就是java中的if逻辑判断如果为true，则执行
+</span></span><span class="line"><span class="cl">	c:out 输出内容
+</span></span><span class="line"><span class="cl">--&gt;
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">&#34;${param.user==&#39;admin&#39;}&#34;</span> <span class="na">var=</span><span class="s">&#34;isAdmin&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&#34; Welcome Admin    &#34;</span><span class="nt">&gt;&lt;/c:out&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/c:if&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&#34;${isAdmin}&#34;</span><span class="nt">&gt;&lt;/c:out&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="err">&lt;</span>！--
+</span></span><span class="line"><span class="cl">	c:forEach 遍历数组
+</span></span><span class="line"><span class="cl">	var 遍历的变量名 等同于int item=list[i];
+</span></span><span class="line"><span class="cl">	items 遍历的对象 就是list
+</span></span><span class="line"><span class="cl">	从0 开始计数
+</span></span><span class="line"><span class="cl">	begin end step 开始位置 结束位置 步长
+</span></span><span class="line"><span class="cl">--&gt;
+</span></span><span class="line"><span class="cl">     <span class="err">&lt;</span>%
+</span></span><span class="line"><span class="cl">        ArrayList<span class="nt">&lt;String&gt;</span> list = new ArrayList<span class="err">&lt;</span>&gt;();
+</span></span><span class="line"><span class="cl">        list.add(&#34;张三&#34;);
+</span></span><span class="line"><span class="cl">        list.add(&#34;李四&#34;);
+</span></span><span class="line"><span class="cl">        list.add(&#34;王五&#34;);
+</span></span><span class="line"><span class="cl">        list.add(&#34;赵六&#34;);
+</span></span><span class="line"><span class="cl">        list.add(&#34;宋七&#34;);
+</span></span><span class="line"><span class="cl">        request.setAttribute(&#34;list&#34;,list);
+</span></span><span class="line"><span class="cl">    %&gt;
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">&#34;${list}&#34;</span> <span class="na">var=</span><span class="s">&#34;item&#34;</span> <span class="na">begin=</span><span class="s">&#34;1&#34;</span> <span class="na">end=</span><span class="s">&#34;3&#34;</span> <span class="na">step=</span><span class="s">&#34;2&#34;</span> <span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&#34;${item}&#34;</span><span class="nt">&gt;&lt;/c:out&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/c:forEach&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/body&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/html&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2021-01-02&#32;19:24:19>更新于 2021/01/02</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/jsp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8C%87%E4%BB%A4/" data-title="jsp基础语法和指令" data-description="jsp基础语法和指令"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/jsp/">jsp</a>,&nbsp;<a href="/tags/javaweb/">JavaWeb</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E4%BA%86%E8%A7%A3jsp%E6%9C%AC%E8%B4%A8/" class="prev" rel="prev" title="从源码角度了解jsp本质"><i class="fas fa-angle-left fa-fw"></i>从源码角度了解jsp本质</a>
+      <a href="/posts/javabean%E7%9A%84%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90/" class="next" rel="next" title="一个 javabean 的简单例子">一个 javabean 的简单例子<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

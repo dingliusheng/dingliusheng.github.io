@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>数据质量概述 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="什么是数据质量？如何提高数据质量" />
+<meta name="keywords" content="数据质量" /><meta itemprop="name" content="数据质量概述">
+<meta itemprop="description" content="什么是数据质量？如何提高数据质量"><meta itemprop="datePublished" content="2022-04-24T21:35:07+08:00" />
+<meta itemprop="dateModified" content="2022-04-24T21:35:07+08:00" />
+<meta itemprop="wordCount" content="4107"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="数据质量," /><meta property="og:title" content="数据质量概述" />
+<meta property="og:description" content="什么是数据质量？如何提高数据质量" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-24T21:35:07+08:00" />
+<meta property="article:modified_time" content="2022-04-24T21:35:07+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="数据质量概述"/>
+<meta name="twitter:description" content="什么是数据质量？如何提高数据质量"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/" /><link rel="prev" href="https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E6%95%B0%E6%8D%AE%E5%85%83%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%BB%E6%95%B0%E6%8D%AE%E5%8F%82%E8%80%83%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/" /><link rel="next" href="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "数据质量概述",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0\/"
+    },"genre": "posts","keywords": "数据质量","wordcount":  4107 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0\/","datePublished": "2022-04-24T21:35:07+08:00","dateModified": "2022-04-24T21:35:07+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "什么是数据质量？如何提高数据质量"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据质量概述</h1><h2 class="single-subtitle">什么是数据质量？如何提高数据质量</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86/"><i class="far fa-folder fa-fw"></i>&nbsp;数据治理</a></span></div>
+      <div class="post-meta-line"><span title=2022-04-24&#32;21:35:07>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022/04/24" >2022/04/24</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4107 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190924%2F2eecefebb85e4deaa4a5c49b7c08e153.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655566091&amp;t=adca7ab90b5cd72ad07ec181444c7982"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190924%2F2eecefebb85e4deaa4a5c49b7c08e153.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655566091&amp;t=adca7ab90b5cd72ad07ec181444c7982, https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190924%2F2eecefebb85e4deaa4a5c49b7c08e153.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655566091&amp;t=adca7ab90b5cd72ad07ec181444c7982 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190924%2F2eecefebb85e4deaa4a5c49b7c08e153.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655566091&amp;t=adca7ab90b5cd72ad07ec181444c7982 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190924%2F2eecefebb85e4deaa4a5c49b7c08e153.jpeg&amp;refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655566091&amp;t=adca7ab90b5cd72ad07ec181444c7982"
+    title="什么是数据质量？如何提高数据质量" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据质量概述">数据质量概述</a>
+      <ul>
+        <li><a href="#什么是数据">什么是数据</a></li>
+        <li><a href="#什么是数据质量">什么是数据质量</a>
+          <ul>
+            <li><a href="#数据完整性">数据完整性</a></li>
+            <li><a href="#数据唯一性">数据唯一性</a></li>
+            <li><a href="#数据及时性">数据及时性</a></li>
+            <li><a href="#数据有效性">数据有效性</a></li>
+            <li><a href="#数据准确性">数据准确性</a></li>
+            <li><a href="#数据一致性">数据一致性</a></li>
+          </ul>
+        </li>
+        <li><a href="#数据质量管理">数据质量管理</a>
+          <ul>
+            <li><a href="#技术层面">技术层面</a></li>
+            <li><a href="#业务层面">业务层面</a></li>
+            <li><a href="#管理层面">管理层面</a></li>
+          </ul>
+        </li>
+        <li><a href="#参考">参考：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="数据质量概述">数据质量概述</h2>
+<h3 id="什么是数据">什么是数据</h3>
+<blockquote>
+<p>数据(data)：是事实或观察的结果，是对客观事物的逻辑归纳，是用于表示客观事物的未经加工的的原始素材。</p>
+</blockquote>
+<p>数据可以是连续的值，比如声音、图像，称为模拟数据或者计量型数据。也可以是离散的，如符号、文字，称为数字数据或计数型数据。在计算机系统中，数据以二进制信息单元0，1的形式表示。</p>
+<p>在信息技术中，数据也被理解为以数字形式存储的信息（尽管数据不仅限于已数字化的信息，还有纸面上的数据等）如姓名、地址、生日、周六晚餐吃的东西、最近买的书等有关信息。</p>
+<h3 id="什么是数据质量">什么是数据质量</h3>
+<blockquote>
+<p><strong>数据质量：一个评估规则维度提供一种测量与管理信息和数据的方式。</strong></p>
+</blockquote>
+<p>数据质量就是通过一组维度来测量数据的方式。就如同判断东西的好坏和性价比一样，数据也有一些好坏的评判标准。</p>
+<h4 id="数据完整性">数据完整性</h4>
+<blockquote>
+<p>**完整性（Completeness）：**用来描述信息的完整程度。</p>
+</blockquote>
+<p>完整性指的是数据信息是否存在缺失的状况，数据缺失的情况可能是整个数据记录缺失，也可能是数据中某个字段信息的记录缺失。 数据完整性问题包括：</p>
+<p>​	模型设计不完整，例如：唯一性约束不完整、参照不完整；</p>
+<p>​	数据条目不完整，例如：数据记录丢失或不可用；</p>
+<p>​	数据属性不完整，例如：数据属性空值。</p>
+<p>不完整的数据所能借鉴的价值就会大大降低，也是数据质量问题最为基础和常见的一类问。</p>
+<h4 id="数据唯一性">数据唯一性</h4>
+<blockquote>
+<p>**唯一性（Uniqueness）：**用来描述数据是否存在重复记录。</p>
+</blockquote>
+<p>比如真实成交 1 万条，但数据表有 3000 条重复了，成了 1.3 万条成交记录，这种数据不符合数据唯一性。</p>
+<p>重复数据、冗余数据是导致业务无法协同、流程无法追溯的重要因素，也是数据治理需要解决的最基本的数据问题。</p>
+<h4 id="数据及时性">数据及时性</h4>
+<blockquote>
+<p>**及时性（Timeless）：**用来描述从业务发生到对应数据正确存储并可正常查看的时间间隔程度，也叫数据的延时时长，数据在及时性上应能尽可能贴合业务实际发生时点。</p>
+</blockquote>
+<p>一般来说数据同步都是基于业务系统的落表技术字段（比如：CREATE_TIME），而真是业务发生的时间可能与该字段存在时间间隔。可以通过简单的sql对两个时间比较，判断数据的及时性是否符合需求。</p>
+<h4 id="数据有效性">数据有效性</h4>
+<blockquote>
+<p><strong>有效性（Validity）：</strong>  用来描述模型或数据是否满足用户定义的条件（也称为数据规范性）。通常从命名、数据类型、长度、值域、取值范围、内容规范等方面进行约束。</p>
+</blockquote>
+<p>**代码值域约束：**描述检核对象的代码值是否在对应的代码表内。如业务规则定义“性别”的取值应该是“1-未知的性别”、“2-男性”、“3-女性”、“4-未说明的性别”，如果出现“A”、“B”这样的取值，则认为“性别”的代码值域存在问题；</p>
+<p>**长度约束：**描述检核对象的长度是否满足长度约束。如“金融机构编码”在《人民银行金融机构编码规范》中规定长度为14位，如果出现非14位的值，则判定为不满足长度约束，不是一个有效的“金融机构编码”；</p>
+<p>**内容规范约束：**描述检核对象的值是否按照一定的要求和规范进行数据的录入与存储。如“存款账号”应仅含数字，如果出现字母或其他非法字符，则不是一个有效的“存款账号”，不满足内容规范约束；</p>
+<p><strong>取值范围约束</strong>：描述检核对象的取值是否在预定义的范围内。如“授信额度”取值范围应大于等于 0，如果出现小于 0 的情况，则超出了取值范围的约束，不是一个有效的“授信额度”；</p>
+<h4 id="数据准确性">数据准确性</h4>
+<blockquote>
+<p>**准确性（Accuracy）：**用来描述数据是否与其对应的客观实体的特征相一致（需要一个确定的和可访问的权威参考源）。</p>
+</blockquote>
+<p>数据准确性主要是指取值的准确性，描述该检核对象是否与其对应的客观实体的特征相一致。例如：投保人的性别代码为 <code>0-女性</code>，虽然满足代码值域约束，但却不满足取值准确性约束，因为该人为男性，其性别代码应为 <code>1-男性</code>；再比如：国际保函业务的手续费应录入为<code>国际担保手续费收入</code>，却录入成<code>国内担保手续费收入</code>。</p>
+<p>准确性要求不仅数据的取值范围和内容规范满足有效性的要求，其值也是客观真实世界的数据。由此可见，有效的数据未必是准确的，反之成立。准确性通常需要业务人员或其他当事人手工核查。</p>
+<p>对待这种情况，数据质量规则没办法直接统一处理，只能通过即使查询的方式对数据结果进行详细核查。</p>
+<h4 id="数据一致性">数据一致性</h4>
+<p>**一致性（Consistency）：**用来描述同一信息主体在不同的数据集中信息属性是否相同，各实体、属性是否符合一致性约束关系。</p>
+<p>数据质量的一致性主要体现在数据记录的规范和数据是否符合逻辑，一致性并不意味着数值上的绝对相同，而是数据收集、处理的方法和标准的一致。常见的一致性指标有：ID 重合度、属性一致、取值一致、采集方法一致、转化步骤一致。</p>
+<p>**等值一致性：**一个检核对象数据取值必须与另一个或多个检核对象在一定规则下相等。一般指外键关联的场景。例如：保单表，理赔表的保单号存在保单主表，同一张表，两个字段之间的关联关系。</p>
+<p><strong>存在一致性：<strong>一个检核对象的数据值必须在另一个检核对象满足某一条件时存在。主要是强调业务的关联性，一个状态发生了则某个值一定会如何。例如：<strong>投保状态</strong>为已投保，则</strong>投保日期</strong>不应为空；</p>
+<p><strong>逻辑一致性：<strong>一个检核对象上的数据值必须与另一个检核对象的数据值满足某种逻辑关系（如大于、小于等）。 主要强调的是字段间的互相约束关系。例如：<strong>投保开始时间</strong>小于等于</strong>投保结束时间</strong>。</p>
+<h3 id="数据质量管理">数据质量管理</h3>
+<p>分析以下的场景：</p>
+<p><strong>场景一</strong>：作为数据分析人员，要统计一下近 7 天用户的购买情况，结果从数仓中统计完发现，很多数据发生了重复记录，甚至有些数据统计单位不统一。</p>
+<p><strong>场景二</strong>：业务看报表，发现某一天的成交 gmv 暴跌，经过排查发现，是当天的数据缺失。</p>
+<p>造成这一情况的一个重要因素就是忽视了对数据质量的客观评估，没有制定合理的衡量标准，导致没有发现数据已出现问题。</p>
+<h4 id="技术层面">技术层面</h4>
+<p>我们需要保证数据从源端到最终应用端流转过程中的数据质量，一方面我们需要提高每一位数据开发者的技术能力来提高模型和 ETL 的设计与落地质量，另一方面我们使用数据质量工具来对 ETL 过程进行监控。对于源端的数据问题，有时候也可以通过技术手段解决，比如编码映射、ID-Mapping、缺失值补全等等。</p>
+<ul>
+<li>数据模型设计的质量问题，例如：数据库表结构、数据库约束条件、数据校验规则的设计开发不合理，造成数据录入无法校验或校验不当，引起数据重复、不完整、不准确。</li>
+<li>数据源存在数据质量问题，例如：有些数据是从生产系统采集过来的，在生产系统中这些数据就存在重复、不完整、不准确等问题，而采集过程有没有对这些问题做清洗处理，这种情况也比较常见。</li>
+<li>数据采集过程质量问题， 例如：采集点、采集频率、采集内容、映射关系等采集参数和流程设置的不正确，数据采集接口效率低，导致的数据采集失败、数据丢失、数据映射和转换失败。</li>
+<li>数据传输过程的问题，例如：数据接口本身存在问题、数据接口参数配置错误、网络不可靠等都会造成数据传输过程中的发生数据质量问题。</li>
+<li>数据装载过程的问题，例如：数据清洗规则、数据转换规则、数据装载规则配置有问题。</li>
+<li>数据存储的质量问题，例如：数据存储设计不合理，数据的存储能力有限，人为后台调整数据，引起的数据丢失、数据无效、数据失真、记录重复。</li>
+<li>系统之间的数据不一致问题。</li>
+</ul>
+<h4 id="业务层面">业务层面</h4>
+<p>有时候，数据质量问题的根本原因是业务问题造成的，我们就需要从业务着手解决。</p>
+<p>我们需要有业务专家或者业务部门参与，统一数据口径、纠正理解偏差、通过深入的沟通明确业务方诉求。</p>
+<p>数据质量改进的驱动因素永远来自业务目标，不能脱离业务需求谈数据质量。制定数据质量改进方案的基础，首先是清晰定义业务需求，然后是根据业务需求对企业业务的长期影响来定义数据质量问题的优先级。衡量业务影响、定义问题优先级有助于明确治理目标并跟进数据质量改进的进度。</p>
+<ul>
+<li>
+<p>业务需求不清晰，例如：数据的业务描述、业务规则不清晰，导致技术无法构建出合理、正确的数据模型。</p>
+</li>
+<li>
+<p>业务需求的变更，这个问题其实是对数据质量影响非常大的，需求一变，数据模型设计、数据录入、数据采集、数据传输、数据装载、数据存储等环节都会受到影响，稍有不慎就会导致数据质量问题的发生。</p>
+</li>
+<li>
+<p>业务端数据输入不规范，常见的数据录入问题，如：大小写、全半角、特殊字符等一不小心就会录错。人工录入的数据质量与录数据的业务人员密切相关，录数据的人工作严谨、认真，数据质量就相对较好，反之就较差。</p>
+</li>
+</ul>
+<h4 id="管理层面">管理层面</h4>
+<p>技术再努力起到的作用毕竟有限，有些事情必须通过管理手段去约束。通过管理使得规范得以贯彻，通过管理来提高团队成员的数据质量意识，通过管理手段去协调各个参与方提高效率。</p>
+<p>可以建立数据质量保障委员会，源端团队负责人、数据团队负责人、业务团队负责人，都要参与其中。统一规划顶层设计，制定统一数据架构、数据标准，设计数据质量的管理机制，采用分类处理的方式持续提升数据质量。源端的数据问题最好在源端解决，建立指标体系统一各方的数据口径，明确数据问题的责任谁的问题谁解决。</p>
+<p>总之，只有管理上重视了，整体工作才好开展。</p>
+<ul>
+<li>
+<p>认知问题。企业管理缺乏数据思维，没有认识到数据质量的重要性，重系统而轻数据，认为系统是万能的，数据质量差些也没关系。</p>
+</li>
+<li>
+<p>没有明确数据归口管理部门或岗位，缺乏数据认责机制，出现数据质量问题找不到负责人。</p>
+</li>
+<li>
+<p>缺乏数据规划，没有明确的数据质量目标，没有制定数据质量相关的政策和制度。</p>
+</li>
+<li>
+<p>数据输入规范不统一，不同的业务部门、不同的时间、甚至在处理相同业务的时候，由于数据输入规范不同，造成数据冲突或矛盾。</p>
+</li>
+<li>
+<p>缺乏有效的数据质量问题处理机制，数据质量问题从发现、指派、处理、优化没有一个统一的流程和制度支撑，数据质量问题无法闭环。</p>
+</li>
+<li>
+<p>缺乏有效的数据管控机制，对历史数据质量检查、新增数据质量校验没有明确和有效的控制措施，出现数据质量问题无法考核。</p>
+</li>
+</ul>
+<p>影响数据质量的因素，可以总结为两类，客观因素和主观因素。客观因素：在数据各环节流转中，由于系统异常和流程设置不当等因素，从而引起的数据质量问题。主观因素：在数据各环节处理中，由于人员素质低和管理缺陷等因素，从而操作不当而引起的数据质量问题。</p>
+<h3 id="参考">参考：</h3>
+<p><a
+  href="https://mp.weixin.qq.com/s/YcfudK6uPrgBj-xcAduiKQ"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>小白入门学习数据质量</a></p>
+<p><a
+  href="https://mp.weixin.qq.com/s/L9ImBwU2s7lXQDqHEGrWrQ"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>数据仓库详细介绍（九.数据质量）理论与经验</a></p>
+<p><a
+  href="https://mp.weixin.qq.com/s/kwqtyo9nj0prTOFu8vMGlQ"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>数据管理百问（第3期）：数据质量</a></p>
+<p><a
+  href="https://mp.weixin.qq.com/s/MmE__25bbkDvHHVX230GCg"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>数据治理：数据质量提升十步法（PPT）</a></p>
+<p><a
+  href="https://mp.weixin.qq.com/s/0ijcCa9SFYp8TsferMVjmA"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>数据治理系列5：浅谈数据质量管理</a></p>
+<p><a
+  href="https://mp.weixin.qq.com/s/NExpXvKwXdXHh5lQ9GcNQA"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>数据质量：数据治理的核心</a></p>
+<p><a
+  href="https://mp.weixin.qq.com/s/urqis5YTPHXZa1eU7o-TSA"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>数据仓库之数据质量建设（深度好文）</a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-04-24&#32;21:35:07>更新于 2022/04/24</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/" data-title="数据质量概述" data-description="什么是数据质量？如何提高数据质量"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F/">数据质量</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E6%95%B0%E6%8D%AE%E5%85%83%E5%85%83%E6%95%B0%E6%8D%AE%E4%B8%BB%E6%95%B0%E6%8D%AE%E5%8F%82%E8%80%83%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/" class="prev" rel="prev" title="【数据治理】数据元、元数据、主数据、参考数据概述"><i class="fas fa-angle-left fa-fw"></i>【数据治理】数据元、元数据、主数据、参考数据概述</a>
+      <a href="/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" class="next" rel="next" title="sql优化(1)-扫描区间和边界条件">sql优化(1)-扫描区间和边界条件<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>mysql数据类型概述 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="mysql有哪些数据类型？对应的计算机底层是怎么表示的？" />
+<meta name="keywords" content="mysql数据类型" /><meta itemprop="name" content="mysql数据类型概述">
+<meta itemprop="description" content="mysql有哪些数据类型？对应的计算机底层是怎么表示的？"><meta itemprop="datePublished" content="2022-04-12T22:05:56+08:00" />
+<meta itemprop="dateModified" content="2022-04-12T22:05:56+08:00" />
+<meta itemprop="wordCount" content="4436"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="mysql,数据库," /><meta property="og:title" content="mysql数据类型概述" />
+<meta property="og:description" content="mysql有哪些数据类型？对应的计算机底层是怎么表示的？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-12T22:05:56+08:00" />
+<meta property="article:modified_time" content="2022-04-12T22:05:56+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="mysql数据类型概述"/>
+<meta name="twitter:description" content="mysql有哪些数据类型？对应的计算机底层是怎么表示的？"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0/" /><link rel="prev" href="https://dingliusheng.github.io/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/" /><link rel="next" href="https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "mysql数据类型概述",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0\/"
+    },"genre": "posts","keywords": "mysql, 数据库","wordcount":  4436 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0\/","datePublished": "2022-04-12T22:05:56+08:00","dateModified": "2022-04-12T22:05:56+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "mysql有哪些数据类型？对应的计算机底层是怎么表示的？"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">mysql数据类型概述</h1><h2 class="single-subtitle">mysql有哪些数据类型？对应的计算机底层是怎么表示的？</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>&nbsp;数据库</a></span></div>
+      <div class="post-meta-line"><span title=2022-04-12&#32;22:05:56>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022/04/12" >2022/04/12</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4436 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fa380f8076cac2a55fb14665bb5cc5c17.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565430&amp;t=f67ec7ad3f51b2db8fa010cfac7749c1"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fa380f8076cac2a55fb14665bb5cc5c17.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565430&amp;t=f67ec7ad3f51b2db8fa010cfac7749c1, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fa380f8076cac2a55fb14665bb5cc5c17.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565430&amp;t=f67ec7ad3f51b2db8fa010cfac7749c1 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fa380f8076cac2a55fb14665bb5cc5c17.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565430&amp;t=f67ec7ad3f51b2db8fa010cfac7749c1 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2Fa380f8076cac2a55fb14665bb5cc5c17.png&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565430&amp;t=f67ec7ad3f51b2db8fa010cfac7749c1"
+    title="mysql有哪些数据类型？对应的计算机底层是怎么表示的？" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据类型概述">数据类型概述</a>
+      <ul>
+        <li><a href="#整数类型">整数类型</a>
+          <ul>
+            <li><a href="#整数类型列表">整数类型列表</a></li>
+            <li><a href="#整数的底层存储原理">整数的底层存储原理</a></li>
+          </ul>
+        </li>
+        <li><a href="#实数类型">实数类型</a>
+          <ul>
+            <li><a href="#实数类型列表">实数类型列表</a></li>
+            <li><a href="#浮点数的底层存储原理">浮点数的底层存储原理</a></li>
+          </ul>
+        </li>
+        <li><a href="#字符串类型">字符串类型</a>
+          <ul>
+            <li><a href="#字符串类型列表">字符串类型列表</a></li>
+            <li><a href="#相关拓展">相关拓展</a></li>
+          </ul>
+        </li>
+        <li><a href="#时间类型">时间类型</a>
+          <ul>
+            <li><a href="#时间类型列表">时间类型列表</a></li>
+          </ul>
+        </li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="数据类型概述">数据类型概述</h2>
+<p>mysql中有很多数据类型，包括整数、实数、字符串、时间、大文件存储。通过底层原理来看一下mysql数据类型的具体应用场景。</p>
+<h3 id="整数类型">整数类型</h3>
+<h4 id="整数类型列表">整数类型列表</h4>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储长度(byte)</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYINT</td>
+<td>1</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2</td>
+<td>-32,768</td>
+<td>32,767</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>3</td>
+<td>-8,388,608</td>
+<td>8,388,607</td>
+</tr>
+<tr>
+<td>INT(INTEGER)</td>
+<td>4</td>
+<td>-2,147,483,648</td>
+<td>2,147,483,647</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8</td>
+<td>-9,223,372,036,854,775,808</td>
+<td>9,223,372,036,854,775,807</td>
+</tr>
+</tbody>
+</table>
+<h4 id="整数的底层存储原理">整数的底层存储原理</h4>
+<p>整数的编码分为原码、反码和补码。计算机使用的是补码的存储方式。它们的定义如下：</p>
+<p><strong>原码</strong>：在数值前面增加了一位符号位(即最高位为符号位)，该位为0表示正数，该位为1表示负数，其余位表示数值的大小。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">以</span><span class="o">-</span><span class="n">100</span> <span class="n">为例子</span>  <span class="n">100</span><span class="o">=</span><span class="n">64</span><span class="o">+</span><span class="n">32</span><span class="o">+</span><span class="n">4</span> <span class="n">用1个字节</span> <span class="n">8位二进制表示</span>
+</span></span><span class="line"><span class="cl"><span class="n">二进制位对应的大小</span>                 <span class="n">128</span> <span class="n">64</span> <span class="n">32</span> <span class="n">16</span>   <span class="n">8</span>  <span class="n">4</span>  <span class="n">2</span>  <span class="n">1</span>
+</span></span><span class="line"><span class="cl"> <span class="n">100对应的二进制表示</span>                <span class="n">0</span>  <span class="n">1</span>  <span class="n">1</span>  <span class="n">0</span>    <span class="n">0</span>  <span class="n">1</span>  <span class="n">0</span>  <span class="n">0</span>
+</span></span><span class="line"><span class="cl"> <span class="n">最高位是符号位</span> <span class="n">0表示正数</span> <span class="n">1表示负数</span>  <span class="o">-</span><span class="n">100</span> <span class="n">的原码是</span> <span class="n">1110</span> <span class="n">0100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>反码</strong>：正数的反码与其原码相同。负数的反码是对其原码逐位取反，但符号位除外。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">以</span><span class="o">-</span><span class="n">100</span> <span class="n">为例子</span>  
+</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">100</span> <span class="n">的原码是</span> <span class="n">1110</span> <span class="n">0100</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">100</span> <span class="n">的反码是</span> <span class="n">1001</span> <span class="n">1011</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>补码</strong>：正数的补码与其原码相同，负数的补码就是对该负数的反码加1。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">以</span> <span class="o">-</span><span class="n">100为例子</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">100</span> <span class="n">的反码是</span> <span class="n">1001</span> <span class="n">1011</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">100</span> <span class="n">的补码是</span> <span class="n">1001</span> <span class="n">1100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>计算机为什么使用补码作为存储方式呢？</p>
+<p>如果我们用原码来储存数据，那么 0 这个数字就会有两个数字来表示 =》</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="n">原码</span><span class="o">+</span><span class="n">0</span>  <span class="n">0000</span> <span class="n">0000</span>
+</span></span><span class="line"><span class="cl"> <span class="n">原码</span><span class="o">-</span><span class="n">0</span>  <span class="n">1000</span> <span class="n">0000</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果我们用反码来储存数据，那么 0 这个数字也会有两个数字来表示 =》</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">反码</span><span class="o">+</span><span class="n">0</span> <span class="n">0000</span> <span class="n">0000</span>
+</span></span><span class="line"><span class="cl"><span class="n">反码</span><span class="o">-</span><span class="n">0</span> <span class="n">1111</span> <span class="n">1111</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样的数据在计算机这样的精确软件中是不允许存在的，这样只有补码满足这个条件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">补码</span><span class="o">+</span><span class="n">0</span> <span class="n">0000</span> <span class="n">0000</span>
+</span></span><span class="line"><span class="cl"><span class="n">补码</span><span class="o">-</span><span class="n">0</span> <span class="n">0000</span> <span class="n">0000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>机器中只有加法，减法会变成补码的加法。</p>
+<p>1、补码加法运算：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="n">补</span> <span class="o">+</span> <span class="o">[</span><span class="n">y</span><span class="o">]</span><span class="n">补</span> <span class="o">=</span> <span class="o">[</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">]</span><span class="n">补</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2、补码减法运算：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">[</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="o">]</span><span class="n">补</span> <span class="o">=</span> <span class="o">[</span><span class="n">x</span><span class="o">+(-</span><span class="n">y</span><span class="o">)]</span><span class="n">补</span> <span class="o">=</span> <span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="n">补</span> <span class="o">+</span> <span class="o">[-</span><span class="n">y</span><span class="o">]</span><span class="n">补</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面从两个角度理解-128的补码为什么是1000 0000.</p>
+<p>从补码的意义上去理解</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">因为</span><span class="err">：</span><span class="n">256</span><span class="o">-</span><span class="n">128</span><span class="o">=</span><span class="n">256</span><span class="o">+(-</span><span class="n">128</span><span class="o">)</span> <span class="n">的补码</span> 
+</span></span><span class="line"><span class="cl"><span class="n">而</span>    <span class="n">256</span><span class="o">-</span><span class="n">128</span><span class="o">=</span><span class="n">128</span> 
+</span></span><span class="line"><span class="cl"><span class="n">所以</span>  <span class="n">256</span><span class="o">+</span><span class="err">（</span><span class="o">-</span><span class="n">128</span><span class="err">）</span><span class="n">的补码</span><span class="o">=</span><span class="n">128</span> 
+</span></span><span class="line"><span class="cl"><span class="n">所以</span>      <span class="err">（</span><span class="o">-</span><span class="n">128</span><span class="err">）</span><span class="n">的补码</span><span class="o">=</span><span class="n">256</span><span class="o">-</span><span class="n">128</span> 
+</span></span><span class="line"><span class="cl">                   <span class="o">=</span><span class="n">128</span> 
+</span></span><span class="line"><span class="cl"><span class="n">数学上</span><span class="err">，</span> <span class="n">128的二进制表示为</span> <span class="n">1000</span> <span class="n">0000</span> 
+</span></span><span class="line"><span class="cl"><span class="n">故规定</span><span class="o">-</span><span class="n">128的补码为</span> <span class="n">1000</span> <span class="n">0000</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：只是规定而已，下面还有原因</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">8位二进制</span> <span class="n">的补码组合序列有256个</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">0000</span> <span class="n">0000</span> <span class="o">-</span> <span class="n">0111</span> <span class="n">1111</span>   <span class="n">0</span> <span class="o">~+</span><span class="n">127</span>
+</span></span><span class="line"><span class="cl"><span class="n">1000</span> <span class="n">0000</span>            <span class="n">用来干啥好呢</span><span class="err">？</span>       
+</span></span><span class="line"><span class="cl"><span class="n">1000</span> <span class="n">0001</span> <span class="o">-</span> <span class="n">1111</span> <span class="n">1111</span>   <span class="o">-</span><span class="n">127</span><span class="o">~-</span><span class="n">1</span>  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再看看这个规律表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="n">原码</span>               <span class="n">补码</span>             <span class="n">值</span>
+</span></span><span class="line"><span class="cl"><span class="n">0111</span> <span class="n">1111</span>        <span class="n">0111</span> <span class="n">1111</span>        <span class="o">+</span><span class="n">127</span>
+</span></span><span class="line"><span class="cl"><span class="n">0111</span> <span class="n">1110</span>        <span class="n">0111</span> <span class="n">1110</span>        <span class="o">+</span><span class="n">126</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="o">...</span>            <span class="n">补码不断</span><span class="o">-</span><span class="n">1</span>        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">0000</span> <span class="n">0000</span>        <span class="n">0000</span> <span class="n">0000</span>          <span class="n">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">1000</span> <span class="n">0001</span>        <span class="n">1111</span> <span class="n">1111</span>         <span class="o">-</span><span class="n">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">1000</span> <span class="n">0010</span>        <span class="n">1111</span> <span class="n">1110</span>         <span class="o">-</span><span class="n">2</span>
+</span></span><span class="line"><span class="cl"><span class="n">1000</span> <span class="n">0011</span>        <span class="n">1111</span> <span class="n">1101</span>         <span class="o">-</span><span class="n">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="o">...</span>           <span class="n">补码不断</span><span class="o">-</span><span class="n">1</span>          <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">1111</span> <span class="n">1111</span>        <span class="n">1000</span> <span class="n">0001</span>         <span class="o">-</span><span class="n">127</span>
+</span></span><span class="line"><span class="cl"><span class="n">无法表达</span>          <span class="n">1000</span> <span class="n">0000</span>         <span class="o">-</span><span class="n">128</span>   
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>于是就有了规定 1000 0000 定为 -128的补码</p>
+<p><span style="color: red;font-weight:bolder;">总结：整数在计算机都是补码形式存储的，以1个字节为例子，从 0~127 的正负两个值共255个数（0,+1,-1,+2,-2&hellip;..），因为0 没有正负的概念，就把剩余的一个补码  1000 000 规定为 -128 ，范围大小是-128~127</span></p>
+<h3 id="实数类型">实数类型</h3>
+<h4 id="实数类型列表">实数类型列表</h4>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储长度(byte)</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FLAOT</td>
+<td>4</td>
+<td>10的38次方级</td>
+<td>10的38次方级</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>8</td>
+<td>10的308次方级</td>
+<td>10的308次方级</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>对decimal(M,D) ，依赖于M,D</td>
+<td>依赖于M,D</td>
+<td>依赖于M,D</td>
+</tr>
+</tbody>
+</table>
+<h4 id="浮点数的底层存储原理">浮点数的底层存储原理</h4>
+<p><span style="color: green;font-weight:bolder;">float的表示原理：</span>首先我们知道常用科学计数法是将所有的数字转换成 <span style="color: green;font-weight:bolder;">$\pm{a.b<em>10^c}$</span>  的形式，其中a的范围是1到9共9个整数，b是小数点后的所有数字，c是10的指数。而计算机中存储的都是二进制数据，所以float存储的数字都要先转化<span style="color: green;font-weight:bolder;">$\pm{a.b</em>2^c}$</span>由于二进制中最大的数字就是1，所以表示法可以写成 的 <span style="color: green;font-weight:bolder;">$\pm{1.b*2^c}$</span>形式，float要想存储小数就只需要存储<span style="color: green;font-weight:bolder;">（$\pm$）、b 和 c </span>就可以了。</p>
+<p>float的存储正是将4字节32位划分为了3部分来分别存储正负号，小数部分和指数部分的：</p>
+<p>​	1、Sign（1位）：用来表示浮点数是正数还是负数，0表示正数，1表示负数。
+​	2、Exponent（8位）：指数部分。即上文提到数字c，但是这里不是直接存储c，为了同时表示正负指数以及他们的大小顺序，这里实际范围是 -127~+127
+​	3、Mantissa（23位）：尾数部分。也就是上文中提到的数字b</p>
+<p>比如8.25用二进制表示可表示为1000.01，转成指数的形式1.00001*2^3,在计算机中<br>
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/536dd678cbf34f2fb13bc7d00c9d9c81.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/536dd678cbf34f2fb13bc7d00c9d9c81.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/536dd678cbf34f2fb13bc7d00c9d9c81.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/536dd678cbf34f2fb13bc7d00c9d9c81.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/536dd678cbf34f2fb13bc7d00c9d9c81.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>double和float 都是一样，double 是8个字节 64位二进制。</p>
+<p><strong>DECIMAL类型简介</strong></p>
+<p>DECIMAL从MySQL 5.1引入，列的声明语法是DECIMAL(M,D)。NUMERIC与DECIMAL同义，如果字段类型定义为NUMERIC，则将自动转成DECIMAL。</p>
+<p>对于声明语法DECIMAL(M,D)，自变量的值范围如下：</p>
+<ul>
+<li>M是最大位数（精度），范围是1到65。可不指定，默认值是10。</li>
+<li>D是小数点右边的位数（小数位）。范围是0到30，并且不能大于M，可不指定，默认值是0。</li>
+</ul>
+<p>例如字段 salary DECIMAL(5,2)，能够存储具有五位数字和两位小数的任何值，因此可以存储在salary列中的值的范围是从-999.99到999.99。</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/cbd7fd7a99a74220b651d12d618c80d2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/cbd7fd7a99a74220b651d12d618c80d2.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center, https://img-blog.csdnimg.cn/cbd7fd7a99a74220b651d12d618c80d2.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 1.5x, https://img-blog.csdnimg.cn/cbd7fd7a99a74220b651d12d618c80d2.png?x-oss-process=image/watermark%2ctype_d3F5LXplbmhlaQ%2cshadow_50%2ctext_Q1NETiBA5riF6aOO5ZKM5pyI5piO%2csize_20%2ccolor_FFFFFF%2ct_70%2cg_se%2cx_16#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/cbd7fd7a99a74220b651d12d618c80d2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5riF6aOO5ZKM5pyI5piO,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"
+    title="在这里插入图片描述" /></p>
+<p><span style="color: red;font-weight:bolder;">总结</span></p>
+<p>​    float单精度小数部分只能精确到后面6位，加上小数点前的一位，即有效数字为7位</p>
+<p>double双精度小数部分能精确到小数点后的15位，加上小数点前的一位 有效位数为16位。</p>
+<p>​    float 和doble 都是近似值，本身就无法保障数据就一定精准。 通常在设置小数的时候，都是用的decimal类型!!</p>
+<h3 id="字符串类型">字符串类型</h3>
+<h4 id="字符串类型列表">字符串类型列表</h4>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储占用最大空间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHAR</td>
+<td>255字符</td>
+</tr>
+<tr>
+<td>VARCHAR</td>
+<td>65535字节或者255字符</td>
+</tr>
+<tr>
+<td>TINYTEXT</td>
+<td>255字节</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>65,535字节  ( ~64kb）</td>
+</tr>
+<tr>
+<td>MEDIUMTEXT</td>
+<td>16,777,215字节 (~16MB)</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td>4,294,967,295字节（~4GB）</td>
+</tr>
+<tr>
+<td>TINYBLOB</td>
+<td>255字节</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>65,535字节  ( ~64kb）</td>
+</tr>
+<tr>
+<td>MEDIUMBLOB</td>
+<td>16,777,215字节 (~16MB)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="相关拓展">相关拓展</h4>
+<p><strong>varchar 长度限制因素：</strong></p>
+<p>a)  存储限制</p>
+<p>​    varchar 字段是将实际内容单独存储在聚簇索引之外，内容开头用1到2个字节表示实际长度（长度超过255时需要2个字节），因此最大长度不能超过65535。</p>
+<p>b)  编码长度限制</p>
+<p>​       字符类型若为gbk，每个字符最多占2个字节，最大长度不能超过32766;</p>
+<p>　　字符类型若为utf8，每个字符最多占3个字节，最大长度不能超过21845。</p>
+<p>　　使用GBK英文则每个字符占用2个字节，而使用UTF－8英文却只占一个字节。</p>
+<p>　　<strong>若定义的时候超过上述限制，则varchar字段会被强行转为text类型，并产生warning。</strong></p>
+<p>c)  行长度限制</p>
+<p>　　MySQL要求一个行的定义长度不能超过65535。</p>
+<p><strong>varchar 和char 比较：</strong></p>
+<blockquote>
+<p>**VARCHAR类型用于存储可变长字符串。**它比定长类型更节省空间，因为它仅使用必要的空间(例如，越短的字符串使用越少的空间)。有一种情况例外，如果MySQL表使用ROW_FORMAT=FIXED创建的话，每一行都会使用定长存储，这会很浪费空间。</p>
+<p><strong>VARCHAR需要使用1或2个额外字节记录字符串的长度</strong>：如果列的最大长度小于或等于255字节，则只使用1个字节表示，否则使用2个字节。假设采用latin1字符集，一个VARCHAR(10)的列需要11个字节的存储空间。VARCHAR(1000)的列则需要1002个字节，因为需要2个字节存储长度信息。</p>
+<p>**VARCHAR节省了存储空间，所以对性能也有帮助。但是，由于行是变长的，在UPDATE时可能使行变得比原来更长，这就导致需要做额外的工作。**如果一个行占用的空间增长，并且在页内没有更多的空间可以存储，在这种情况下，不同的存储引擎的处理方式是不一样的。例如，MyISAM会将行拆成不同的片段存储，InnoDB则需要分裂页来使行可以放进页内。其他一些存储引擎也许从不在原数据位置更新数据。</p>
+<p>下面这些情况下适用VARCHAR是合适的：</p>
+<ul>
+<li>字符串列的最大长度比平均长度大很多</li>
+<li>列的更新很少，所以碎片不是问题</li>
+<li>使用了像UTF-8这样复杂的字符集，每个字符都使用不同的字节数进行存储</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>**CHAR类型是定长的：MySQL总是根据定义的字符串长度分配足够的空间。**当存储CHAR值时，MySQL会删除所有的末尾空格。CHAR值会根据需要采用空格进行填充以方便比较。</p>
+<p>CHAR适合存储很短的字符串，或者所有值都接近同一个长度。例如，CHAR非常适合存储密码的MD5值，因为这是一个定长的值。对于经常变更的数据，CHAR也比VARCHAR更好，因为定长的CHAR类型不容易产生碎片。对于非常短的列，CHAR比VARCHAR在存储空间上也更有效率。例如用CHAR(1)来存储只有Y和N的值，如果采用单字节字符集只需要一个字节，但是VARCHAR(1)却需要两个字节，因为还有一个记录长度的额外字节。</p>
+</blockquote>
+<p>总结：</p>
+<p>当我们为字符串类型的字段选取类型的时候，判断该选取VARCHAR还是CHAR，我们可以从以下几个方面来考虑：</p>
+<ul>
+<li>该字段数据集的平均长度与最大长度是否相差很小，若相差很小优先考虑CHAR类型，反之，考虑VARCHAR类型。</li>
+<li>若字段存储的是MD5后的哈希值，或一些定长的值，优先选取CHAR类型。</li>
+<li>若字段经常需要更新，则优先考虑CHAR类型，由于CHAR类型为定长，因此不容易产生碎片。</li>
+<li>对于字段值存储很小的信息，如性别等，优先选取CHAR类型，因为VARCHAR类型会占用额外的字节保存字符串长度信息。</li>
+</ul>
+<p>总之一句话，当我们能够选取CHAR类型的时候，或者说空间消耗相对并不是影响因素的重点时，尽量选取CHAR类型，因为在其他方面，CHAR类型都有着或多或少的优势。而当空间消耗成为了很大的影响因素以后，我们则考虑使用VARCHAR类型。</p>
+<p><strong>BLOB 介绍</strong></p>
+<p>BLOB (binary large object)二进制大对象，是一个可以存储二进制文件的容器。在计算机中，BLOB常常是数据库中用来存储二进制文件的字段类型。BLOB是一个大文件，典型的BLOB是一张图片或一个声音文件，由于它们的尺寸，必须使用特殊的方式来处理。</p>
+<h3 id="时间类型">时间类型</h3>
+<h4 id="时间类型列表">时间类型列表</h4>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储长度(byte)</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YEAR</td>
+<td>1</td>
+<td>1001</td>
+<td>9999</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>3</td>
+<td>00:00:00</td>
+<td>23:59:59</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>3</td>
+<td>1001-01-01</td>
+<td>9999-12-31</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td>8</td>
+<td>1001-01-01 00:00:00</td>
+<td>9999-12-31 23:59:59</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>4</td>
+<td>1970-01-01 00:00:00</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>MySQL 中常见的时间类型有三种<code>DATE</code>, <code>DATETIME</code>和 <code>TIMESTAMP</code>，其中<code>DATE</code>类型用于表示日期，但是不会包含时间，格式为<code>YYYY-MM-DD</code>，而<code>DATETIME</code>和<code>TIMESTAMP</code>用于表示日期和时间，常见的格式为<code>YYYY-MM-DD HH:MM:SS</code>，也可以带6位小数来表示微秒。</p>
+<p>不同于<code>DATETIME</code>，<code>TIMESTAMP</code>支持的时间范围从<code>1970-01-01 00:00:01.000000</code>到<code>2038-01-19 03:14:07.999999</code>，使用了<code>TIMESTAMP</code>的应用很有可能在<code>2038-01-19 03:14:07.999999</code>之后宕机，同样面临这个问题的还有所有的类<code>Unix</code>系统，因为他们使用了<code>time_t</code>这一32位数字来表示时间，这就是著名的<strong>2038年问题</strong>。</p>
+<h3 id="参考">参考</h3>
+<p><a
+  href="https://www.cnblogs.com/flowerslip/p/5933833.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>关于 -128 ，+128，-0，+0，-1 的反码补码</a></p>
+<p><a
+  href="https://www.cnblogs.com/tusheng/articles/9389672.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL如何选择float, double, decimal</a></p>
+<p><a
+  href="https://blog.csdn.net/Mikeoperfect/article/details/78814824"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL数据类型（decimal的存储大小）</a></p>
+<p><a
+  href="https://www.jb51.net/article/229161.htm"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL中varchar和char类型的区别</a></p>
+<p><a
+  href="https://www.cnblogs.com/mo-beifeng/archive/2011/08/09/2133039.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL中varchar最大长度是多少?</a></p>
+<p><a
+  href="https://zhuanlan.zhihu.com/p/41982564"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL中“诡异”的TIMESTAMP数据类型</a></p>
+<p><a
+  href="http://www.postgres.cn/docs/12/datatype-datetime.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>8.5. 日期/时间类型</a></p>
+<p><a
+  href="https://zhuanlan.zhihu.com/p/426439142"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL 尽量避免使用 TIMESTAMP</a></p>
+<p><a
+  href="https://www.cnblogs.com/mo-beifeng/archive/2011/08/09/2133039.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>Mysql varchar 最大长度是多少?</a></p>
+<p><a
+  href="https://zhuanlan.zhihu.com/p/41982564"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL中“诡异”的TIMESTAMP数据类型</a></p>
+<p><a
+  href="http://www.postgres.cn/docs/12/datatype-datetime.html"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>8.5. 日期/时间类型</a></p>
+<p><a
+  href="https://zhuanlan.zhihu.com/p/426439142"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>MySQL 尽量避免使用 TIMESTAMP</a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-04-12&#32;22:05:56>更新于 2022/04/12</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%BF%B0/" data-title="mysql数据类型概述" data-description="mysql有哪些数据类型？对应的计算机底层是怎么表示的？"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">mysql</a>,&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/mysql%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D/" class="prev" rel="prev" title="mysql索引介绍"><i class="fas fa-angle-left fa-fw"></i>mysql索引介绍</a>
+      <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="next" rel="next" title="数据库事务的简单介绍">数据库事务的简单介绍<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

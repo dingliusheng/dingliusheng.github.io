@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>sql优化(1)-扫描区间和边界条件 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="如何判断一条sql的大致数据量？" />
+<meta name="keywords" content="mysql" /><meta itemprop="name" content="sql优化(1)-扫描区间和边界条件">
+<meta itemprop="description" content="如何判断一条sql的大致数据量？"><meta itemprop="datePublished" content="2022-04-29T21:29:08+08:00" />
+<meta itemprop="dateModified" content="2022-04-29T21:29:08+08:00" />
+<meta itemprop="wordCount" content="2844"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="mysql优化,扫描区间," /><meta property="og:title" content="sql优化(1)-扫描区间和边界条件" />
+<meta property="og:description" content="如何判断一条sql的大致数据量？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-29T21:29:08+08:00" />
+<meta property="article:modified_time" content="2022-04-29T21:29:08+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="sql优化(1)-扫描区间和边界条件"/>
+<meta name="twitter:description" content="如何判断一条sql的大致数据量？"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" /><link rel="prev" href="https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/" /><link rel="next" href="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "sql优化(1)-扫描区间和边界条件",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6\/"
+    },"genre": "posts","keywords": "mysql优化, 扫描区间","wordcount":  2844 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6\/","datePublished": "2022-04-29T21:29:08+08:00","dateModified": "2022-04-29T21:29:08+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "如何判断一条sql的大致数据量？"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">sql优化(1)-扫描区间和边界条件</h1><h2 class="single-subtitle">如何判断一条sql的大致数据量？</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>&nbsp;数据库</a></span></div>
+      <div class="post-meta-line"><span title=2022-04-29&#32;21:29:08>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022/04/29" >2022/04/29</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2844 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.36krcdn.com%2F20210831%2Fv2_9085c117c1d64f76b667515400ee6eab_img_png&amp;refer=http%3A%2F%2Fimg.36krcdn.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655565018&amp;t=24cea736bb2efb1157254ed4f2aa28b7"
+    title="如何判断一条sql的大致数据量？" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#sql优化1-扫描区间和边界条件">sql优化(1)-扫描区间和边界条件</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="sql优化1-扫描区间和边界条件">sql优化(1)-扫描区间和边界条件</h2>
+<p>对于某个查询来说，最简单粗暴的执行方案就是扫描表中的所有记录，判断每一条记录是否符合搜索条件。如果符合，就将其发送到客户，否则就跳过该记录。这种执行方案也称为全表扫描。对于使用 InnoD 存储引擎的表来说，全表扫描意味着从聚簇索引第一个叶子节点的第一条记录开始，沿着记录所在的单向链表向后扫描， 直到最后一个叶子节点的最后一条记录。虽然全表扫描是种很笨的执行方案，但却是一种万能的执行方案， 所有的查询都可以使用这种方案来执行。</p>
+<p>还有更快的方法，利用 B+ 树查找索引列值等于某个值的记录，这样可以明显减少需要扫描的记录数量（<strong>索引本质是已经过排序的数据结构</strong>），只需要扫描某个区间或者某些区间中的记录也可以明显减少需要扫描的记录数量。</p>
+<p>为方便理解，先建一个演示表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="nf">table_demo</span><span class="w"> </span><span class="p">(</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">id</span><span class="w"> </span><span class="kt">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="w"> </span><span class="kp">AUTO_INCREMENT</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">keyl</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="n">lOO</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key2</span><span class="w"> </span><span class="kt">INT</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key3</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key_partl</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key_part2</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">10</span><span class="n">Q</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">key_part3</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">common_field</span><span class="w"> </span><span class="nf">VλRCHAR</span><span class="p">(</span><span class="n">lOO</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">PRIMARY</span><span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">KEY</span><span class="w"> </span><span class="nf">idx_keyl</span><span class="w"> </span><span class="p">(</span><span class="n">keyl</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="nf">uk_key2</span><span class="w"> </span><span class="p">(</span><span class="n">key2</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">key</span><span class="w"> </span><span class="nf">idx_key3</span><span class="w"> </span><span class="p">(</span><span class="n">key3</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">KEY</span><span class="w"> </span><span class="nf">idx_part</span><span class="p">(</span><span class="n">key_partl</span><span class="p">.</span><span class="w"> </span><span class="n">key_part2</span><span class="p">,</span><span class="w"> </span><span class="n">keY_part3</span><span class="p">)</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>为这个 table_demo 表建立1个聚簇索引4个二级索引，分别是：</p>
+<ul>
+<li>为 id 列建立的聚簇索引;</li>
+<li>为 key1 列建立的 idx_key1 二级索引</li>
+<li>为 key2 列建立的 uk_key2 唯一索引</li>
+<li>为 key3 列建立的 idx_key3 二级索引</li>
+<li>为key_part1、key_part2、 key_part3列建立联合索引</li>
+</ul>
+<p>假设往这个表插入10万条随机数据。然后进行下面这些查询操作：</p>
+<p>查询语句1：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">&gt;=</span><span class="mi">2</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;=</span><span class="mi">100</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个语句其实是想查找 id 值在 [2,100] 区间中的所有聚簇索引记录。可以通过聚簇索引对应树快速地定位 id 值为 2的那条聚簇索引记录，然后沿着记录所在的单向链表向后扫描直到某条聚簇索引记录的 id 值不在 [2,100] 区间中为止 (即 id 值不再符合 id&lt;= 100 条件)。把这个例子中待扫描记录的 id 值所在的区间称为<strong>扫描区间</strong>，把形成这个扫描区间的搜索条件(也就是 id &gt;= 2 AND  id &lt;=100)  称为形成这个扫描区间的<strong>边界条件</strong>。</p>
+<blockquote>
+<p>其实对于全表扫描来说 相当于扫描 值在 (-∞，+∞ ) 区间中 记录，也就是说全农扫描对应的扫描区间是 (-∞，+∞ )</p>
+</blockquote>
+<p>查询语句2：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">key2</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">1438</span><span class="p">,</span><span class="mi">6328</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="n">key2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">38</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">79</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>该查询的搜索条件涉及 key2 列， 又正好 key2 列建立了 uk_key2 索引 .如果使 uk_key2 索引执行这个查询，则相当于从下面的3个扫描区间获取二级索引记录。</p>
+<ul>
+<li>[1438,6328]：对应的边界条件是 key in (1438)</li>
+<li>[6328,6328]：对应的边界条件是 key in (6328)</li>
+<li>(38,79)：对应的边界条件是 key&gt;38 and key&lt;79</li>
+</ul>
+<p>方便起见，可以把像 [1438,1438]、[6328,6328] 这样只包含一个值的扫描区间称为<strong>单点扫描区间</strong>， [38,79] 这样包含多个值的拍描区间称为<strong>范围扫描区间</strong>。</p>
+<p>查询语句3：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">keyl</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39; a &#39;</span><span class="w"> </span><span class="n">ANO</span><span class="w"> </span><span class="n">key3</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;z&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如果使用 idx_key1 索引执行查询，那么相应的扫描区间就是 (-∞，‘a’ )， 形成该扫描区间的边界条件就是 key1 &lt; &lsquo;a&rsquo;， key3 &gt; &lsquo;z&rsquo; 就是普通的搜索条件，这些普通的搜索条件需要在获取到 idx_key1二级索引记录后，再执行回表操作，在获取到完整的用户记录后才能去判断它们是否成立。</li>
+<li>如果使用 idx_key3 索引执行查询，那么相应的扫描区间就是 (‘z’ , +∞ )， 形成该扫描区间的边界条件就是 key3 &gt; &lsquo;z&rsquo;， key1 &lt; &lsquo;a&rsquo; 就是普通的搜索条件，这些普通的搜索条件需要在获取到 idx_key2二级索引记录后，再执行回表操作，在获取到完整的用户记录后才能去判断它们是否成立。</li>
+</ul>
+<p>所以，对于查询语句3，无论选择哪个索引，都有一部分筛选条件不能成为边界条件。</p>
+<p>一个查询语句中的 WHERE 子句可能有很多个小的搜索条件，这些搜索条件使用 AND 或者 OR 操作符连接起来。</p>
+<ul>
+<li>条件1 AND 条件2  只有当 条件1 和 条件2 都为 TRUE 时，整个表达式才为 TRUE</li>
+<li>条件1 OR  条件2  只要 条件1 或者 条件2 有一个为 TRUE，整个表达式就为 TRUE</li>
+</ul>
+<p>在执行一个查询语句时，首先需要找出所有可用的索引以及使用它们时对应的扫描区间。</p>
+<p>查询语句4：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">100</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">200</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">100</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">200</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于  key2&gt;100 、key2&gt;200 可以用到索引uk_key2，对应的扫描区间是 (100, +∞ )、（200，+∞）。and 就是把两个扫描区间取交集，即(200,+∞)；or就是把两个扫描区间取并集，即(100,+∞ )，这个就比较好理解。</p>
+<p>查询语句5：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">100</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key1</span><span class="o">&gt;</span><span class="s1">&#39;c&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">key2</span><span class="o">&gt;</span><span class="mi">100</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">key1</span><span class="o">&gt;</span><span class="s1">&#39;c&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于这个两个查询，如果使用uk_key2 索引的话，key2&gt;100 可用形成扫描区间(100,+∞) ，key1&gt;&lsquo;c&rsquo; 对于uk_key2 索引来说是没有办法按照扫描区间来查找的（因为uk_key2 索引是按照key2列的值按大小顺序进行排序的，对于key1的值来说，是无序的），就只能全部扫描，即 (-∞,+∞ )。(100,+∞ )和 (-∞,+∞ ) 的并集也还是 (-∞,+∞ )，所以，即便使用uk_key2 索引，还是需要全表扫描，并且先扫描索引，还需要通过回表操作获取key1列的值，这无疑是比直接全表扫描更耗时。</p>
+<blockquote>
+<p>对于扫描区间的 (-∞,+∞ )的筛选条件可以当成逻辑判断中的状态 TRUE</p>
+<p>例如：</p>
+<p>select * from table_demo where key2&gt;100 or key1&gt;&lsquo;c&rsquo;;</p>
+<p>替换：</p>
+<p>select * from table_demo where key2&gt;100 or TRUE;</p>
+<p>即：</p>
+<p>select * from table_demo where TRUE ;</p>
+<p>使用key2列索引形成的索引区间是 TRUE，即 (-∞,+∞ ) 全表扫描</p>
+</blockquote>
+<p>查询语句6：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">table_demo</span><span class="w"> </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">(</span><span class="n">key1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;xyz&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">748</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="k">or</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">(</span><span class="n">key1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;abc&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;lmn&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">(</span><span class="n">key1</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%suf&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">key1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;zzz&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="n">key2</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">8000</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">common_field</span><span class="o">=</span><span class="s1">&#39;abc&#39;</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>假设使用 idx_keyl 执行查询</strong></p>
+<p>那么对于key2、common_field 的筛选条件就都是需要全表扫描的，对于key1 like &lsquo;%suf&rsquo; 是匹配字符末尾，也是需要全表扫描的， 即扫描范围是 (-∞,+∞ ) ,即查询语句可以替换成以下：</p>
+<blockquote>
+<p>select * from table_demo where
+(key1 &gt; &lsquo;xyz&rsquo; and TRUE )  or
+(key1 &lt; &lsquo;abc&rsquo; and key1 &gt; &rsquo;lmn&rsquo;) or
+(TRUE and key1 &gt; &lsquo;zzz&rsquo; and (TRUE orTRUE));</p>
+</blockquote>
+<p>因为 key1 &lt; &lsquo;abc&rsquo; 和 key1 &gt; &rsquo;lmn&rsquo; 这两个条件永远无法满足，即FALSE，上述条件可用简化成：</p>
+<blockquote>
+<p>select * from table_demo where key1 &gt; &lsquo;xyz&rsquo; or key1 &gt; &lsquo;zzz&rsquo;</p>
+</blockquote>
+<p>即扫描区间是（&lsquo;xyz&rsquo;,+∞）和 （&lsquo;zzz&rsquo;,,+∞）取并集，即扫描区间是（&lsquo;xyz&rsquo;,+∞），需要把满足 key1 &gt; &lsquo;xyz&rsquo; 条件的所有二级索引记录都取出来，针对获取到的每一条二级索引记录，都要用它的主键值再进行回表操作， 在得到完整的用户记录之后再使用其他的搜索条件进行过滤 。</p>
+<p><strong>假设使用 idx_key2 执行查询</strong></p>
+<p>那么对于key1、common_field 的筛选条件就都是需要全表扫描的，即扫描范围是 (-∞,+∞ ) ,即查询语句可以替换成以下：</p>
+<blockquote>
+<p>select * from table_demo where</p>
+<p>​    (TRUE and key2 = 748 )  or
+​	(FALSE) or
+​	(TRUE and TRUE and (key2 &lt;8000 or TURE));</p>
+</blockquote>
+<p>key2 &lt;8000 or TURE  结果 肯定是TURE，继续简化：</p>
+<blockquote>
+<p>select * from table_demo where key2 = 748 or TRUE</p>
+<p>即：select * from table_demo where TRUE</p>
+</blockquote>
+<p>得出来的扫描空间是： (-∞,+∞ ) ，全表扫描。需要把所有二级索引记录都取出来，针对获取到的每一条二级索引记录，都要用它的主键值再进行回表操作， 在得到完整的用户记录之后再使用其他的搜索条件进行过滤 。</p>
+<p>显然，对于查询语句6，使用idx_keyl索引执行查询需要扫描的记录数比idx_keyl2索引少。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-04-29&#32;21:29:08>更新于 2022/04/29</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/sql%E4%BC%98%E5%8C%961-%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4%E5%92%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" data-title="sql优化(1)-扫描区间和边界条件" data-description="如何判断一条sql的大致数据量？"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql%E4%BC%98%E5%8C%96/">mysql优化</a>,&nbsp;<a href="/tags/%E6%89%AB%E6%8F%8F%E5%8C%BA%E9%97%B4/">扫描区间</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%A6%82%E8%BF%B0/" class="prev" rel="prev" title="数据质量概述"><i class="fas fa-angle-left fa-fw"></i>数据质量概述</a>
+      <a href="/posts/sql%E4%BC%98%E5%8C%962-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/" class="next" rel="next" title="sql优化(2)-单表访问方法">sql优化(2)-单表访问方法<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

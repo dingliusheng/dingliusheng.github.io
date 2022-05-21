@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Filter - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/filter/</link>
+    <description>Filter - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 03 Jan 2021 08:41:38 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/filter/" rel="self" type="application/rss+xml" /><item>
+  <title>简单理解Filter过滤器</title>
+  <link>https://dingliusheng.github.io/posts/filter-%E8%BF%87%E6%BB%A4%E5%99%A8/</link>
+  <pubDate>Sun, 03 Jan 2021 08:41:38 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/filter-%E8%BF%87%E6%BB%A4%E5%99%A8/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdoc.100lw.com%2Fpic%2Fca68425f6a018155fe0bdaae%2F1-328-png_6_0_0_0_0_0_0_893.25_1263.375-893-0-110-893.jpg&amp;refer=http%3A%2F%2Fdoc.100lw.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655538415&amp;t=50989b442bca9eef6f4b184c02fdca74" referrerpolicy="no-referrer">
+      </div>简单理解Filter过滤器]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,34 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>servlet - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/servlet/</link>
+    <description>servlet - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 18:01:12 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/servlet/" rel="self" type="application/rss+xml" /><item>
+  <title>HttpServletResponse和HttpServletRequest常见应用</title>
+  <link>https://dingliusheng.github.io/posts/httpservletresponse%E5%92%8Chttpservletrequest%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/</link>
+  <pubDate>Wed, 23 Dec 2020 18:01:12 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/httpservletresponse%E5%92%8Chttpservletrequest%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.pianshen.com%2Fimages%2F444%2F28996faf73bf0be989220f44431adb7c.png&amp;refer=http%3A%2F%2Fwww.pianshen.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655509389&amp;t=33f87a418ed2f33e4d669cc6703b6843" referrerpolicy="no-referrer">
+      </div>HttpServletResponse和HttpServletRequest常见应用]]></description>
+</item><item>
+  <title>ServletContext详解</title>
+  <link>https://dingliusheng.github.io/posts/servletcontext%E8%AF%A6%E8%A7%A3/</link>
+  <pubDate>Tue, 22 Dec 2020 19:06:27 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/servletcontext%E8%AF%A6%E8%A7%A3/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2F20201123171744737.png%3Fx-oss-process%3Dimage%2Fwatermark%2Ctype_ZmFuZ3poZW5naGVpdGk%2Cshadow_10%2Ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N5Z2cxMjM0NTY2Ng%3D%3D%2Csize_16%2Ccolor_FFFFFF%2Ct_70%23pic_center&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655479614&amp;t=76db86f003cf44a6dca93258993a3144" referrerpolicy="no-referrer">
+      </div>ServletContext详解]]></description>
+</item><item>
+  <title>初识servlet</title>
+  <link>https://dingliusheng.github.io/posts/%E7%94%A8maven%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84servlet%E4%BE%8B%E5%AD%90/</link>
+  <pubDate>Sat, 19 Dec 2020 16:11:07 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/%E7%94%A8maven%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84servlet%E4%BE%8B%E5%AD%90/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2F2021020623440211.png%3Fx-oss-process%3Dimage%2Fwatermark%2Ctype_ZmFuZ3poZW5naGVpdGk%2Cshadow_10%2Ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDM2MDg5NQ%3D%3D%2Csize_16%2Ccolor_FFFFFF%2Ct_70&amp;refer=http%3A%2F%2Fimg-blog.csdnimg.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655479528&amp;t=417fb2904be9d4764bf5c15e3f5beba5" referrerpolicy="no-referrer">
+      </div>用maven创建一个简单的servlet例子]]></description>
+</item></channel>
+</rss>

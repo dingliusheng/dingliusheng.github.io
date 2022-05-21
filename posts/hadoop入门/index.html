@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <title>hadoop入门文档 - 一个技术猿的自留地</title><meta name="author" content="Tincat: ">
+<meta name="description" content="从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档" />
+<meta name="keywords" content="hadoop" /><meta itemprop="name" content="hadoop入门文档">
+<meta itemprop="description" content="从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档"><meta itemprop="datePublished" content="2021-04-12T17:14:41+08:00" />
+<meta itemprop="dateModified" content="2021-04-12T17:14:41+08:00" />
+<meta itemprop="wordCount" content="8065"><meta itemprop="image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+<meta itemprop="keywords" content="hadoop," /><meta property="og:title" content="hadoop入门文档" />
+<meta property="og:description" content="从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dingliusheng.github.io/posts/hadoop%E5%85%A5%E9%97%A8/" /><meta property="og:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-12T17:14:41+08:00" />
+<meta property="article:modified_time" content="2021-04-12T17:14:41+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dingliusheng.github.io/images/homepage_icon.svg"/>
+
+<meta name="twitter:title" content="hadoop入门文档"/>
+<meta name="twitter:description" content="从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档"/>
+<meta name="application-name" content="一个技术猿的自留地">
+<meta name="apple-mobile-web-app-title" content="一个技术猿的自留地"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://dingliusheng.github.io/posts/hadoop%E5%85%A5%E9%97%A8/" /><link rel="prev" href="https://dingliusheng.github.io/posts/linux%E5%AD%A6%E4%B9%A0/" /><link rel="next" href="https://dingliusheng.github.io/posts/hdfs/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "hadoop入门文档",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dingliusheng.github.io\/posts\/hadoop%E5%85%A5%E9%97%A8\/"
+    },"genre": "posts","keywords": "hadoop","wordcount":  8065 ,
+    "url": "https:\/\/dingliusheng.github.io\/posts\/hadoop%E5%85%A5%E9%97%A8\/","datePublished": "2021-04-12T17:14:41+08:00","dateModified": "2021-04-12T17:14:41+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Tincat"},"author": {
+        "@type": "Person",
+        "name": "Tincat"
+      },"description": "从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档"
+  }
+  </script></head>
+  <body header-desktop="sticky" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script><div class="wrapper"><header class="desktop" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="一个技术猿的自留地"
+    title="一个技术猿的自留地" /><span class="header-title-text">Tincat</span></a></div>
+    <nav>
+      <ul class="menu"><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+              
+            >
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fas fa-times-circle fa-fw"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fas fa-spinner fa-fw fa-spin"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="一个技术猿的自留地"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/homepage_icon.svg"
+    data-srcset="/images/homepage_icon.svg, /images/homepage_icon.svg 1.5x, /images/homepage_icon.svg 2x"
+    data-sizes="auto"
+    alt="/images/homepage_icon.svg"
+    title="/images/homepage_icon.svg" /><span class="header-title-text">Tincat</span></a></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容 ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fas fa-times-circle fa-fw"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fas fa-spinner fa-fw fa-spin"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/posts/"
+                title="满满的干货🎈"
+                
+              ><i class='fa fa-book' aria-hidden='true'></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class='fa fa-th-large' aria-hidden='true'></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class='fa fa-tag' aria-hidden='true'></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fas fa-adjust fa-fw"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header>
+<div class="search-dropdown desktop">
+  <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+  <div id="search-dropdown-mobile"></div>
+</div>
+<main class="container" page-style="narrow"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    
+  </aside>
+
+  <article class="page single"><h1 class="single-title animate__animated animate__flipInX">hadoop入门文档</h1><h2 class="single-subtitle">从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档</h2><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="Tincat"
+    title="Tincat" />&nbsp;Tincat</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8A%80%E6%9C%AF/"><i class="far fa-folder fa-fw"></i>&nbsp;大数据技术</a></span></div>
+      <div class="post-meta-line"><span title=2021-04-12&#32;17:14:41>
+            <i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021/04/12" >2021/04/12</time>
+          </span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 8065 字&nbsp;
+        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 17 分钟&nbsp;</div>
+    </div><div class="featured-image"><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zdnet.com.cn%2F3%2F244%2Flix6W5tstQNIQ.jpg&amp;refer=http%3A%2F%2Fimg.zdnet.com.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655472968&amp;t=be149a43c1dffb7f68a539f701e87b97"
+    data-srcset="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zdnet.com.cn%2F3%2F244%2Flix6W5tstQNIQ.jpg&amp;refer=http%3A%2F%2Fimg.zdnet.com.cn&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655472968&amp;t=be149a43c1dffb7f68a539f701e87b97, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zdnet.com.cn%2F3%2F244%2Flix6W5tstQNIQ.jpg&amp;refer=http%3A%2F%2Fimg.zdnet.com.cn&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655472968&amp;t=be149a43c1dffb7f68a539f701e87b97 1.5x, https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zdnet.com.cn%2F3%2F244%2Flix6W5tstQNIQ.jpg&amp;refer=http%3A%2F%2Fimg.zdnet.com.cn&amp;app=2002&amp;size=f9999%2c10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655472968&amp;t=be149a43c1dffb7f68a539f701e87b97 2x"
+    data-sizes="auto"
+    alt="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zdnet.com.cn%2F3%2F244%2Flix6W5tstQNIQ.jpg&amp;refer=http%3A%2F%2Fimg.zdnet.com.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655472968&amp;t=be149a43c1dffb7f68a539f701e87b97"
+    title="从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档" /></div><div class="details toc" id="toc-static" kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fas fa-angle-right"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一概念">一、概念</a>
+      <ul>
+        <li><a href="#11hadoop是什么">1.1、Hadoop是什么</a></li>
+        <li><a href="#12-hadoop发展历史">1.2 、Hadoop发展历史</a></li>
+        <li><a href="#13-hadoop三大发行版本">1.3 Hadoop三大发行版本</a></li>
+        <li><a href="#14hadoop优势">1.4、Hadoop优势</a></li>
+        <li><a href="#15hadoop组成面试重点">1.5、Hadoop组成（面试重点）</a>
+          <ul>
+            <li><a href="#151hadoop1x2x3x-区别">1.5.1、Hadoop1.x、2.x、3.x 区别</a></li>
+            <li><a href="#152hdfs架构概述">1.5.2、HDFS架构概述</a></li>
+            <li><a href="#153yarn架构概述">1.5.3、YARN架构概述</a></li>
+            <li><a href="#154mapreduce-架构概述">1.5.4、MapReduce 架构概述</a></li>
+            <li><a href="#155hdfs-yarnmapreduce-三者关系">1.5.5、HDFS 、YARN、MapReduce 三者关系</a></li>
+            <li><a href="#16大数据生态体系">1.6、大数据生态体系</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#二hadoop运行环境搭建">二、Hadoop运行环境搭建</a>
+      <ul>
+        <li><a href="#21前期环境准备">2.1、前期环境准备</a>
+          <ul>
+            <li><a href="#211配置虚拟机网络">2.1.1、配置虚拟机网络</a></li>
+            <li><a href="#212配置主机名">2.1.2、配置主机名</a></li>
+            <li><a href="#213安装epel-release">2.1.3、安装epel-release</a></li>
+            <li><a href="#214-关闭防火墙关闭防火墙开机自启">2.1.4 关闭防火墙、关闭防火墙开机自启</a></li>
+            <li><a href="#215-卸载虚拟机自带的jdk">2.1.5、 卸载虚拟机自带的JDK</a></li>
+          </ul>
+        </li>
+        <li><a href="#22远程访问工具">2.2、远程访问工具</a></li>
+        <li><a href="#23克隆虚拟机不推荐可以用下面的同步更新脚本">2.3、克隆虚拟机(不推荐，可以用下面的同步更新脚本)</a></li>
+        <li><a href="#24安装jdk">2.4、安装JDK</a></li>
+        <li><a href="#25安装hadoop">2.5、安装Hadoop</a></li>
+        <li><a href="#26hadoop-文件目录说明">2.6、Hadoop 文件目录说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#三hadoop集群配置">三、Hadoop集群配置</a>
+      <ul>
+        <li><a href="#31hadoop运行模式">3.1、Hadoop运行模式</a></li>
+        <li><a href="#32本机模式案例--统计单词出现的个数">3.2、本机模式案例&ndash;统计单词出现的个数</a></li>
+        <li><a href="#33编写集群分发脚本-xsync">3.3、编写集群分发脚本 xsync</a>
+          <ul>
+            <li><a href="#331scp-secure-copy-安全拷贝">3.3.1、scp (secure copy) 安全拷贝</a></li>
+            <li><a href="#332rsync--远程同步工具">3.3.2、rsync  远程同步工具</a></li>
+            <li><a href="#333-xsync-集群分发脚本">3.3.3、 xsync 集群分发脚本</a></li>
+          </ul>
+        </li>
+        <li><a href="#34ssh免密登录">3.4、SSH免密登录</a>
+          <ul>
+            <li><a href="#341原理">3.4.1、原理</a></li>
+            <li><a href="#342-举例">3.4.2 、举例</a></li>
+          </ul>
+        </li>
+        <li><a href="#35集群配置">3.5、集群配置</a>
+          <ul>
+            <li><a href="#351配置方案">3.5.1、配置方案</a></li>
+            <li><a href="#352配置文件说明">3.5.2、配置文件说明</a></li>
+            <li><a href="#353配置集群">3.5.3、配置集群</a></li>
+            <li><a href="#354同步配置文件">3.5.4、同步配置文件</a></li>
+            <li><a href="#355启动集群">3.5.5、启动集群</a></li>
+            <li><a href="#356hdfs测试">3.5.6、HDFS测试</a></li>
+            <li><a href="#357yarn测试">3.5.7、YARN测试</a></li>
+            <li><a href="#358集群崩溃解决方法">3.5.8、集群崩溃解决方法</a></li>
+          </ul>
+        </li>
+        <li><a href="#36配置历史服务器">3.6、配置历史服务器</a>
+          <ul>
+            <li><a href="#361配置-mapred-sitexml">3.6.1、<strong>配置</strong> mapred-site.xml</a></li>
+            <li><a href="#362同步mapred-sitexml文件">3.6.2、同步mapred-site.xml文件</a></li>
+            <li><a href="#363启动历史服务器">3.6.3、启动历史服务器</a></li>
+            <li><a href="#364查看历史服务器是否启动">3.6.4、查看历史服务器是否启动</a>
+              <ul>
+                <li><a href="#365查看jobhistory">3.6.5、查看jobhistory</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#37配置日志的聚集">3.7、配置日志的聚集</a>
+          <ul>
+            <li><a href="#371配置-yarn-sitexml">3.7.1、<strong>配置</strong> yarn-site.xml</a></li>
+            <li><a href="#372同步mapred-sitexml文件">3.7.2、同步mapred-site.xml文件</a></li>
+            <li><a href="#373关闭yarn和historyserver">3.7.3、关闭YARN和HistoryServer</a></li>
+            <li><a href="#374启动yarn和historyserver">3.7.4、启动YARN和HistoryServer</a></li>
+            <li><a href="#375-查看jobhistory">3.7.5 查看jobhistory</a></li>
+          </ul>
+        </li>
+        <li><a href="#38编写脚本启动关闭集群">3.8、编写脚本启动/关闭集群</a>
+          <ul>
+            <li><a href="#381-启动关闭集群脚本">3.8.1 、启动/关闭集群脚本</a></li>
+            <li><a href="#382-查看hadoop-服务状态脚本">3.8.2 查看hadoop 服务状态脚本</a></li>
+          </ul>
+        </li>
+        <li><a href="#39-两个面试题">3.9、 两个面试题</a></li>
+        <li><a href="#310集群时间同步">3.10、集群时间同步</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="hadoop入门">Hadoop入门</h1>
+<nav>
+<a href="#一概念">一、概念</a><br/>
+<a href="#二环境准备">二、环境准备</a><br/>
+<a href="#三Hadoop生产集群搭建">三、Hadoop生产集群搭建</a><br/>
+</nav>
+<h2 id="一概念">一、概念</h2>
+<h3 id="11hadoop是什么">1.1、Hadoop是什么</h3>
+<ol>
+<li><code>Hadoop</code> 是一个由Apache基金会所开发的<code>分布式系统基础架构</code> 。</li>
+<li>主要解决海量数据的<code>存储</code>和海量数据的<code>分析计算问题</code></li>
+<li>广义上来说，Hadoop 通常是指一个更广泛的概念———<code>Hadoop生态圈</code>(HBase、Hive等)</li>
+</ol>
+<h3 id="12-hadoop发展历史">1.2 、Hadoop发展历史</h3>
+<ol>
+<li>Hadoop创始人 <code>Doug Cutting</code> ，为了实现与 Google类似的全文搜索功能，在<code>Lucene</code>框架基础上进行优化升级，查询引擎和索引引擎。</li>
+<li>2001年年底Lucene成为<code>Apache基金会</code>的一个子项目。</li>
+<li>对于海量数据场景，Lucene框架面对与Google同样的困难，<strong>存储海量数据困难，检索海量数据慢</strong>。</li>
+<li>学习和模仿Google解决这些问题的办法：微型版 Nutch。</li>
+<li>参考Google在大数据的三篇论文（GFS&mdash;&gt;HDFS ，Map-Reduce&mdash;&gt;MR  ，BigTable&mdash;&gt;HBase ）。</li>
+<li>2003-2004年，Google公开了部分GFS和MapReduce思想的细节，以此为基础<code>Doug Cutting</code>等人用了<strong>2年业余时间</strong>实现了DFS和MapReduce机制，使Nutch性能飙升。</li>
+<li>2005年Hadoop作为Lucene的子项目Nutch的一部分正式引入Apache基金会。</li>
+<li>2006年3月，Map-Reduce和Nutch Distributed File System (NDFS) 分别纳入到Hadoop项目中，Hadoop就此正式诞生，标志着大数据时代来临。</li>
+<li>logo来源于<code>Doug Cutting</code>儿子的玩具大象</li>
+</ol>
+<h3 id="13-hadoop三大发行版本">1.3 Hadoop三大发行版本</h3>
+<p>Hadoop 三大发行版本： Apache 、Cloudera 、Hortonworks 。</p>
+<ul>
+<li>Apache 版本最原始（最基础)的版本，对入门学习最好（2006年）。</li>
+<li>Cloudera 在Apache版本基础上集成了很多大数据框架，对应的产品CDH（2008年）。</li>
+<li>Hortonworks 文档较好，对应产品HDP（2011年）。</li>
+<li>Hortonworks 被Cloudera 收费，推出CDP（2018年）。</li>
+<li>两家公司都是在Apache的基础上进行集成功能，提高用户体验，借此收费，最终合并联手。</li>
+</ul>
+<h3 id="14hadoop优势">1.4、Hadoop优势</h3>
+<ol>
+<li><strong>高可靠性</strong>：Hadoop 底层数据有多个备份，所以即使Hadoop某个数据存储或计算出现故障，也不会导致数据丢失。</li>
+<li><strong>高扩展性</strong>：动态增加、减少服务器，在集群间分配任务数据，可方面的扩展数以千计的节点。</li>
+<li><strong>高效性</strong>：在MapReduce 的思想下，Hadoop是==并行工作==的，加快任务处理速度。</li>
+<li><strong>高容错性</strong>：能自动将失败的任务重新分配。</li>
+</ol>
+<h3 id="15hadoop组成面试重点">1.5、Hadoop组成（面试重点）</h3>
+<h4 id="151hadoop1x2x3x-区别">1.5.1、Hadoop1.x、2.x、3.x 区别</h4>
+<ul>
+<li>Hadoop1.x 组成： Common(辅助工具)   + HDFS（数据存储） + ==MapReduce(计算+资源调度)==</li>
+<li>Hadoop2.x 组成： Common(辅助工具)   + HDFS（数据存储） + ==Yarn(资源调度) + MapReduce(计算)==</li>
+<li>Hadoop3.x 组成和Hadoop2.x 没有区别</li>
+</ul>
+<h4 id="152hdfs架构概述">1.5.2、HDFS架构概述</h4>
+<p>​	<code>Hadoop Distributed File System</code> ， 简称<code>HDFS</code>，是一个分布式文件系统。</p>
+<ul>
+<li>
+<p><strong>NameNode</strong>: 存储文件的<strong>元数据</strong>，如<strong>文件名、文件目录结构、文件属性</strong>（生成时间、副本数、文件权限），以及每个文件的<strong>块列表</strong>和<strong>块所在的DataNode</strong>等。</p>
+</li>
+<li>
+<p><strong>DataNode</strong>：在本地文件系统<strong>存储文件块数据</strong>，以及<strong>块数据的校验和</strong></p>
+</li>
+<li>
+<p>Secondary NameNode (<strong>2NN</strong>)：<strong>每隔一段时间对NameNode元数据备份</strong></p>
+<p>理解：NameNode记录了数据存储信息，DataNode就是数据存储块，2NN是对NameNode的备份，以防止NameNode的丢失情况</p>
+</li>
+</ul>
+<h4 id="153yarn架构概述">1.5.3、YARN架构概述</h4>
+<p><code>YetAnother Resource Negotiator</code> 简称<code>YARN</code>，另一种资源协调者，是Hadoop的资源管理器。</p>
+<ul>
+<li>
+<p><strong>ResourceManager</strong>（RM）：整个集群**资源（内存、cpu等）**的管理者</p>
+</li>
+<li>
+<p><strong>NodeManager</strong>（NM）：单个节点服务器资源的管理者</p>
+</li>
+<li>
+<p><strong>ApplicationMaster</strong>（AM）：单个任务运行的管理者</p>
+</li>
+<li>
+<p><strong>Container</strong>：容器，相当于一台独立的服务器，里面封装了任务运行所需要的资源，如<strong>内存，CPU、磁盘、网络</strong>等（将一个计算资源虚拟划分多个容器，并分配好内存、CPU、磁盘、网络等）</p>
+<p>说明：客户端可以有多个，集群上可以运行多个ApplicationMaster，每个NodeManager上可以有多个Container</p>
+<p>理解：<strong>ApplicationMaster</strong>根据任务运行资源需要向<strong>ResourceManager</strong>申请对应的资源，<strong>ResourceManager</strong>分配一个<strong>NodeManager</strong>并在<strong>NodeManager</strong>划分出满足任务资源需要的容器，任务完成后，删除容器，释放对应资源，能灵活分配集群资源</p>
+</li>
+</ul>
+<h4 id="154mapreduce-架构概述">1.5.4、MapReduce 架构概述</h4>
+<p><strong>Map阶段</strong>：并行处理输入数据</p>
+<p><strong>Reduce阶段</strong>：对Map结果进行汇总</p>
+<p>理解：将待分析的数据划分成N分，分配给多个服务器进行计算，再将各个计算结果进行汇总</p>
+<h4 id="155hdfs-yarnmapreduce-三者关系">1.5.5、HDFS 、YARN、MapReduce 三者关系</h4>
+<p>首先，通过数据采集获取海量数据需要HDFS来存储，当查询或计算这些海量数据时，需要先给查询或计算任务分配CPU、内存等资源，并将大量的输入数据进行拆分，分给多个服务器并行计算，最终将结果汇总。</p>
+<h4 id="16大数据生态体系">1.6、大数据生态体系</h4>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412165855408.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412165855408.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412165855408.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412165855408.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412165855408.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h2 id="二hadoop运行环境搭建">二、Hadoop运行环境搭建</h2>
+<h3 id="21前期环境准备">2.1、前期环境准备</h3>
+<ul>
+<li>VMware 虚拟机安装</li>
+<li>CentOS7 安装（都可以百度有对应的教程）</li>
+</ul>
+<h4 id="211配置虚拟机网络">2.1.1、配置虚拟机网络</h4>
+<ol>
+<li>
+<p>​	打开 编辑&ndash;》虚拟网络编辑器</p>
+</li>
+<li>
+<p>​    选择 删除VMnet 8 ，添加新网络VMnet2， 选择NAT模式，NET设置修改网关（不建议），DHCP设置修改分配的IP地址（虚拟机设置的IP必须要在这个范围内）一般是 xxx.xxx.xxx.3~254</p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412165951882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412165951882.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412165951882.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412165951882.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412165951882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="3">
+<li>在Windows下，打开网络和Internet设置&mdash;》更改网络配置&mdash;-》更改适配器选项&ndash;》找到VMnet2(刚才添加的信网络)&mdash;》点击属性&mdash;》选择Internet协议版本4（TCP\IPv4）</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170010197.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170010197.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170010197.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170010197.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170010197.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="4">
+<li>设置IP地址，子网掩码，默认网关，首选DNS服务器和网关一样，备选DNS服务器国际默认8.8.8.8</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170024318.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170024318.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170024318.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170024318.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170024318.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="5">
+<li>在VMware ，点击网络适配器，选择自定义，选择新建的网络VMnet2</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170038461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170038461.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170038461.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170038461.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170038461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="6">
+<li>登入虚拟机，编辑网络配置文件 <strong>/etc/sysconfig/network-scripts/ifcfg-ens33</strong> ，内容如下，编辑后重启或 执行<strong>source /etc/sysconfig/network-scripts/ifcfg-ens33</strong>命令</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">TYPE</span><span class="o">=</span><span class="s2">&#34;Ethernet&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PROXY_METHOD</span><span class="o">=</span><span class="s2">&#34;none&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BROWSER_ONLY</span><span class="o">=</span><span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#设置为静态ip,默认是dchp,动态分配ip地址</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BOOTPROTO</span><span class="o">=</span><span class="s2">&#34;static&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DEFROUTE</span><span class="o">=</span><span class="s2">&#34;yes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPV4_FAILURE_FATAL</span><span class="o">=</span><span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPV6INIT</span><span class="o">=</span><span class="s2">&#34;yes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPV6_AUTOCONF</span><span class="o">=</span><span class="s2">&#34;yes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPV6_DEFROUTE</span><span class="o">=</span><span class="s2">&#34;yes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPV6_FAILURE_FATAL</span><span class="o">=</span><span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPV6_ADDR_GEN_MODE</span><span class="o">=</span><span class="s2">&#34;stable-privacy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;ens33&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span><span class="s2">&#34;b400b844-2c25-4434-8f17-1da5faf08353&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DEVICE</span><span class="o">=</span><span class="s2">&#34;ens33&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ONBOOT</span><span class="o">=</span><span class="s2">&#34;yes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#设置网络IP地址，网关，DNS服务器地址</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IPADDR</span><span class="o">=</span><span class="s2">&#34;192.168.75.100&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">GATEWAY</span><span class="o">=</span><span class="s2">&#34;192.168.75.2&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DNS1</span><span class="o">=</span><span class="s2">&#34;192.168.75.2&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="7">
+<li>
+<p>验证是否完成配置，<strong>ping  <a
+  href="https://www.baidu.com"
+  
+  
+    
+    
+    target="_blank"
+  
+  
+    rel="external nofollow noopener noreffer"
+  
+  
+  
+  
+>www.baidu.com</a></strong>  ，如果能接收数据就表示成功完成网络配置</p>
+</li>
+<li>
+<p>ps:不要通过克隆来创建其他虚拟机，会出现网络bug,直接从最初镜像或干净的虚拟机进行同步</p>
+</li>
+</ol>
+<h4 id="212配置主机名">2.1.2、配置主机名</h4>
+<ol>
+<li>
+<p>登入linux，编辑主机名称，<strong>vi /etc/hostname</strong></p>
+</li>
+<li>
+<p>修改主机名称映射（在本机中自动将相应的字符转为ip地址，如localhost 对应127.0.0.0）</p>
+<p><strong>vi /etc/hosts</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+</span></span><span class="line"><span class="cl">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+</span></span><span class="line"><span class="cl"><span class="c1">#添加下列信息</span>
+</span></span><span class="line"><span class="cl">192.168.75.100 Hadoop100
+</span></span><span class="line"><span class="cl">192.168.75.101 Hadoop101
+</span></span><span class="line"><span class="cl">192.168.75.102 Hadoop102
+</span></span><span class="line"><span class="cl">192.168.75.103 Hadoop103
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>重启系统 （或者用source 命令）</p>
+</li>
+</ol>
+<h4 id="213安装epel-release">2.1.3、安装epel-release</h4>
+<p>Extra Packages for Enterprise Linux 是红帽系的操作系统提供额外的软件包，适用于RHEL 、CentOS 和 Scientific Linux。相当于是一个软件仓库，大多数rpm包在官方repository是找不到的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum install -y epel-release
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>如果Linux系统安装的是最小系统版，还需要配置如下工具：</strong></p>
+<p>net-tools:工具包集合，包含ifconfig等命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum install -y net-tools
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>vim 编辑器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum install -y vim
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="214-关闭防火墙关闭防火墙开机自启">2.1.4 关闭防火墙、关闭防火墙开机自启</h4>
+<p>一般公司对外网的入口建防火墙，内部服务器不建防火墙</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl stop firewalld
+</span></span><span class="line"><span class="cl">systemctl disable firewalld.service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="215-卸载虚拟机自带的jdk">2.1.5、 卸载虚拟机自带的JDK</h4>
+<p>==如果是虚拟机最小化安装不需要执行这一步==</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> <span class="c1">#查询所安装的所有rpm软件包</span>
+</span></span><span class="line"><span class="cl">rpm -qa
+</span></span><span class="line"><span class="cl"><span class="c1">#忽略大小写过滤</span>
+</span></span><span class="line"><span class="cl">grep -i
+</span></span><span class="line"><span class="cl"><span class="c1">#表示每次只传递一个参数</span>
+</span></span><span class="line"><span class="cl">xargs -n1
+</span></span><span class="line"><span class="cl"><span class="c1">#强制卸载软件</span>
+</span></span><span class="line"><span class="cl">rpm -e --nodeps
+</span></span><span class="line"><span class="cl"><span class="c1">#完整命令</span>
+</span></span><span class="line"><span class="cl">rpm -qa <span class="p">|</span>grep -i java <span class="p">|</span>xargs -n1 rpm -e --nodeps
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22远程访问工具">2.2、远程访问工具</h3>
+<ul>
+<li>xshell+xftp</li>
+<li>（或）putty + WinSCP</li>
+<li>安装教程自行百度</li>
+</ul>
+<h3 id="23克隆虚拟机不推荐可以用下面的同步更新脚本">2.3、克隆虚拟机(不推荐，可以用下面的同步更新脚本)</h3>
+<p>1、打开VMware，选择要克隆的模板机，右键管理，克隆，选择<strong>创建完整性克隆</strong></p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170135839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170135839.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170135839.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170135839.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170135839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<p>2、设置克隆机的ip地址和主机名，参考上面的方法（如果克隆的是已经配置好的linux系统，则只需修改 /etc/sysconfig/network-scripts/ifcfg-ens33  和 /etc/hostname ）</p>
+<h3 id="24安装jdk">2.4、安装JDK</h3>
+<ul>
+<li>
+<p>1、XFTP软件将JDK的压缩包传输到 /opt/software/目录下</p>
+</li>
+<li>
+<p>2、解压压缩包：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/software/
+</span></span><span class="line"><span class="cl">tar -zxvf jdk-8u161-linux-x64.tar.gz -C /opt/module/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>3、配置环境变量</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/profile.d
+</span></span><span class="line"><span class="cl"><span class="c1">#创建my_env.sh 文件</span>
+</span></span><span class="line"><span class="cl">vi my_env.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 my_env.sh 文件添加如下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#JAVA_HOME</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/module/jdk1.8.0_161
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CLASSPATH</span><span class="o">=</span>$:CLASSPATH:<span class="nv">$JAVA_HOME</span>/lib/
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重新启动配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile
+</span></span><span class="line"><span class="cl"><span class="c1">#验证是否配置完成</span>
+</span></span><span class="line"><span class="cl">java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="25安装hadoop">2.5、安装Hadoop</h3>
+<ul>
+<li>
+<p>1、XFTP软件将Hadoop的压缩包传输到 /opt/software/目录下</p>
+</li>
+<li>
+<p>2、解压压缩包：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/software/
+</span></span><span class="line"><span class="cl">tar -zxvf hadoop-2.7.3.tar.gz -C /opt/module/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>3、配置环境变量</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/profile.d
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 my_env.sh 文件添加如下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#HADOOP_HOME</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HADOOP_HOME</span><span class="o">=</span>/opt/module/hadoop-2.7.3
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/sbin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重新启动配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile
+</span></span><span class="line"><span class="cl"><span class="c1">#验证是否配置完成</span>
+</span></span><span class="line"><span class="cl">hadoop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="26hadoop-文件目录说明">2.6、Hadoop 文件目录说明</h3>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170228553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170228553.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170228553.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170228553.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170228553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">bin</span><span class="o">:</span> <span class="nx">存储hdfs</span><span class="err">、</span><span class="nx">yarn</span><span class="err">、</span><span class="nx">mapred</span> <span class="nx">相关命令</span>
+</span></span><span class="line"><span class="cl"><span class="nx">etc</span><span class="o">:</span> <span class="nx">存储重要的配置文件</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sbin</span><span class="o">:</span> <span class="nx">集群相关命令</span>
+</span></span><span class="line"><span class="cl"><span class="nx">share</span><span class="o">:</span> <span class="nx">学习资料</span><span class="err">，</span><span class="nx">有一些官方的资料</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="三hadoop集群配置">三、Hadoop集群配置</h2>
+<h3 id="31hadoop运行模式">3.1、Hadoop运行模式</h3>
+<ul>
+<li>本地模式：单台服务器，数据存储在linux本地</li>
+<li>伪分布式：单台服务器，数据存储在HDFS</li>
+<li>分布式： 多台服务器,数据存储在HDFS，多台服务器工作</li>
+</ul>
+<h3 id="32本机模式案例--统计单词出现的个数">3.2、本机模式案例&ndash;统计单词出现的个数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/module/hadoop-2.7.3
+</span></span><span class="line"><span class="cl">mkdir wcinput
+</span></span><span class="line"><span class="cl">vi word.txt
+</span></span><span class="line"><span class="cl"><span class="c1">#编辑输入若干个单词如下</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># qtds  ppx  tthy</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ppx   qtds  dmxy</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># qtds </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#调用hadoop 命令执行统计单词数量</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#输出目录wcoutput 会自动生成，不需要创建  输入数据文件的目录 wcinput/</span>
+</span></span><span class="line"><span class="cl">hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar wordcount wcinput/  wcoutput
+</span></span><span class="line"><span class="cl"><span class="c1">#查看输出结果</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170246338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170246338.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170246338.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170246338.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170246338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h3 id="33编写集群分发脚本-xsync">3.3、编写集群分发脚本 xsync</h3>
+<h4 id="331scp-secure-copy-安全拷贝">3.3.1、scp (secure copy) 安全拷贝</h4>
+<p>（1）scp定义</p>
+<p>​		scp 可以实现服务器与服务器之间的数据拷贝</p>
+<p>（2）基本语法</p>
+<p>​     <strong>scp  -r   要拷贝的文件路径/名称  目的地用户@主机：目的地路径/名称</strong></p>
+<p>​    <strong>-r 文件递归</strong></p>
+<ol>
+<li>
+<p>在hadoop100 机器上将文件拷贝给hadoop102</p>
+<p><code>    scp -r /opt/software/hadoop-2.7.3.tar.gz  root@hadoop102:/opt/module/</code></p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170259832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170259832.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170259832.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170259832.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170259832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="2">
+<li>
+<p>在hadoop102机器上从hadoop100拿取文件</p>
+<p><code>scp -r root@hadoop100:/opt/software/hadoop-2.7.3.tar.gz  /opt/software/</code></p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170340534.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170340534.png#pic_center, https://img-blog.csdnimg.cn/20210412170340534.png#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170340534.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170340534.png#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="3">
+<li>
+<p>在hadoop102机器上从hadoop100机器传输文件到hadoop103机器</p>
+<p><code>scp -r root@hadoop100:/opt/software/*  root@hadoop103:/opt/software/</code></p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170359840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170359840.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170359840.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170359840.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170359840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="332rsync--远程同步工具">3.3.2、rsync  远程同步工具</h4>
+<p>rsync主要用于<strong>备份和镜像</strong>。具有<strong>速度快、避免复制相同内容</strong>和支持符号链接的优点。</p>
+<p>rsync和scp区别：用rsync做文件的复制要比scp速度快，rsync只对差异文件做更新。scp是把所有文件都复制过去。</p>
+<p>（1）rsync  基本语法</p>
+<pre><code>**rsync  -av   要拷贝的文件路径/名称  目的地用户@主机：目的地路径/名称**
+
+ **-a 归档拷贝**
+
+**-v 显示复制过程**
+</code></pre>
+<p>如果没有rsync 命令，则需下载 yum -y install rsync</p>
+<ol>
+<li>在hadoop102删除部分文件</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170412814.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170412814.png#pic_center, https://img-blog.csdnimg.cn/20210412170412814.png#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170412814.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170412814.png#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="2">
+<li>从hadoop100机器同步Hadoop-2.7.3文件到hadoop102机器</li>
+</ol>
+<p><code>rsync -a root@hadoop100:/opt/module/hadoop-2.7.3/*  /opt/module/hadoop-2.7.3/</code>
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170428106.png#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170428106.png#pic_center, https://img-blog.csdnimg.cn/20210412170428106.png#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170428106.png#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170428106.png#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="333-xsync-集群分发脚本">3.3.3、 xsync 集群分发脚本</h4>
+<p>需求：循环复制文件到所有节点的目录下</p>
+<p>需求分析：</p>
+<ol>
+<li>
+<p>rsync 原始拷贝文件</p>
+</li>
+<li>
+<p>脚本要同步文件名</p>
+</li>
+<li>
+<p>脚本要在任何地方都能使用（脚本放在了声明全局变量的路径）</p>
+<p>在 /etc/profile.d/my_env.sh  编辑添加脚本的全局路径，编辑好后，执行 <strong>source /etc/profile</strong>  命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#XSYNC_HOME</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">XSYNC_HOME</span><span class="o">=</span>/root
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$XSYNC_HOME</span>/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>实现脚本xsync：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">#1. 判断参数个数</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -lt <span class="m">1</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> Not Enough Arguement!
+</span></span><span class="line"><span class="cl"> exit<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#2. 遍历集群所有机器</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> host in hadoop102 hadoop103 hadoop104
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="o">====================</span> <span class="nv">$host</span> <span class="o">====================</span>
+</span></span><span class="line"><span class="cl"> 	<span class="c1">#3. 遍历所有目录，挨个发送</span>
+</span></span><span class="line"><span class="cl"> 	<span class="k">for</span> file in <span class="nv">$@</span>
+</span></span><span class="line"><span class="cl"> 	<span class="k">do</span>
+</span></span><span class="line"><span class="cl"> 	    <span class="c1">#4. 判断文件是否存在</span>
+</span></span><span class="line"><span class="cl"> 		<span class="k">if</span> <span class="o">[</span> -e <span class="nv">$file</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl"> 		<span class="k">then</span>
+</span></span><span class="line"><span class="cl"> 			<span class="c1">#5. 获取父目录</span>
+</span></span><span class="line"><span class="cl"> 			<span class="nv">pdir</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span> -P <span class="k">$(</span>dirname <span class="nv">$file</span><span class="k">)</span><span class="p">;</span> <span class="nb">pwd</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"> 			<span class="c1">#6. 获取当前文件的名称</span>
+</span></span><span class="line"><span class="cl"> 			<span class="nv">fname</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$file</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"> 			ssh <span class="nv">$host</span> <span class="s2">&#34;mkdir -p </span><span class="nv">$pdir</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"> 			rsync -av <span class="nv">$pdir</span>/<span class="nv">$fname</span> <span class="nv">$host</span>:<span class="nv">$pdir</span>
+</span></span><span class="line"><span class="cl"> 		<span class="k">else</span>
+</span></span><span class="line"><span class="cl"> 			<span class="nb">echo</span> <span class="nv">$file</span> does not exists!
+</span></span><span class="line"><span class="cl"> 		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl"> 	<span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例，将hadoop100机器 /etc/profile.d/  下的文件进行同步到hadoop102上</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170455907.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170455907.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170455907.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170455907.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170455907.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h3 id="34ssh免密登录">3.4、SSH免密登录</h3>
+<h4 id="341原理">3.4.1、原理</h4>
+<ol>
+<li>有两台服务器A和B ，在A服务器上创建一对密钥（<strong>公钥和私钥</strong>），注意：私钥始终掌握在本机手中，不能传给其他服务器，否则会将服务器完全暴露给其他机器</li>
+<li>把<strong>公钥</strong>拷贝给服务器B，服务器B将公钥放在<strong>授权文件</strong>里</li>
+<li>当服务器A <strong>ssh</strong> 访问服务器B时(<strong>数据用私钥加密</strong>)</li>
+<li>服务器B 接收到数据后，去<strong>授权文件</strong>中查找服务器A的<strong>公钥</strong>，并<strong>解密数据</strong></li>
+<li>服务器B用服务器A的<strong>公钥加密数据</strong>返回给服务器A</li>
+<li>用服务A<strong>公钥加密的数据</strong>，只能通过服务器A的<strong>私钥解密</strong></li>
+</ol>
+<h4 id="342-举例">3.4.2 、举例</h4>
+<ol>
+<li>
+<p>在hadoop102机器上生成<strong>密钥对</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#切换到用户目录下的.ssh目录</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#如果没有.ssh目录，则需要用ssh 命令登入一下其他机器</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /root/.ssh/
+</span></span><span class="line"><span class="cl"><span class="c1">#生成密钥对</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t rsa
+</span></span><span class="line"><span class="cl"><span class="c1">#然后敲（三个回车），就会生成两个文件 id_rsa（私钥）、id_rsa.pub（公钥）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>将hadoop102机器的<strong>公钥</strong> 拷贝给hadoop100</p>
+<p><strong>ssh-copy-id hadoop100</strong></p>
+</li>
+<li>
+<p>在hadoop102就可以免密登入hadoop100了
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/2021041217051936.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/2021041217051936.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/2021041217051936.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/2021041217051936.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/2021041217051936.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+</li>
+</ol>
+<h3 id="35集群配置">3.5、集群配置</h3>
+<h4 id="351配置方案">3.5.1、配置方案</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>hadoop100</th>
+<th>Hadoop102</th>
+<th>hadoop103</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDFS</td>
+<td>==NameNode==   DataNode</td>
+<td>DataNode</td>
+<td>==2NN==   DataNode</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>==ResourceManger==   NodeManager</td>
+<td>NodeManager</td>
+</tr>
+</tbody>
+</table>
+<p>​      备注：1、NameNode 和 2NN ，不要安装在同一台服务器</p>
+<p>​                  2、ResourceManager<strong>也</strong>很消耗内存，不要和NameNode 和 2NN 配置在同一服务器</p>
+<h4 id="352配置文件说明">3.5.2、配置文件说明</h4>
+<p>​			Hadoop 配置文件分两类，默认配置文件和自定义配置文件，==只有用户想修改某一默认配置时才需要修改自定义配置文件==</p>
+<ol>
+<li>
+<p>默认配置文件</p>
+<p><strong>/opt/module/hadoop-2.7.3/share/hadoop</strong>  目录下</p>
+<table>
+<thead>
+<tr>
+<th>要获取的默认文件</th>
+<th>文件存放在 Hadoop 的 jar 包中的位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>core-default.xml</td>
+<td>hadoop-common-2.7.3.jar/core-default.xml</td>
+</tr>
+<tr>
+<td>hdfs-default.xml</td>
+<td>hadoop-hdfs-2.7.3.jar/hdfs-default.xml</td>
+</tr>
+<tr>
+<td>yarn-default.xml</td>
+<td>hadoop-yarn-common-2.7.3.jar/yarn-default.xml</td>
+</tr>
+<tr>
+<td>mapred-default.xml</td>
+<td>hadoop-mapreduce-client-core-2.7.3.jar/mapred-default.xml</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>自定义配置文件</p>
+<p><strong>/opt/module/hadoop-2.7.3/etc/hadoop</strong> 目录下</p>
+<p><strong>core-site.xml</strong>、<strong>hdfs-site.xml</strong>、<strong>yarn-site.xml</strong>、<strong>mapred-site.xml</strong> 四个配置文件</p>
+</li>
+</ol>
+<h4 id="353配置集群">3.5.3、配置集群</h4>
+<ol>
+<li>
+<p>配置 core-site.xml，添加如下内容</p>
+<p><code>vi /opt/module/hadoop-2.7.3/etc/hadoop/core-site.xml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="c">&lt;!-- 指定 NameNode 的地址 --&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;name&gt;</span>fs.defaultFS<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;value&gt;</span>hdfs://hadoop100:8020<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">	 <span class="c">&lt;!-- 指定 hadoop 数据的存储目录 --&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">		 <span class="nt">&lt;name&gt;</span>hadoop.tmp.dir<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">		 <span class="nt">&lt;value&gt;</span>/opt/module/hadoop-2.7.3/data<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置hdfs-site.xml，添加如下内容</p>
+</li>
+</ol>
+<p><code>vi /opt/module/hadoop-2.7.3/etc/hadoop/hdfs-site.xml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="c">&lt;!-- nn web 端访问地址--&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;name&gt;</span>dfs.namenode.http-address<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;value&gt;</span>hadoop100:9870<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="c">&lt;!-- 2nn web 端访问地址--&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;name&gt;</span>dfs.namenode.secondary.http-address<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;value&gt;</span>hadoop103:9868<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>
+<p>配置 yarn-site.xml，添加如下内容</p>
+<p><code>vi /opt/module/hadoop-2.7.3/etc/hadoop/yarn-site.xml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="c">&lt;!-- 指定 MR 走 shuffle --&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;name&gt;</span>yarn.nodemanager.aux-services<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;value&gt;</span>mapreduce_shuffle<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="c">&lt;!-- 指定 ResourceManager 的地址--&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;name&gt;</span>yarn.resourcemanager.hostname<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;value&gt;</span>hadoop102<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="c">&lt;!-- 环境变量的继承 --&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;name&gt;</span>yarn.nodemanager.env-whitelist<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="nt">&lt;value&gt;</span>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CO
+</span></span><span class="line"><span class="cl">		NF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAP
+</span></span><span class="line"><span class="cl">		RED_HOME<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">	 <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置 mapred-site.xml，添加如下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="c">&lt;!-- 指定 MapReduce 程序运行在 Yarn 上 --&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl"> 		<span class="nt">&lt;value&gt;</span>yarn<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    	<span class="nt">&lt;name&gt;</span>yarn.app.mapreduce.am.env<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    	<span class="nt">&lt;value&gt;</span>HADOOP_MAPRED_HOME=/opt/module/hadoop-2.7.3<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    	<span class="nt">&lt;name&gt;</span>mapreduce.map.env<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    	<span class="nt">&lt;value&gt;</span>HADOOP_MAPRED_HOME=/opt/module/hadoop-2.7.3<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    	<span class="nt">&lt;name&gt;</span>mapreduce.reduce.env<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    	<span class="nt">&lt;value&gt;</span>HADOOP_MAPRED_HOME=/opt/module/hadoop-2.7.3<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h4 id="354同步配置文件">3.5.4、同步配置文件</h4>
+<p>执行脚本 <strong>xsync  /opt/module/hadoop-2.7.3/etc/hadoop/</strong></p>
+<h4 id="355启动集群">3.5.5、启动集群</h4>
+<ol>
+<li>
+<p>配置<strong>workers</strong></p>
+<p><code>vim  /opt/module/hadoop-2.7.3/etc/hadoop/workers</code></p>
+<p>在该文件中增加如下内容：</p>
+<p>==注意：该文件中添加的内容结尾不允许有空格，文件中不允许有空行。==</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hadoop100
+</span></span><span class="line"><span class="cl">hadoop102
+</span></span><span class="line"><span class="cl">hadoop103
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同步所有节点配置文件</p>
+<p><code>xsync /opt/module/hadoop-2.7.3/etc/</code></p>
+</li>
+<li>
+<p><strong>启动集群</strong></p>
+<p><strong>如果集群是第一次启动</strong>，需要在 hadoop102 节点格式化 NameNode（注意：格式化 NameNode，会产生新的集群 id，导致 NameNode 和 DataNode 的集群 id 不一致，集群找不到已往数据。如果集群在运行过程中报错，需要重新格式化 NameNode 的话，一定要先停 止 namenode 和 datanode 进程，并且要删除所有机器的 data 和 logs 目录，然后再进行格式化。）</p>
+<p>在hadoop100机器上格式化NameNode</p>
+<p>执行命令：<code> hdfs namenode -format</code></p>
+</li>
+<li>
+<p><strong>启动 HDFS</strong></p>
+<p>在各个机器上启动HDFS执行(==在hadoop目录下执行下面命令==)</p>
+<p><code>sbin/start-dfs.sh</code></p>
+</li>
+<li>
+<p>在各个机器上启动 YARN (==在hadoop目录下执行下面命令==)</p>
+<p><code>sbin/start-yarn.sh</code></p>
+<p>执行  <strong>jps</strong>  查看启动的服务是否与配置方案一样</p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170931979.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170931979.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170931979.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170931979.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170931979.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="5">
+<li>
+<p>Web 端查看 HDFS 的 NameNode</p>
+<p>浏览器中输入：http://192.168.75.100:9870/</p>
+<p><strong>如果是核心最小版的需要下载 httpd，并且关闭防火墙</strong></p>
+<p><code>yum install -y  httpd</code></p>
+<p>在启动http服务</p>
+<p><code>/bin/systemctl start httpd.service</code></p>
+<p>设置http服务开机自启：</p>
+<p><code>systemctl enable httpd.service</code></p>
+<p>查询服务是否自启</p>
+<p><code>systemctl is-enabled httpd.service</code></p>
+<p>查询服务是否运行</p>
+<p><code>systemctl status httpd.service</code></p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170551477.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170551477.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170551477.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170551477.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170551477.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="6">
+<li>Web 端查看 YARN 的 ResourceManager</li>
+</ol>
+<p>http://192.168.75.102:8088</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412170605760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412170605760.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412170605760.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412170605760.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412170605760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="356hdfs测试">3.5.6、HDFS测试</h4>
+<ol>
+<li>
+<p>上传文件到集群</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#创建目录input</span>
+</span></span><span class="line"><span class="cl">hadoop fs -mkdir /wcinput  
+</span></span><span class="line"><span class="cl"><span class="c1">#上传文件</span>
+</span></span><span class="line"><span class="cl">fs -put /opt/module/hadoop-2.7.3/wcinput/word.txt   /input
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171000588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171000588.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171000588.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171000588.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171000588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="2">
+<li>
+<p>查看 HDFS 文件存储路径</p>
+<p>根据 core-site.xml 的配置 ,查看 HDFS 在磁盘存储文件内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"> <span class="c">&lt;!-- 指定 hadoop 数据的存储目录 --&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">		 <span class="nt">&lt;name&gt;</span>hadoop.tmp.dir<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">		 <span class="nt">&lt;value&gt;</span>/opt/module/hadoop-2.7.3/data<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nt">&lt;/property&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 /opt/module/hadoop-2.7.3/data 目录下 能找到对应上传的word.txt 数据</p>
+</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171017171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171017171.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171017171.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171017171.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171017171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<ol start="3">
+<li>复制的三份分别存在hadoop100、hadoop102、hadoop103,在hadoop102、hadoop103 机器相同的路径下，能找到一模一样的文件</li>
+</ol>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171043871.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171043871.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171043871.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171043871.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171043871.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="357yarn测试">3.5.7、YARN测试</h4>
+<p>执行 wordcount 程序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> <span class="c1"># 注意文件路径都是HDFS系统下的路径</span>
+</span></span><span class="line"><span class="cl"> hadoop jar /opt/module/hadoop-2.7.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar wordcount /input /output
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171119195.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171119195.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171119195.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171119195.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171119195.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171130238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171130238.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171130238.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171130238.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171130238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h4 id="358集群崩溃解决方法">3.5.8、集群崩溃解决方法</h4>
+<ol>
+<li>
+<p>杀死进程</p>
+<p>==hadoop目录下执行== sbin/stop-dfs.sh</p>
+</li>
+<li>
+<p>删除每个节点的 data（数据存放目录） 和 logs（日志存放目录） 文件</p>
+<p>==hadoop目录下执行== rm -rf   data/   logs/</p>
+</li>
+<li>
+<p>格式化Namenode 节点</p>
+<p>==hadoop目录下执行== hdfs namenode -format</p>
+</li>
+<li>
+<p>启动集群</p>
+<p>==hadoop目录下执行== sbin/start-dfs.sh</p>
+</li>
+</ol>
+<h3 id="36配置历史服务器">3.6、配置历史服务器</h3>
+<p>为了查看程序的历史运行情况，需要配置一下历史服务器。具体配置步骤如下：</p>
+<h4 id="361配置-mapred-sitexml">3.6.1、<strong>配置</strong> mapred-site.xml</h4>
+<p>在hadoop100机器上编辑 mapred-site.xml</p>
+<p><code>vim  /opt/module/hadoop-2.7.3/etc/hadoop/mapred-site.xml</code></p>
+<p>添加如下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;!-- 历史服务器端地址 --&gt;
+</span></span><span class="line"><span class="cl">&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;value&gt;hadoop100:10020&lt;/value&gt;
+</span></span><span class="line"><span class="cl">&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;!-- 历史服务器 web 端地址 --&gt;
+</span></span><span class="line"><span class="cl">&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;value&gt;hadoop100:19888&lt;/value&gt;
+</span></span><span class="line"><span class="cl">&lt;/property&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="362同步mapred-sitexml文件">3.6.2、同步mapred-site.xml文件</h4>
+<p><code>xsync /opt/module/hadoop-2.7.3/etc/hadoop/mapred-site.xml</code></p>
+<h4 id="363启动历史服务器">3.6.3、启动历史服务器</h4>
+<p>本文配置在hadoop100机器上，所有在hadoop100执行</p>
+<p><code>/opt/module/hadoop-2.7.3/sbin/mr-jobhistory-daemon.sh start historyserver</code></p>
+<h4 id="364查看历史服务器是否启动">3.6.4、查看历史服务器是否启动</h4>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171146660.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171146660.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171146660.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171146660.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171146660.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h5 id="365查看jobhistory">3.6.5、查看jobhistory</h5>
+<p>http://192.168.75.100:19888/jobhistory</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171156781.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171156781.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171156781.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171156781.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171156781.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h3 id="37配置日志的聚集">3.7、配置日志的聚集</h3>
+<p>日志聚集概念：应用运行完成以后，将程序运行日志信息上传到 HDFS 系统上。</p>
+<p>日志聚集功能好处：可以方便的查看到程序运行详情，方便开发调试。</p>
+<p>==注意：开启日志聚集功能，需要重新启动 NodeManager 、ResourceManager 和HistoryServer。==</p>
+<h4 id="371配置-yarn-sitexml">3.7.1、<strong>配置</strong> yarn-site.xml</h4>
+<p>在hadoop100机器上编辑 yarn-site.xml</p>
+<p><code>vim  /opt/module/hadoop-2.7.3/etc/hadoop/yarn-site.xml</code></p>
+<p>添加如下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;!-- 开启日志聚集功能 --&gt;
+</span></span><span class="line"><span class="cl">&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;value&gt;true&lt;/value&gt;
+</span></span><span class="line"><span class="cl">&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;!-- 设置日志聚集服务器地址 --&gt;
+</span></span><span class="line"><span class="cl">&lt;property&gt; 
+</span></span><span class="line"><span class="cl"> 	&lt;name&gt;yarn.log.server.url&lt;/name&gt; 
+</span></span><span class="line"><span class="cl"> 	&lt;value&gt;http://hadoop100:19888/jobhistory/logs&lt;/value&gt;
+</span></span><span class="line"><span class="cl">&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;!-- 设置日志保留时间为 <span class="m">7</span> 天 --&gt;
+</span></span><span class="line"><span class="cl">&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;name&gt;yarn.log-aggregation.retain-seconds&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;value&gt;604800&lt;/value&gt;
+</span></span><span class="line"><span class="cl">&lt;/property&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="372同步mapred-sitexml文件">3.7.2、同步mapred-site.xml文件</h4>
+<p><code>xsync /opt/module/hadoop-2.7.3/etc/hadoop/yarn-site.xml</code></p>
+<h4 id="373关闭yarn和historyserver">3.7.3、关闭YARN和HistoryServer</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jps <span class="c1">#查看启动的服务</span>
+</span></span><span class="line"><span class="cl">/opt/module/hadoop-2.7.3/sbin/stop-yarn.sh  <span class="c1">#hadoop102</span>
+</span></span><span class="line"><span class="cl">/opt/module/hadoop-2.7.3/sbin/mr-jobhistory-daemon.sh stop historyserver <span class="c1">#hadoop100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="374启动yarn和historyserver">3.7.4、启动YARN和HistoryServer</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#hadoop102(ResourceManager 配置在hadoop102)</span>
+</span></span><span class="line"><span class="cl">/opt/module/hadoop-2.7.3/sbin/start-yarn.sh 
+</span></span><span class="line"><span class="cl"><span class="c1">#hadoop100(historyserver配置在hadoop100)</span>
+</span></span><span class="line"><span class="cl">/opt/module/hadoop-2.7.3/sbin/mr-jobhistory-daemon.sh start historyserver 
+</span></span><span class="line"><span class="cl">jps
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="375-查看jobhistory">3.7.5 查看jobhistory</h4>
+<p>网页：http://192.168.75.100:19888/jobhistory</p>
+<p>删除前面单词统计生成的目录(<strong>输出目录不能存在，执行wordcount 程序会自行创建</strong>)</p>
+<p><code>hadoop fs -rm -r /output</code></p>
+<p>执行WordCount 程序</p>
+<p><code>hadoop jar /opt/module/hadoop-2.7.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar wordcount /input /output</code></p>
+<p>通过网页查看任务执行日志</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171212200.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171212200.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171212200.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171212200.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171212200.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" />
+<img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="https://img-blog.csdnimg.cn/20210412171224384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    data-srcset="https://img-blog.csdnimg.cn/20210412171224384.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/20210412171224384.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/20210412171224384.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
+    data-sizes="auto"
+    alt="https://img-blog.csdnimg.cn/20210412171224384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTE2MDI3,size_16,color_FFFFFF,t_70#pic_center"
+    title="在这里插入图片描述" /></p>
+<h3 id="38编写脚本启动关闭集群">3.8、编写脚本启动/关闭集群</h3>
+<h4 id="381-启动关闭集群脚本">3.8.1 、启动/关闭集群脚本</h4>
+<ol>
+<li>
+<p>进入 /root/bin/</p>
+</li>
+<li>
+<p>编辑 myhadoop.sh 脚本</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -lt <span class="m">1</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34;No Args Input...&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">exit</span> <span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="nv">$1</span> in
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;start&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; =================== 启动 hadoop 集群 ===================&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; --------------- 启动 hdfs ---------------&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop100 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/start-dfs.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop102 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/start-dfs.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop103 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/start-dfs.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; --------------- 启动 yarn ---------------&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop100 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/start-yarn.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop102 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/start-yarn.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop103 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/start-yarn.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; --------------- 启动 historyserver ---------------&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop100 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/mr-jobhistory-daemon.sh start  historyserver&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;stop&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; =================== 关闭 hadoop 集群 ===================&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; --------------- 关闭 historyserver ---------------&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop100 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/mr-jobhistory-daemon.sh stop historyserver&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; --------------- 关闭 yarn ---------------&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop100 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/stop-yarn.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop102 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/stop-yarn.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop103 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/stop-yarn.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="s2">&#34; --------------- 关闭 hdfs ---------------&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop100 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/stop-dfs.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop102 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/stop-dfs.sh&#34;</span>
+</span></span><span class="line"><span class="cl"> 	ssh hadoop103 <span class="s2">&#34;/opt/module/hadoop-2.7.3/sbin/stop-dfs.sh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">*<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> <span class="s2">&#34;Input Args Error...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="k">esac</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>赋予可执行权限  chmod +x  myhadoop.sh</li>
+</ol>
+<h4 id="382-查看hadoop-服务状态脚本">3.8.2 查看hadoop 服务状态脚本</h4>
+<p>/root/bin/ 目录下，创建脚本  jpsall ，赋予可执行权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">for</span> host in hadoop100 hadoop102 hadoop103
+</span></span><span class="line"><span class="cl"> <span class="k">do</span>
+</span></span><span class="line"><span class="cl"> 	<span class="nb">echo</span> <span class="o">===============</span> <span class="nv">$host</span> <span class="o">===============</span>
+</span></span><span class="line"><span class="cl"> 	ssh <span class="nv">$host</span> jps 
+</span></span><span class="line"><span class="cl"> <span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将以上脚本同步到其他集群机器上</p>
+<p>xsync  /root/bin/</p>
+<h3 id="39-两个面试题">3.9、 两个面试题</h3>
+<p>常用端口号</p>
+<table>
+<thead>
+<tr>
+<th>端口名称</th>
+<th>hadoop.2.x</th>
+<th>hadoop.3.x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NameNode内部通信端口</td>
+<td>8020 / 9000</td>
+<td>8020 / 9000/9820</td>
+</tr>
+<tr>
+<td>NameNode HTTP UI</td>
+<td>50070</td>
+<td>9870</td>
+</tr>
+<tr>
+<td>MapReduce 查看执行任务端口</td>
+<td>8088</td>
+<td>8088</td>
+</tr>
+<tr>
+<td>历史服务器</td>
+<td>19888</td>
+<td>19888</td>
+</tr>
+</tbody>
+</table>
+<p>常用的配置文件</p>
+<table>
+<thead>
+<tr>
+<th>hadoop3.x</th>
+<th>core-site.xml   hdfs-site.xml   yarn-site.xml   mapred-site.xml   works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>hadoop2.x</strong></td>
+<td><strong>core-site.xml   hdfs-site.xml   yarn-site.xml   mapred-site.xml    slaves</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="310集群时间同步">3.10、集群时间同步</h3>
+<p>==如果服务器在公网环境（能连接外网）==，可以不采用集群时间同步，因为服务器会定期和公网时间进行校准；如果服务器在内网环境，必须要配置集群时间同步，否则时间久了，会产生时间偏差，导致集群执行任务时间不同步。</p>
+<p>doop103
+do
+echo =============== $host ===============
+ssh $host jps
+done</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">将以上脚本同步到其他集群机器上 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">xsync  /root/bin/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">### 3.9、 两个面试题
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">常用端口号
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| 端口名称                   | hadoop.2.x  | hadoop.3.x       |
+</span></span><span class="line"><span class="cl">| -------------------------- | ----------- | ---------------- |
+</span></span><span class="line"><span class="cl">| NameNode内部通信端口       | 8020 / 9000 | 8020 / 9000/9820 |
+</span></span><span class="line"><span class="cl">| NameNode HTTP UI           | 50070       | 9870             |
+</span></span><span class="line"><span class="cl">| MapReduce 查看执行任务端口 | 8088        | 8088             |
+</span></span><span class="line"><span class="cl">| 历史服务器                 | 19888       | 19888            |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">常用的配置文件
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| hadoop3.x     | core-site.xml   hdfs-site.xml   yarn-site.xml   mapred-site.xml   works |
+</span></span><span class="line"><span class="cl">| ------------- | ------------------------------------------------------------ |
+</span></span><span class="line"><span class="cl">| **hadoop2.x** | **core-site.xml   hdfs-site.xml   yarn-site.xml   mapred-site.xml    slaves** |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">### 3.10、集群时间同步
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==如果服务器在公网环境（能连接外网）==，可以不采用集群时间同步，因为服务器会定期和公网时间进行校准；如果服务器在内网环境，必须要配置集群时间同步，否则时间久了，会产生时间偏差，导致集群执行任务时间不同步。
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2021-04-12&#32;17:14:41>更新于 2021/04/12</span>
+      </div>
+      <div class="post-info-license"></div>
+    </div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a
+  href="/posts/hadoop%E5%85%A5%E9%97%A8/index.md"
+  
+    title="阅读原始文档"
+  
+  
+  
+  
+  
+    class="link-to-markdown"
+  
+  
+>阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://dingliusheng.github.io/posts/hadoop%E5%85%A5%E9%97%A8/" data-title="hadoop入门文档" data-description="从如何使用虚拟机创建hadoop环境，到部署多服务器集群，是一份入门级指导文档"><i class="fab fa-blogger fa-fw"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/hadoop/">hadoop</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/linux%E5%AD%A6%E4%B9%A0/" class="prev" rel="prev" title="linux命令使用文档"><i class="fas fa-angle-left fa-fw"></i>linux命令使用文档</a>
+      <a href="/posts/hdfs/" class="next" rel="next" title="hdfs学习文档">hdfs学习文档<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom">一个技术猿的自留地</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer" title="Hugo 0.98.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/Lruihao/FixIt" target="_blank" rel="external nofollow noopener noreffer" title="FixIt v0.2.14-RC"><img class="fixit-icon" src="/images/fixit.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i>
+            <span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">
+              <a
+  href="/"
+  
+  
+  
+  
+  
+  
+>Tincat</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中 ...'><i class="fas fa-heartbeat fa-fw animate-icon"></i>&nbsp;<span class="run-times">网站运行中 ...</span></span></div></div>
+  </footer></div><div class="widgets">
+  <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+      <i class="fas fa-arrow-up fa-fw"></i>
+    </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+      <i class="fas fa-comment fa-fw"></i>
+    </a>
+  </div><div id="mask"></div>
+</div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js" defer></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js" async defer></script><script type="text/javascript" src="/lib/sharer/sharer.min.js" async defer></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{},"enablePWA":null,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"siteTime":"2022-05-15T19:30:34+08:00"};</script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>

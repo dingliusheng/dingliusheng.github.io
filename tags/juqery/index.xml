@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>juqery - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/juqery/</link>
+    <description>juqery - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 24 Jan 2021 16:20:42 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/juqery/" rel="self" type="application/rss+xml" /><item>
+  <title>Juqery笔记</title>
+  <link>https://dingliusheng.github.io/posts/juqery/</link>
+  <pubDate>Sun, 24 Jan 2021 16:20:42 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/juqery/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp.ananas.chaoxing.com%2Fstar3%2Forigin%2Fe6d1d4a83c2cdd5b1310677647bfbc3e.gif&amp;refer=http%3A%2F%2Fp.ananas.chaoxing.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1655206650&amp;t=d1cf5c534da8b9298ab48eb21a2aef50" referrerpolicy="no-referrer">
+      </div>介绍juqery的基本语法，作为简单的文档]]></description>
+</item></channel>
+</rss>

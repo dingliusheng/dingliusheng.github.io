@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>数据库事务 - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/</link>
+    <description>数据库事务 - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 12 Apr 2022 22:12:22 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" rel="self" type="application/rss+xml" /><item>
+  <title>数据库事务的简单介绍</title>
+  <link>https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</link>
+  <pubDate>Tue, 12 Apr 2022 22:12:22 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://img0.baidu.com/it/u=511232307,3060180644&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=PNG?w=478&amp;h=262" referrerpolicy="no-referrer">
+      </div>数据库的ACID指的是什么？什么是事务？为什么需要锁机制？]]></description>
+</item></channel>
+</rss>

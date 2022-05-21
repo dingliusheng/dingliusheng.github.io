@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>http - 标签 - 一个技术猿的自留地</title>
+    <link>https://dingliusheng.github.io/tags/http/</link>
+    <description>http - 标签 - 一个技术猿的自留地</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 18:20:12 &#43;0800</lastBuildDate><atom:link href="https://dingliusheng.github.io/tags/http/" rel="self" type="application/rss+xml" /><item>
+  <title>http的简单介绍</title>
+  <link>https://dingliusheng.github.io/posts/http%E7%9A%84%E7%AE%80%E6%98%93%E7%90%86%E8%A7%A3/</link>
+  <pubDate>Wed, 23 Dec 2020 18:20:12 &#43;0800</pubDate>
+  <author>Tincat</author>
+  <guid>https://dingliusheng.github.io/posts/http%E7%9A%84%E7%AE%80%E6%98%93%E7%90%86%E8%A7%A3/</guid>
+  <description><![CDATA[<div class="featured-image">
+        <img src="https://img0.baidu.com/it/u=857177023,4023284809&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=667&amp;h=500" referrerpolicy="no-referrer">
+      </div>http的简单介绍]]></description>
+</item></channel>
+</rss>
